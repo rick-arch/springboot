@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--滚动条样式-->
+    <link rel="stylesheet" th:href="@{/css/srollbar.css}">
+    <script th:src="@{/js/layui/layui.js}"></script>
+    <script th:src="@{/js/snowflake.js}"></script>
+    <script th:src="@{/js/windmill.js}"></script>
+    <style>
+        #windmill {
+        filter：alpha(Opacity = 80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            margin-left: 1383px;
+            margin-top: 15px
+        }
+
+    </style>
+</head>
+
+<body style="" id="test">
+
+<!--日历-->
+<div class="div-left" style="margin-left: 10px;  width: 300px;height: 120px; float: right;margin-top: 50px" id="right">
+    <a class="layui-btn layui-btn layui-btn-warm layui-btn-xs" lay-event="menu" id="time">
+        <i class="layui-icon layui-icon-tree"></i>恋に</a>
+</div>
+
+<!--风车-->
+<canvas id="windmill"></canvas>
+
+<div style="margin-left: 149px;margin-top: -332px">
+    <h2 id="add">あなたの心への道を教えてもらえますか？道に迷いました</h2>
+</div>
+<br><br>
+
+<!--时间线-->
+<ul class="layui-timeline" style="margin-left: 150px;" id="timeLine"></ul>
+
+</body>
+<script>
+    createSnow('', 200);//雪花特效
+    init();//风车特效
+</script>
+<script>
+    layui.use(['table', 'tree'], function () {
+        var form = layui.form;
+        //新增（提交）时间线
+        form.on('submit(commit)', function (d) {
+            console.log(d.field)
+            d.field.timeLineContent = d.field.timeLineContent.replace(/\n/g, '<br>');
+            var content = "<p>" + d.field.timeLineContent + "</p>";
+            d.field.timeLineContent = content;
+
+            d.field.contentJapan = d.field.contentJapan.replace(/\n/g, '<br>');
+            var cj = "<p>" + d.field.contentJapan + "</p>";
+            d.field.contentJapan = cj;
+            $.ajax({
+                url: '/timeLine/add',
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(d.field),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("新增成功", {icon: 6});
+                    } else {
+                        layer.msg("新增失败", {icon: 5});
+                    }
+                }
+            });
+        });
+
+        //新增弹窗
+        $(document).on('click', "#time", function () {
+            layer.open({
+                type: 1,
+                anim: 4,
+                title: '戻れない',
+                area: ['600px', '400px'],
+                content: $("#timeForm"),//引用的弹出层的页面层的方式加载修改界面表单
+            });
+        });
+    });
+
+</script>
+<form class="layui-form" id="timeForm" style="display: none">
+    <div style="margin-top: 36px"></div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">件名</label>
+        <div class="layui-input-block">
+            <input type="text" name="timeLineTitle" id="timeLineTitle" required lay-verify="required" autocomplete="off"
+                   placeholder="件名を入力してください"
+                   class="layui-input"
+                   style="height:30px;width:400px;">
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">ストーリーの内容</label>
+            <div class="layui-input-block" style="width:400px;">
+                <textarea name="timeLineContent" id="timeLineContent" class="layui-textarea" lay-verify="required"
+                          placeholder="ストーリーの内容を入力してください"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">ストーリーの内容（日本語版）</label>
+            <div class="layui-input-block" style="width:400px;">
+                <textarea name="contentJapan" id="contentJapan" class="layui-textarea" lay-verify="required"
+                          placeholder="ストーリーの内容を入力してください（日本語版）"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 65px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="commit">提交</button>
+                <button type="reset" class="layui-btn layui-btn-normal">重置</button>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    // 查询时间线并渲染样式
+    $.ajax({
+        url: '/timeLine/timeLineList',
+        type: 'get',
+        success: function (res) {
+            var timeLine = '';
+            d = res;
+            for (var i = 0; i < res.length; i++) {//contentJapan
+                timeLine += '<li class="layui-timeline-item"> <i class="layui-icon layui-timeline-axis">&#xe63f;</i> <div class="layui-timeline-content layui-text">  <h3 class="layui-timeline-title">' + res[i].timeLineTitle + '</h3>' + res[i].timeLineContent + '</div>';
+            }
+            timeLine += '</li>'
+            $('#timeLine').html(timeLine);
+        }
+    });
+
+    //直接嵌套显示https://www.layui.com/laydate/(日历)
+    laydate.render({
+        elem: '#right',
+        position: 'static',
+        calendar: true,
+        showBottom: false,
+        theme: '#393D49',
+        mark: {
+            '0-7-20': '別れる',
+            '0-8-8': '上海に'
+        }
+    });
+
+    //点击爱心特效
+    $(function () {
+        var height = $(window).width();
+        $('#test').css({
+            'height': height,
+        });
+        var n = 1;
+        $('#test').click(function (e) {
+            var $i = $('<b></b>').text('❤');
+            n++;
+            var x = e.pageX, y = e.pageY;//获取鼠标点击的位置坐标
+            $i.css({
+                "z-index": 9999,
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "color": 'red',
+                "font-size": 14,
+            });
+            $("body").append($i);
+            $i.animate({
+                "top": y - 180,
+                "opacity": 0
+            }, 7000, function () {
+                $i.remove();
+            });//设置动画
+        });
+    });
+</script>
+</html>

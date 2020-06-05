@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>角色管理</title>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+</head>
+<script type="text/javascript">
+    layui.config({//文档地址：https://faysunshine.com/layui/site/template/doc.html?formSelects
+        base: '/js/layui/formSelect/src/' //设定扩展模块所在的目录, 可以使用绝对路径
+    }).extend({  //设定模块别名
+        formSelects: 'formSelects-v3'
+    });
+</script>
+<body>
+<div style="width: 10px;color: white;margin-top: 10px;"></div>
+<div class="demoTable">
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <div class="layui-field-box">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色id：
+            <div class="layui-inline">
+                <input class="layui-input" name="roleId" id="roleId" placeholder="请输入角色id" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色名称：
+            <div class="layui-inline">
+                <input class="layui-input" name="roleName" id="roleName" placeholder="请输入角色名称(en)" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;角色名称：
+            <div class="layui-inline">
+                <input class="layui-input" name="roleNameCn" id="roleNameCn" placeholder="请输入角色名称(cn)"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建时间：
+            <div class="layui-inline">
+                <input class="layui-input" name="createTime" id="createTime" placeholder="请选择创建时间"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述：
+            <div class="layui-inline">
+                <input class="layui-input" name="description" id="description" placeholder="请输入描述" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="layui-btn layui-btn-warm layui-btn-sm" data-type="reload">
+                <li class="layui-icon layui-icon-search">查询</li>
+            </button>
+            <button class="layui-btn layui-btn-sm" data-type="reset">
+                <li class="layui-icon layui-icon-refresh-1"> 重置</li>
+            </button>
+        </div>
+    </fieldset>
+</div>
+<!--table-->
+<table class="layui-hide" id="demo2" lay-filter="demo2"></table>
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#createTime'
+        });
+    });
+</script>
+<script>
+    layui.use(['table', 'tree', 'formSelects', 'jquery'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var util = layui.util;
+        var tree = layui.tree;
+
+        //方法级渲染
+        table.render({
+            elem: '#demo2',
+            //height: 478,
+            url: '/role/getRoleList', //数据接口,
+            id: 'roleManager',
+            toolbar: '#headToolBar',//开启头部工具栏，并为其绑定左侧模板
+            cols: [
+                [ //表头
+                    {field: '', title: '', type: 'checkbox'},
+                    {field: 'no', title: '序号', type: 'numbers',},
+                    {field: 'roleId', title: '角色id', width: 151, align: 'center'},
+                    {field: 'roleName', title: '角色名称(en)', width: 225, align: 'center',},
+                    {field: 'roleNameCn', title: '角色名称(cn)', width: 225, align: 'center',},
+                    {
+                        field: 'deleteFlag', title: '状态', align: 'center', width: 150, templet: function (res) {
+                            if (res.deleteFlag == 1) return '<span style="color: green">启用</span>';
+                            else return '<span style="color: red">禁用</span>';
+                        }
+                    },
+                    {field: 'description', title: '描述', width: 300, align: 'center'},
+                    {
+                        field: 'createTime', title: '创建时间', width: 230, align: 'center', templet: function (res) {
+                            return util.toDateString(res.createTime, "yyyy-MM-dd HH:mm:ss");
+                        }
+                    },
+                    {field: '', title: '操作', width: 330, align: 'center', toolbar: '#barDemo'}
+                ]
+            ],
+            done: function (res, curr, count) {// 表格渲染完成之后的回调
+                var that = this.elem.next();
+                if (res.code === 0) {
+                    res.data.forEach(function (item, index) {//item表示每列显示的数据
+                        if (index % 2 !== 0) {
+                            that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#F5F5F5");
+                        }
+                    })
+                }
+            },
+            page: true,
+            response: {
+                statusName: 'code', //数据状态的字段名称，默认：code
+                statusCode: 0,//成功的状态码，默认：0
+                msgName: 'msg', //状态信息的字段名称，默认：msg
+                countName: 'count', //数据总数的字段名称，默认：count
+                dataName: 'data' //数据列表的字段名称，默认：data
+            }
+        });
+
+
+        var $ = layui.$, active = {
+            reload: function () {  //查询
+                var roleId = $('#roleId');
+                var roleName = $('#roleName');
+                var roleNameCn = $('#roleNameCn');
+                var description = $('#description');
+                var createTime = $('#createTime');
+                table.reload('roleManager', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        roleId: roleId.val(),
+                        roleName: roleName.val(),
+                        roleNameCn: roleNameCn.val(),
+                        createTime: createTime.val(),
+                        description: description.val()
+                    }
+                }, 'data')
+            },
+            reset: function () {//重置
+                $('#roleId').val('');
+                $('#roleName').val('');
+                $('#roleNameCn').val('');
+                $('#description').val('');
+                $('#createTime').val('');
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //禁用角色
+        function deleteRole(data) {
+            if (data.length === 0) {
+                layer.msg("小样，你还没有选择要操作的数据呢！", {icon: 5});
+                return false;
+            }
+            $.ajax({
+                url: "/role/disable",
+                type: "POST",
+                contentType: "application/json",//请求内容为Json
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (res) {
+                    if (res.success === true) {
+                        //关闭弹框
+                        layer.msg("禁用成功了哦，小样！", {icon: 6});
+                        table.reload('roleManager', {});//刷新表格
+                    } else {
+                        layer.msg("禁用失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        }
+
+        //点击添加 弹窗头部（添加 禁用）
+        table.on('toolbar(demo2)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    layer.open({
+                        type: 1,
+                        anim: 4,
+                        title: '新增角色',
+                        area: ['600px', '500px'],
+                        content: $("#roleForm"),//引用的弹出层的页面层的方式加载修改界面表单
+                    });
+                    break;
+                case 'disable':
+                    var roleIdArr = [];
+                    var d = checkStatus.data;
+                    for (var i = 0; i < d.length; i++) {
+                        roleIdArr.push(d[i].roleId)
+                    }
+                    deleteRole(roleIdArr);
+                    break;
+            }
+        });
+
+
+        //加载中提示信息
+        var e;
+
+        function showLoad() {
+            return layer.msg('拼命执行中了哦，小样...', {
+                icon: 16,
+                shade: [0.5, '#f5f5f5'],
+                scrollbar: false,
+                offset: 'auto',
+                time: 100000
+            });
+        }
+
+        //关闭加载提示信息
+        function closeLoad(index) {
+            layer.close(index);
+        }
+
+
+        //监听工具条(操作栏: 菜单 启用 禁用)
+        table.on('tool(demo2)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'enable') {//启用
+                if (data.deleteFlag == 1) {
+                    layer.msg("小样，已经是启用状态哦！", {icon: 6});
+                    return false;
+                }
+                var roleId = data.roleId;
+                $.ajax({
+                    url: '/role/enable/' + roleId,
+                    type: 'post',
+                    dataType: "json",
+                    async: false,
+                    contentType: "application/json",//请求内容为Json
+                    success: function (res) {
+                        if (res.success === true) {
+                            layer.msg("启用成功了哦，小样！", {icon: 6});
+                            table.reload('roleManager', {});
+                        } else {
+                            layer.msg("启用失败了哦，小样！", {icon: 5});
+                        }
+                    }
+                });
+            } else if (obj.event === 'disable') {//禁用
+                if (data.deleteFlag == 0) {
+                    layer.msg("小样，已经是禁用状态哦！", {icon: 6});
+                    return false;
+                }
+                var roleIdArr = [];
+                roleIdArr.push(data.roleId);
+                deleteRole(roleIdArr);
+            } else if (obj.event === 'menu') {//menu 菜单
+                var roleId = data.roleId;
+                $("#roleIdValue").val(roleId);
+                $("#roleValue").val('配置角色 （' + data.roleNameCn + '） 菜单权限');
+
+                layer.open({
+                    type: 1,
+                    title: '配置角色菜单',
+                    area: ['600px', '500px'],
+                    anim: 4,
+                    isOutAnim: true,
+                    resize: false,
+                    content: $("#menuForm"),//引用的弹出层的页面层的方式加载修改界面表单
+                    success: function () {
+                        //查询角色对应的菜单
+                        $.ajax({
+                            url: '/role/getMenuListByRoleId/' + roleId,
+                            type: 'post',
+                            dataType: "json",
+                            async: false,
+                            contentType: "application/json",//请求内容为Json
+                            beforeSend: function () {
+                                //加载中提示信息
+                                e = showLoad();
+                            },
+                            success: function (res, status) {
+                                if (status === "success") {
+                                    //关闭加载提示信息
+                                    closeLoad(e);
+                                }
+                                var idArray = [];
+                                for (var i = 0; i < res.length; i++) {
+                                    idArray.push(res[i].menuId);
+                                }
+                                //重载一个已经创建的组件实例，被覆盖新的基础属性,menuList为tree组件的id
+                                tree.reload('menuList', {});
+                                //选中tree
+                                tree.setChecked("menuList", idArray);
+                            }
+                        });
+                    }
+                });
+            } else {//权限permission
+                var roleId = data.roleId;
+                $("#roleValuePermission").val(roleId);
+                var permissionIdAr = [];
+                layer.open({
+                    type: 1,
+                    title: '配置角色对应的权限',
+                    area: ['600px', '500px'],
+                    anim: 4,
+                    isOutAnim: true,
+                    resize: false,
+                    shade:0.3,
+                    content: $("#permissionForm"),//引用的弹出层的页面层的方式加载修改界面表单
+                    success: function () {
+                        $("#rolePermission").val('配置角色 （' + data.roleNameCn + '） 按钮权限');
+                        $.ajax({
+                            url: '/role/getPermission/' + roleId,
+                            type: 'post',
+                            success: function (res) {
+                                for (var i = 0; i < res.length; i++) {
+                                    for (var j = 0; j < res[i].permissionsLists.length; j++) {
+                                        permissionIdAr.push(res[i].permissionsLists[j].permissionId);
+                                    }
+                                }
+                                tree.reload('permissionList', {});
+                                tree.setChecked("permissionList", permissionIdAr);
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        permissionIdAr = [];
+                        tree.setChecked("permissionList", permissionIdAr);
+                    }
+                });
+
+            }
+        });
+
+
+        //新增角色formDemo为提交按钮
+        form.on('submit(formDemo)', function (d) {
+            $.ajax({
+                url: '/role/addRole',
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(d.field),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("新增成功了哦，小样！", {icon: 6});
+                    } else {
+                        layer.msg("新增失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        });
+
+        //新增角色对应权限
+        form.on('submit(permissionSubmit)', function () {
+            var permissionIdArr = [];
+            ////获取选中的权限树
+            var checkData = tree.getChecked('permissionList');
+            console.log(JSON.stringify(checkData))
+            for (var i = 0; i < checkData.length; i++) {
+                permissionIdArr.push(checkData[i].id);
+                for (var j = 0; j < checkData[i].children.length; j++) {
+                    permissionIdArr.push(checkData[i].children[j].id);
+                }
+            }
+            var roleId = $("#roleValuePermission").val();
+            $.ajax({
+                url: '/role/permission/add/' + roleId,
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(permissionIdArr),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("修改成功了哦，小样！", {icon: 6});
+                    } else {
+                        layer.msg("修改失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        });
+
+        //新增角色对应的菜单
+        form.on('submit(menuSubmit)', function () {
+            var menuIdArr = [];
+            //获取选中的菜单树
+            var checkData = tree.getChecked('menuList');
+            for (var i = 0; i < checkData.length; i++) {
+                menuIdArr.push({
+                    menuId: checkData[i].id
+                });
+                for (var j = 0; j < checkData[i].children.length; j++) {
+                    menuIdArr.push({
+                        menuId: checkData[i].children[j].id
+                    });
+                }
+            }
+            var roleId = $('#roleIdValue').val();
+
+            $.ajax({
+                url: '/role/deployMenu/' + roleId,
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(menuIdArr),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("修改成功了哦，小样！", {icon: 6});
+                    } else {
+                        layer.msg("修改失败了哦，小样！", {icon: 5});
+                    }
+                }
+            })
+        })
+
+
+    })
+</script>
+<script type="text/html" id="barDemo">
+    <shiro:hasPermission name="role:permission">
+        <a class="layui-btn layui-btn-xs" style="background-color:#F5DEB3" lay-event="permission">
+            <i class="layui-icon layui-icon-auz"></i>权限</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="role:menu">
+        <a class="layui-btn  layui-btn-warm layui-btn-xs" lay-event="menu">
+            <i class="layui-icon layui-icon-set"></i>菜单</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="role:enable">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="enable">
+            <i class="layui-icon layui-icon-edit"></i>启用</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="role:disable">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">
+            <i class="layui-icon layui-icon-delete"></i>禁用</a>
+    </shiro:hasPermission>
+</script>
+<script type="text/html" id="headToolBar">
+    <shiro:hasPermission name="role:add">
+        <button type="button" class="layui-btn  layui-btn-normal layui-btn-sm layui-btn-radius" lay-event="add">添加
+        </button>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="role:disable">
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="disable">禁用
+        </button>
+    </shiro:hasPermission>
+</script>
+<!--新增角色form-->
+<form class="layui-form" action="" id="roleForm" style="display: none">
+    <div style="margin-top: 36px"></div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="roleName" id="roleName1" onkeyup="value=value.replace(/[^\a-zA-Z]/g,'')" required
+                   lay-verify="required" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入角色名称(英文)">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="roleNameCn" id="roleNameCn1" required lay-verify="required" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入角色名称(中文)">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block" id="status">
+            <input type="radio" name="deleteFlag" id="deleteFlag1" value="1" title="启用">
+            <input type="radio" name="deleteFlag" value="0" id="deleteFlag0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block" style="width:400px;">
+            <textarea name="description" id="description1" placeholder="请输入角色描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left: 65px">
+        <div class="layui-input-block">
+            <button class="layui-btn" style="margin-left: 65px" lay-submit lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+
+<!--配置角色对应的菜单form-->
+<form class="layui-form" id="menuForm" style="display: none">
+    <div style="margin-top: 15px"></div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="">
+            <input type="text" id="roleValue" class="layui-input"
+                   style="text-align: center;background-color: #FFDEAD;height:30px;width:400px;border:none;" disabled>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="">
+            <input type="text" class="layui-input"
+                   style="text-align: center;margin-left:-60px;background-color: #FFF8DC;height:30px;width:150px;border:none;"
+                   disabled placeholder="所有菜单如下：">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单：</label>
+        <div class="layui-input-block" id="menuName" style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" id="roleIdValue" style="display: none">
+            <div class="layui-input-block" id="addOrNot" style="display: none">
+            </div>
+        </div>
+        <div style="margin-top: 100px"></div>
+        <div class="layui-form-item" style="margin-left: 300px">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-warm" style="margin-left: 28px" lay-submit lay-filter="menuSubmit">
+                    提交
+                </button>
+                <button class="layui-btn" lay-submit lay-filter="" th:onclick="layer.closeAll('page')">关闭</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--配置角色对应的权限form-->
+<form class="layui-form" id="permissionForm" style="display: none">
+    <div style="margin-top: 15px"></div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="">
+            <input type="text" id="rolePermission" class="layui-input"
+                   style="text-align: center;background-color: #FFDEAD;height:30px;width:400px;border:none;" disabled>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="">
+            <input type="text" id="roleValuePermission" class="layui-input"
+                   style="text-align: center;display: none;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">拥有权限</label>
+        <div class="layui-input-block" id="permission" style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left: 283px;margin-top: 128px">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-warm" style="margin-left: 28px" lay-submit lay-filter="permissionSubmit">
+                提交
+            </button>
+            <button class="layui-btn" lay-submit lay-filter="" th:onclick="layer.closeAll('page')">关闭</button>
+        </div>
+    </div>
+</form>
+<script>
+    //https://www.layui.com/v1/doc/modules/tree.html#use
+    layui.use('tree', function () { //文档地址：https://www.layui.com/doc/modules/tree.html
+        var tree = layui.tree;
+
+        //获取菜单列表并渲染菜单tree
+        $.ajax({
+            url: '/menu/getMenuList',
+            type: 'post',
+            success: function (res) {
+                tree.render({
+                    elem: '#menuName', //指向容器选择器
+                    data: res,
+                    id: 'menuList',
+                    showCheckbox: true,//是否显示复选框
+                });
+            }
+        });
+
+        //拥有的权限下拉列表
+        $.ajax({
+            url: '/role/permission/list',
+            type: 'post',
+            success: function (res) {
+                tree.render({
+                    elem: '#permission', //指向容器选择器
+                    data: res,
+                    id: 'permissionList',
+                    showCheckbox: true,//是否显示复选框
+                })
+            }
+        });
+
+    })
+
+</script>
+</html>

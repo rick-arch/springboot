@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.repository.SysPermissionRepository">
+
+    <!--根据条件查询权限集合-->
+    <select id="getPermissionList" resultType="com.example.springboot.entity.system.SysPermission">
+        SELECT * FROM sys_permission WHERE  parentId != 0
+        <if test="permissionId != null and permissionId != ''">
+            AND permissionId LIKE '%${permissionId}%'
+        </if>
+        <if test="permissionName != null and permissionName != ''">
+            AND permissionName LIKE '%${permissionName}%'
+        </if>
+        <if test="description != null and description != ''">
+            AND description LIKE '%${description}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="permissionNameCn != null and permissionNameCn !='' ">
+            AND permissionNameCn LIKE '%${permissionNameCn}%'
+        </if>
+        <if test="page!=null and limit >0">
+            LIMIT #{page},#{limit}
+        </if>
+    </select>
+
+    <!--根据条件查询权限条数-->
+    <select id="getSysPermissionCount" resultType="integer">
+        SELECT COUNT(1) FROM sys_permission WHERE  parentId != 0
+        <if test="permissionId != null and permissionId != ''">
+            AND permissionId LIKE '%${permissionId}%'
+        </if>
+        <if test="permissionName != null and permissionName != ''">
+            AND permissionName LIKE '%${permissionName}%'
+        </if>
+        <if test="description != null and description != ''">
+            AND description LIKE '%${description}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="permissionNameCn != null and permissionNameCn !='' ">
+            AND permissionNameCn LIKE '%${permissionNameCn}%'
+        </if>
+    </select>
+
+    <!--启用权限-->
+    <update id="enable">
+        UPDATE sys_permission SET deleteFlag = 1 WHERE permissionId = #{permissionId}
+    </update>
+
+    <!--禁用权限-->
+    <update id="disable">
+        UPDATE sys_permission SET deleteFlag = 0 WHERE permissionId IN
+        <foreach collection="array" open="(" close=")" separator="," item="permissionId">
+            #{permissionId}
+        </foreach>
+    </update>
+
+    <!-- 新增权限-->
+    <insert id="insertPermission">
+        INSERT INTO sys_permission(permissionName, description, createTime,permissionNameCn,parentId)
+        VALUES (#{permissionName}, #{description}, #{createTime},#{permissionNameCn},#{parentId})
+    </insert>
+
+    <update id="updatePermission">
+        UPDATE sys_permission
+        SET permissionName = #{permissionName},
+            description    = #{description},
+            createTime     = #{createTime},
+            deleteFlag     = #{deleteFlag},
+            permissionNameCn = #{permissionNameCn},
+            parentId = #{parentId}
+        WHERE permissionId = #{permissionId}
+    </update>
+
+    <select id="getParent" resultType="com.example.springboot.entity.system.SysPermission">
+        SELECT * FROM sys_permission WHERE parentId = 0
+    </select>
+</mapper>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>角色管理</title>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+</head>
+<body>
+<div style="width: 10px;color: white;margin-top: 10px;"></div>
+<div class="demoTable">
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <div class="layui-field-box">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作人：
+            <div class="layui-inline">
+                <input class="layui-input" name="username" id="username" placeholder="请输入操作人"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行操作：
+            <div class="layui-inline">
+                <input class="layui-input" name="operation" id="operation" placeholder="请输入执行操作"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建时间：
+            <div class="layui-inline">
+                <input class="layui-input" name="createTime" id="createTime" placeholder="请选择创建时间"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行方法：
+            <div class="layui-inline">
+                <input class="layui-input" name="method" id="method" placeholder="请输入执行方法"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请求路径：
+            <div class="layui-inline">
+                <input class="layui-input" name="requestUrl" id="requestUrl" placeholder="请输入请求路径"
+                       autocomplete="off">
+            </div> <br><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法参数：
+            <div class="layui-inline">
+                <input class="layui-input" name="params" id="params" placeholder="请输入方法参数"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主机IP：
+            <div class="layui-inline">
+                <input class="layui-input" name="ip" id="ip" placeholder="请输入主机IP"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览器：
+            <div class="layui-inline">
+                <input class="layui-input" name="browser" id="browser" placeholder="请输入浏览器"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统：
+            <div class="layui-inline">
+                <input class="layui-input" name="system" id="system" placeholder="请输入系统"
+                       autocomplete="off">
+            </div>
+            <div class="layui-inline" style="margin-left: 60px">
+                <button class="layui-btn layui-btn-warm layui-btn-sm" data-type="reload">
+                    <li class="layui-icon layui-icon-search">查询</li>
+                </button>
+                <button class="layui-btn layui-btn-sm" data-type="reset">
+                    <li class="layui-icon layui-icon-refresh-1"> 重置</li>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<!--table-->
+<table class="layui-hide" id="demo2" lay-filter="demo2"></table>
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#createTime'
+        });
+    });
+</script>
+<script>
+    layui.use(['table', 'tree'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var util = layui.util;
+
+        //方法级渲染
+        table.render({
+            elem: '#demo2',
+            //height: 478,
+            url: '/system/logList', //数据接口,
+            id: 'logManager',
+            cols: [
+                [ //表头
+                    {field: '', title: '', type: 'checkbox'},
+                    {field: 'no', title: '序号', type: 'numbers',},
+                    {field: 'username', title: '操作人', width: 100, align: 'center'},
+                    {field: 'operation', title: '执行操作', width: 150, align: 'center',},
+                    {
+                        field: 'method', title: '执行方法', align: 'center', width: 130, templet: function (res) {
+                            if (res.method != null) {
+                                var str = res.method.split(".");
+                                return str[str.length - 1];
+                            }
+                        }
+                    },
+                    {field: 'requestUrl', title: '请求路径', width: 180, align: 'center'},
+                    {field: 'params', title: '方法参数', width: 400, align: 'center'},
+                    {field: 'system', title: '操作系统', width: 120, align: 'center'},
+                    {field: 'browser', title: '浏览器', width: 100, align: 'center'},
+                    {
+                        field: 'time', title: '执行时间', width: 100, align: 'center', templet: function (res) {
+                            if (res.time > 5) return '<span style="color: red">' + res.time + 'ms' + '</span>';
+                            else return '<span style="color: green">' + res.time + 'ms' + '</span>';
+                        }
+                    },
+                    {field: 'ip', title: '主机IP', width: 130, align: 'center'},
+                    {
+                        field: 'createTime', title: '操作时间', width: 198, align: 'center', templet: function (res) {
+                            return util.toDateString(res.createTime, "yyyy-MM-dd HH:mm:ss");
+                        }
+                    },
+                ]
+            ],
+            done: function (res, curr, count) {// 表格渲染完成之后的回调
+                var that = this.elem.next();
+                if (res.code === 0) {
+                    res.data.forEach(function (item, index) {//item表示每列显示的数据
+                        if (index % 2 !== 0) {
+                            that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#F5F5F5");
+                        }
+                    })
+                }
+
+            },
+            page: true,
+            response: {
+                statusName: 'code', //数据状态的字段名称，默认：code
+                statusCode: 0,//成功的状态码，默认：0
+                msgName: 'msg', //状态信息的字段名称，默认：msg
+                countName: 'count', //数据总数的字段名称，默认：count
+                dataName: 'data' //数据列表的字段名称，默认：data
+            }
+        });
+
+
+        var $ = layui.$, active = {
+            reload: function () {  //查询
+                var username = $('#username');
+                var operation = $('#operation');
+                var method = $('#method');
+                var params = $('#params');
+                var ip = $('#ip');
+                var createTime = $('#createTime');
+                var system = $('#system');
+                var browser = $('#browser');
+                var requestUrl = $('#requestUrl');
+                table.reload('logManager', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        username: username.val(),
+                        operation: operation.val(),
+                        method: method.val(),
+                        params: params.val(),
+                        ip: ip.val(),
+                        createTime: createTime.val(),
+                        system: system.val(),
+                        requestUrl: requestUrl.val(),
+                        browser: browser.val()
+                    }
+                }, 'data')
+            },
+            reset: function () {//重置
+                $('#username').val('');
+                $('#operation').val('');
+                $('#method').val('');
+                $('#params').val('');
+                $('#createTime').val('');
+                $('#ip').val('');
+                $('#system').val('');
+                $('#browser').val('');
+                $('#requestUrl').val('');
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+    })
+</script>
+</html>

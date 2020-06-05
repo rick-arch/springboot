@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>角色管理</title>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+</head>
+<body>
+<div style="width: 10px;color: white;margin-top: 10px;"></div>
+<div class="demoTable">
+    <div class="layui-field-box">
+        <blockquote class="layui-elem-quote layui-quote-nm">
+            且&nbsp;&nbsp;听&nbsp;&nbsp;风&nbsp;&nbsp;吟，静&nbsp;&nbsp;待&nbsp;&nbsp;花&nbsp;&nbsp;开&nbsp;&nbsp;。
+            <br>&nbsp;&nbsp;——&nbsp;&nbsp;村&nbsp;&nbsp;上&nbsp;&nbsp;村&nbsp;&nbsp;树
+        </blockquote>
+    </div>
+</div>
+<table class="layui-hide" id="demo2" lay-filter="demo2"></table>
+</body>
+<script>
+    layui.use(['table', 'tree'], function () {
+        var table = layui.table;
+
+        //方法级渲染
+        table.render({
+            elem: '#demo2',
+            //height: 478,
+            url: '/online/list', //数据接口,
+            id: 'onlineManager',
+            cols: [
+                [ //表头
+                    {field: 'no', title: '序号', type: 'numbers',},
+                    {field: 'id', title: 'SESSION ID', width: 350, align: 'center'},
+                    {field: 'chinaName', title: '中文名', width: 200, align: 'center'},
+                    {field: 'username', title: '英文名', width: 200, align: 'center'},
+                    {
+                        field: 'status', title: '状态', align: 'center', width: 150, templet: function (res) {
+                            if (res.status === '在线') return '<span style="color: green">' + res.status + '</span>';
+                            else return '<span style="color: red">' + res.status + '</span>';
+                        }
+                    },
+                    {field: 'lastAccessTime', title: '上次访问时间', width: 250, align: 'center'},
+                    {field: 'host', title: 'IP地址', width: 350, align: 'center'},
+                    {field: '', title: '操作', width: 160, align: 'center', toolbar: '#barDemo'},
+                ]
+            ],
+            done: function (res, curr, count) {// 表格渲染完成之后的回调
+                var that = this.elem.next();
+                if (res.code === 0) {
+                    res.data.forEach(function (item, index) {//item表示每列显示的数据
+                        if (index % 2 !== 0) {
+                            that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#F5F5F5");
+                        }
+                    })
+                }
+            },
+            page: true,
+            response: {
+                statusName: 'code', //数据状态的字段名称，默认：code
+                statusCode: 0,//成功的状态码，默认：0
+                msgName: 'msg', //状态信息的字段名称，默认：msg
+                countName: 'count', //数据总数的字段名称，默认：count
+                dataName: 'data' //数据列表的字段名称，默认：data
+            }
+        });
+
+
+        table.on('tool(demo2)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'logout') {//下线
+                if (data.status === "离线") {
+                    layer.msg("小样，该用户已是离线状态了哦！！");
+                    return;
+                }
+                layer.confirm('您确定要让【' + data.chinaName + '】强制下线吗？', {btn: ['确定', '取消']}, function () {
+                    $.ajax({
+                        url: "/online/forceLogout/" + data.id,
+                        type: "POST",
+                        contentType: "application/json",//请求内容为Json
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.code === 0) {
+                                //关闭弹框
+                                layer.msg("【" + data.chinaName + "】已被您强制下线了哦，小样！！", {icon: 6});
+                                table.reload('onlineManager', {});//刷新表格
+                                location.href = '/online/index';
+                            } else {
+                                layer.msg("下线失败了哦，小样！", {icon: 5});
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+    });
+</script>
+<script type="text/html" id="barDemo">
+    <shiro:hasPermission name="user:kickOut">
+        <a class="layui-btn layui-btn-danger layui-btn-xs">
+            <i class="layui-icon layui-icon-right" lay-event="logout"></i></a>
+    </shiro:hasPermission>
+</script>
+</html>

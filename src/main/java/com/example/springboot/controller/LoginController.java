@@ -1,0 +1,54 @@
+package com.example.springboot.controller;
+
+import com.example.springboot.annotation.Log;
+import com.example.springboot.common.ResponseBo;
+import com.example.springboot.entity.user.SysUser;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import static com.example.springboot.common.ResponseBo.error;
+import static com.example.springboot.common.ResponseBo.ok;
+import static com.example.springboot.constant.Constant.AUTHENTICATION_FAILED;
+import static com.example.springboot.constant.Constant.USER;
+import static com.example.springboot.constant.WebForwardConstant.FWD_INDEX;
+import static com.example.springboot.constant.WebURIConstant.*;
+
+@Controller
+@Slf4j
+public class LoginController extends BaseController {
+
+    @PostMapping(LOGIN)
+    @ResponseBody
+    public ResponseBo login(String username, String password, Boolean rememberMe) {
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+        try {
+            login(token);
+            return ok();
+        } catch (UnknownAccountException | LockedAccountException | IncorrectCredentialsException e) {
+            return error(e.getMessage());
+        } catch (AuthenticationException e) {
+            return error(AUTHENTICATION_FAILED);
+        }
+    }
+
+
+    @GetMapping(INDEX)
+    public String index(Model model) {
+        // 登录成后，即可通过Subject获取登录的用户信息
+        SysUser user = getPrincipal();
+        model.addAttribute(USER, user);
+        return FWD_INDEX;
+    }
+
+    @GetMapping(LOGOUT)
+    @Log("用户退出")
+    public void logout() {
+        //用户退出后，shiro实现自动跳转到登陆页面
+        userLogout();
+    }
+}

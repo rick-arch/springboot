@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>角色管理</title>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+</head>
+<body>
+<div style="width: 10px;color: white;margin-top: 10px;"></div>
+<div class="demoTable">
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <div class="layui-field-box">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限id：
+            <div class="layui-inline">
+                <input class="layui-input" name="permissionId" id="permissionId" placeholder="请输入权限id"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限名称：
+            <div class="layui-inline">
+                <input class="layui-input" name="permissionName" id="permissionName" placeholder="请输入权限名称"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;权限名称：
+            <div class="layui-inline">
+                <input class="layui-input" name="permissionNameCn" id="permissionNameCn" placeholder="请输入权限名称(中文)"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建时间：
+            <div class="layui-inline">
+                <input class="layui-input" name="createTime" id="createTime" placeholder="请选择创建时间"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述：
+            <div class="layui-inline">
+                <input class="layui-input" name="description" id="description" placeholder="请输入描述" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="layui-btn layui-btn-warm layui-btn-sm" data-type="reload">
+                <li class="layui-icon layui-icon-search">查询</li>
+            </button>
+            <button class="layui-btn layui-btn-sm" data-type="reset">
+                <li class="layui-icon layui-icon-refresh-1"> 重置</li>
+            </button>
+        </div>
+    </fieldset>
+</div>
+
+<!--table-->
+<table class="layui-hide" id="demo2" lay-filter="demo2"></table>
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#createTime'
+        });
+    });
+</script>
+<script>
+    layui.use(['table', 'tree'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var util = layui.util;
+
+        //方法级渲染
+        table.render({
+            elem: '#demo2',
+            //height: 478,
+            url: '/permission/getPermissionList', //数据接口,
+            id: 'permissionManager',
+            toolbar: '#headToolBar',//开启头部工具栏，并为其绑定左侧模板
+            cols: [
+                [ //表头
+                    {field: '', title: '', type: 'checkbox'},
+                    {field: 'no', title: '序号', type: 'numbers',},
+                    {field: 'permissionId', title: '权限id', width: 151, align: 'center'},
+                    {field: 'permissionName', title: '权限名称', width: 225, align: 'center',},
+                    {field: 'permissionNameCn', title: '权限名称(中文)', width: 235, align: 'center',},
+                    {
+                        field: 'deleteFlag', title: '状态', align: 'center', width: 150, templet: function (res) {
+                            if (res.deleteFlag == 1) return '<span style="color: green">启用</span>';
+                            else return '<span style="color: red">禁用</span>';
+                        }
+                    },
+                    {field: 'description', title: '描述', width: 250, align: 'center'},
+                    {
+                        field: 'createTime', title: '创建时间', width: 300, align: 'center', templet: function (res) {
+                            return util.toDateString(res.createTime, "yyyy-MM-dd HH:mm:ss");
+                        }
+                    },
+                    {field: '', title: '操作', width: 300, align: 'center', toolbar: '#barDemo'}
+                ]
+            ],
+            done: function (res, curr, count) {// 表格渲染完成之后的回调
+                var that = this.elem.next();
+                if (res.code === 0) {
+                    res.data.forEach(function (item, index) {//item表示每列显示的数据
+                        if (index % 2 !== 0) {
+                            that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#F5F5F5");
+                        }
+                    })
+                }
+            },
+            page: true,
+            response: {
+                statusName: 'code', //数据状态的字段名称，默认：code
+                statusCode: 0,//成功的状态码，默认：0
+                msgName: 'msg', //状态信息的字段名称，默认：msg
+                countName: 'count', //数据总数的字段名称，默认：count
+                dataName: 'data' //数据列表的字段名称，默认：data
+            }
+        });
+
+
+        var $ = layui.$, active = {
+            reload: function () {  //查询
+                var permissionId = $('#permissionId');
+                var permissionName = $('#permissionName');
+                var description = $('#description');
+                var createTime = $('#createTime');
+                var permissionNameCn = $('#permissionNameCn');
+                table.reload('permissionManager', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        permissionId: permissionId.val(),
+                        permissionName: permissionName.val(),
+                        createTime: createTime.val(),
+                        permissionNameCn: permissionNameCn.val(),
+                        description: description.val()
+                    }
+                }, 'data')
+            },
+            reset: function () {//重置
+                $('#permissionId').val('');
+                $('#permissionName').val('');
+                $('#description').val('');
+                $('#createTime').val('');
+                $('#permissionNameCn').val('');
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //禁用角色
+        function deletePermission(data) {
+            if (data.length === 0) {
+                layer.msg("小样，请选择你要操作的数据哦！", {icon: 5});
+                return false;
+            }
+            $.ajax({
+                url: "/permission/disable",
+                type: "POST",
+                contentType: "application/json",//请求内容为Json
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (res) {
+                    if (res.success === true) {
+                        //关闭弹框
+                        layer.msg("禁用成功了哦，小样！", {icon: 6});
+                        table.reload('permissionManager', {});//刷新表格
+                    } else {
+                        layer.msg("禁用失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        }
+
+        //点击添加 弹窗头部（添加 禁用）
+        table.on('toolbar(demo2)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    layer.open({
+                        type: 1,
+                        anim: 4,
+                        title: '新增角色',
+                        area: ['600px', '500px'],
+                        content: $("#permissionForm"),//引用的弹出层的页面层的方式加载修改界面表单
+                        success: function () {
+                            $('#permissionName1').val('');
+                            $('#permissionNameCn1').val('');
+                            $('#description1').val('');
+                            $('#permissionIdValue').val('');
+                            form.render();
+                        }
+                    });
+                    break;
+                case 'disable':
+                    var permissionIdArr = [];
+                    var d = checkStatus.data;
+                    for (var i = 0; i < d.length; i++) {
+                        permissionIdArr.push(d[i].permissionId)
+                    }
+                    deletePermission(permissionIdArr);
+                    break;
+            }
+        });
+
+        //监听工具条(操作栏: 菜单 启用 禁用)
+        table.on('tool(demo2)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'enable') {//启用
+                if (data.deleteFlag == 1) {
+                    layer.msg("小样，已经是启用状态哦！", {icon: 6});
+                    return false;
+                }
+                var permissionId = data.permissionId;
+                $.ajax({
+                    url: '/permission/enable/' + permissionId,
+                    type: 'post',
+                    dataType: "json",
+                    async: false,
+                    contentType: "application/json",//请求内容为Json
+                    success: function (res) {
+                        if (res.success === true) {
+                            layer.msg("启用成功了哦，小样！", {icon: 6});
+                            table.reload('permissionManager', {});
+                        } else {
+                            layer.msg("启用失败了哦，小样！", {icon: 5});
+                        }
+                    }
+                });
+            } else if (obj.event === 'disable') {//禁用
+                if (data.deleteFlag == 0) {
+                    layer.msg("小样，已经是禁用状态哦！", {icon: 6});
+                    return false;
+                }
+                var permissionIddArr = [];
+                permissionIddArr.push(data.permissionId);
+                deletePermission(permissionIddArr);
+            } else {//编辑
+                var permissionId = data.permissionId;
+                $("#permissionIdValue").val(permissionId);
+
+                //加载中提示信息
+                function showLoad() {
+                    return layer.msg('拼命执行中了哦，小样...', {
+                        icon: 16,
+                        shade: [0.5, '#f5f5f5'],
+                        scrollbar: false,
+                        offset: 'auto',
+                        time: 100000
+                    });
+                }
+
+                //关闭加载提示信息
+                function closeLoad(index) {
+                    layer.close(index);
+                }
+
+                layer.open({
+                    type: 1,
+                    title: '修改权限',
+                    area: ['600px', '500px'],
+                    anim: 4,
+                    isOutAnim: true,
+                    resize: false,
+                    content: $("#permissionForm"),//引用的弹出层的页面层的方式加载修改界面表单
+                    success: function () {
+                        $('#permissionName1').val(data.permissionName);
+                        $('#permissionNameCn1').val(data.permissionNameCn);
+                        $('#description1').val(data.description);
+                        $('#permissionIdValue').val(data.permissionId);
+                        data.deleteFlag == 0 ? $("#deleteFlag0").attr("checked", true) : $("#deleteFlag1").attr("checked", true);
+                        var parentId = data.parentId;
+                        $('#parentIdEdit').each(function () {
+                            // this代表的是<option></option>，对option再进行遍历
+                            $(this).children("option").each(function () {
+                                // 判断需要对那个选项进行回显
+                                if (this.value == parentId) {
+                                    // 进行回显
+                                    $(this).attr("selected", true);
+                                }
+                            });
+                        });
+                        form.render();
+                    }
+                });
+            }
+        });
+
+
+        //新增权限formDemo为提交按钮
+        form.on('submit(formDemo)', function (d) {
+            var parentId = $('#parentIdEdit').val();
+            if (parentId == null || parentId === '') {
+                parentId = 0;
+            }
+            d.field.parentId = parentId;
+            $.ajax({
+                url: '/permission/addOrUpdate',
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(d.field),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("新增成功了哦，小样！", {icon: 6});
+                    } else {
+                        layer.msg("新增失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        })
+
+    })
+</script>
+<script type="text/html" id="barDemo">
+    <shiro:hasPermission name="permission:modify">
+        <a class="layui-btn layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">
+            <i class="layui-icon layui-icon-set"></i>编辑</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="permission:enable">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="enable">
+            <i class="layui-icon layui-icon-edit"></i>启用</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="permission:disable">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">
+            <i class="layui-icon layui-icon-delete"></i>禁用</a>
+    </shiro:hasPermission>
+</script>
+<script type="text/html" id="headToolBar">
+    <shiro:hasPermission name="permission:add">
+        <button type="button" class="layui-btn  layui-btn-normal layui-btn-sm layui-btn-radius" lay-event="add">添加
+        </button>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="permission:disable">
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="disable">禁用
+        </button>
+    </shiro:hasPermission>
+</script>
+<!--新增修改权限form-->
+<form class="layui-form" action="" id="permissionForm" style="display: none">
+    <div style="margin-top: 36px"></div>
+    <input type="text" name="permissionId" id="permissionIdValue" autocomplete="off" style="display: none">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级权限</label>
+        <div class="layui-input-block" id="parentPermission" name="parentId" style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="permissionName"
+                   id="permissionName1" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入权限名称（英文）">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="permissionNameCn" id="permissionNameCn1" required lay-verify="required"
+                   autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入权限名称（中文）">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block" id="status">
+            <input type="radio" name="deleteFlag" id="deleteFlag1" value="1" title="启用">
+            <input type="radio" name="deleteFlag" value="0" id="deleteFlag0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block" style="width:400px;">
+            <textarea name="description" id="description1" placeholder="请输入权限描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left: 65px">
+        <div class="layui-input-block">
+            <button class="layui-btn" style="margin-left: 65px" lay-submit lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+<script>
+    //上级权限
+    $.ajax({
+        url: '/permission/parent',
+        type: 'get',
+        success: function (res) {
+            var selection = res.data;
+            var menu = '<select name="permissionName" id="parentIdEdit" ><option value=""></option>';
+            for (var i = 0; i < selection.length; i++) {
+                menu += '<option name="' + selection[i].permissionNameCn + '" value="' + selection[i].permissionId + '">' + selection[i].permissionNameCn + '</option>';
+            }
+            menu += "</select>";
+            $("#parentPermission").html(menu);
+        }
+    });
+</script>
+</html>

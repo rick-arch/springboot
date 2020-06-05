@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script th:src="@{/js/layui/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!-- 高德地图，key为演示作用，请勿滥用-->
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=0e8a587317998a5e03cf608649b229d6&plugin=AMap.Autocomplete"></script>
+</head>
+<div class="layui-fluid layui-anim febs-anim" id="febs-map-demo" lay-title="高德地图">
+    <div class="layui-row febs-container">
+        <div class="layui-card">
+            <div style="padding: .1rem;">
+                <div id="container" class="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['jquery', 'form', 'layer',], function () {
+        var $ = layui.jquery,
+            $view = $('#febs-map-demo');
+
+        $view.find('#container').css({"height": document.documentElement.clientHeight + 'px'})
+
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            center:[113.543338,22.265496],
+            zoom: 14 //初始地图级别
+        });
+
+        function currentLocationInfo() {
+            map.getCity(function (info) {
+                layer.msg('当前位置：' + info.province + '，' + info.city + '，' + info.district + '，区号：' + info.citycode, {icon: 6});
+            });
+        }
+
+        currentLocationInfo();
+
+        //为地图注册click事件获取鼠标点击出的经纬度坐标
+        map.on('click', function (e) {
+            layer.msg('经度：' + e.lnglat.getLng() + '，纬度：' + e.lnglat.getLat(), {icon: 6});
+        });
+    });
+</script>
+</html>

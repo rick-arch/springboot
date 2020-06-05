@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.repository.SysUserRepository">
+    <resultMap id="resultMap" type="com.example.springboot.entity.user.SysUser">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="createTime" column="createTime"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="chinaName" column="chinaName"/>
+        <result property="email" column="email"/>
+        <result property="description" column="description"/>
+        <result property="gender" column="gender"/>
+        <association property="sysDept" javaType="com.example.springboot.entity.system.SysDept">
+            <id property="deptId" column="deptId"/>
+            <result property="deptName" column="deptName"/>
+        </association>
+        <collection property="roleLists" ofType="com.example.springboot.entity.system.SysRole">
+            <id property="roleId" column="roleId"/>
+            <result property="roleName" column="roleName"/>
+            <result property="roleIdStr" column="roleIdStr"/>
+            <result property="roleNameCn" column="roleNameCn"/>
+            <collection property="permissionsLists" ofType="com.example.springboot.entity.system.SysPermission">
+                <id property="permissionId" column="permissionId"/>
+                <result property="permissionName" column="permissionName"/>
+                <result property="deleteFlag" column="deleteFlag"/>
+                <result property="description" column="description"/>
+                <result property="createTime" column="createTime"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <!--  查询用户是否存在-->
+    <select id="selectByName" resultType="com.example.springboot.entity.user.SysUser">
+        SELECT id, chinaName, username, password, createtime createTime, status
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
+
+    <!--根据用户名查询角色和权限-->
+    <select id="findRoleAndPermission" resultMap="resultMap">
+        SELECT user.username,
+               user.chinaName,
+               role.roleName,
+               per.permissionName
+        FROM sys_user user
+                 JOIN user_role userrole ON userrole.userId = user.id
+                 JOIN sys_role role ON role.roleId = userrole.roleId
+                 JOIN role_permission rolep ON rolep.roleId = role.roleId
+                 JOIN sys_permission per ON rolep.permissionId = per.permissionId
+        WHERE user.username = #{username} AND per.parentId !=0
+    </select>
+
+    <!--  查询所有用户-->
+    <select id="findUserList" resultMap="resultMap">
+        SELECT user.*,
+            dept.deptName,
+            GROUP_CONCAT(CAST(sr.roleId AS CHAR)) roleIdStr ,
+            GROUP_CONCAT(CAST(sr.roleName AS CHAR)) roleName,
+            GROUP_CONCAT(CAST(sr.roleNameCn AS CHAR)) roleNameCn
+        FROM `sys_user` user
+            JOIN sys_dept dept ON user.deptId = dept.deptId AND dept.status =1
+            LEFT JOIN user_role ur ON ur.userId = user.id
+            LEFT JOIN sys_role sr ON sr.roleId = ur.roleId AND sr.deleteFlag =1
+        WHERE 1=1
+        <if test="username!=null and username !=''">
+            AND user.username LIKE '%${username}%'
+        </if>
+        <if test="chinaName!=null and chinaName !=''">
+            AND user.chinaName LIKE '%${chinaName}%'
+        </if>
+        <if test="email!=null and email !=''">
+            AND user.email LIKE '%${email}%'
+        </if>
+        <if test="description!=null and description !=''">
+            AND user.description LIKE '%${description}%'
+        </if>
+        <if test="deptId!=null and deptId !=''">
+            AND dept.deptName LIKE '%${deptId}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND user.createTime LIKE '%${createTime}%'
+        </if>
+        GROUP BY user.id ORDER BY id
+        <if test="page!=null and limit >0">
+            LIMIT #{page},#{limit}
+        </if>
+    </select>
+
+    <!--修改用户状态-->
+    <update id="updateUser">
+        UPDATE sys_user SET status = 0 WHERE id IN
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <!--查询满足条件的用户条数-->
+    <select id="getUserCount" resultType="integer">
+        SELECT COUNT(1) FROM sys_user user
+        JOIN sys_dept dept ON user.deptId = dept.deptId AND dept.status =1
+        WHERE 1=1
+        <if test="username!=null and username !=''">
+            AND user.username LIKE '%${username}%'
+        </if>
+        <if test="chinaName!=null and chinaName !=''">
+            AND user.chinaName LIKE '%${chinaName}%'
+        </if>
+        <if test="email!=null and email !=''">
+            AND user.email LIKE '%${email}%'
+        </if>
+        <if test="description!=null and description !=''">
+            AND user.description LIKE '%${description}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND user.createTime LIKE '%${createTime}%'
+        </if>
+        <if test="deptId!=null and deptId !=''">
+            AND dept.deptName LIKE '%${deptId}%'
+        </if>
+    </select>
+
+    <!--    修改用户-->
+    <update id="modifyUser">
+        UPDATE sys_user
+        SET username    = #{username},
+            password    = #{password},
+            status      = #{status},
+            deptId      = #{deptId},
+            chinaName   = #{chinaName},
+            email       = #{email},
+            description = #{description},
+            createTime  = #{createTime},
+            gender      = #{gender}
+        WHERE id = #{id}
+    </update>
+
+    <!--删除用户和角色的关系-->
+    <delete id="removeRelation">
+        DELETE
+        FROM user_role
+        WHERE userId = #{userId}
+    </delete>
+
+    <!--新增用户和角色的关系-->
+    <insert id="insertRelation">
+        INSERT INTO user_role(userId,roleId) VALUES
+        <foreach collection="sysRoleList" separator="," item="role">
+            (#{userId},#{role.roleId})
+        </foreach>
+    </insert>
+
+    <!--查询可用角色-->
+    <select id="findRoleList" resultType="com.example.springboot.entity.system.SysRole">
+        SELECT *
+        FROM sys_role
+        WHERE deleteFlag = 1
+    </select>
+
+    <!--新增用户-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user(username, chinaName, password, createtime, status, deptId, email, description, gender)
+        VALUES (#{username}, #{chinaName}, #{password}, #{createTime}, #{status}, #{deptId}, #{email}, #{description},
+                #{gender})
+    </insert>
+
+    <!--启用用户-->
+    <update id="enable">
+        UPDATE sys_user
+        SET status = 1
+        WHERE id = #{userId}
+    </update>
+
+    <!--判断账户是否有效-->
+    <select id="isEffective" resultType="integer">
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE id = #{id}
+          AND status = 1
+    </select>
+
+    <!--重置密码-->
+    <update id="resetPassword">
+        UPDATE sys_user
+        SET password = #{password}
+        WHERE id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.repository.SysRoleRepository">
+
+    <resultMap id="resultMap" type="com.example.springboot.entity.system.SysRole">
+        <id column="roleId" property="roleId"/>
+        <collection property="permissionsLists" ofType="com.example.springboot.entity.system.SysPermission">
+            <id column="permissionId" property="permissionId"/>
+            <result column="permissionName" property="permissionName"/>
+            <result column="permissionNameCn" property="permissionNameCn"/>
+            <result column="deleteFlag" property="deleteFlag"/>
+            <result column="description" property="description"/>
+            <result column="createTime" property="createTime"/>
+        </collection>
+    </resultMap>
+
+    <!--查询角色列表-->
+    <select id="queryRoleList" resultType="com.example.springboot.entity.system.SysRole">
+        SELECT * FROM `sys_role` WHERE 1=1
+        <if test="roleId != null and roleId !='' ">
+            AND roleId LIKE '%${roleId}%'
+        </if>
+        <if test="roleName != null and roleName !='' ">
+            AND roleName LIKE'%${roleName}%'
+        </if>
+        <if test="roleNameCn != null and roleNameCn !='' ">
+            AND roleNameCn LIKE'%${roleNameCn}%'
+        </if>
+        <if test="description != null and description !='' ">
+            AND description LIKE '%${description}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="page!=null and limit >0">
+            LIMIT #{page},#{limit}
+        </if>
+    </select>
+
+    <!--查询角色总条数-->
+    <select id="getRoleCount" resultType="integer">
+        SELECT COUNT(1) FROM sys_role WHERE 1=1
+        <if test="roleId != null and roleId !='' ">
+            AND roleId LIKE '%${roleId}%'
+        </if>
+        <if test="roleName != null and roleName !='' ">
+            AND roleName LIKE'%${roleName}%'
+        </if>
+        <if test="roleNameCn != null and roleNameCn !='' ">
+            AND roleNameCn LIKE'%${roleNameCn}%'
+        </if>
+        <if test="description != null and description !='' ">
+            AND description LIKE '%${description}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+    </select>
+
+    <!--新增角色-->
+    <insert id="insertRole">
+        INSERT INTO sys_role(roleName, description, createTime, deleteFlag, roleNameCn)
+        VALUES (#{roleName}, #{description}, #{createTime}, #{deleteFlag}, #{roleNameCn})
+    </insert>
+
+    <!--禁用角色-->
+    <update id="disable">
+        UPDATE sys_role SET deleteFlag = 0 WHERE roleId IN
+        <foreach collection="array" open="(" close=")" separator="," item="roleId">
+            #{roleId}
+        </foreach>
+    </update>
+
+    <!--启用角色-->
+    <update id="enable">
+        UPDATE sys_role SET deleteFlag = 1 WHERE roleId = #{roleId}
+    </update>
+
+    <!--新增角色对应菜单-->
+    <insert id="addRoleMenuRelationship">
+        INSERT INTO role_menu(roleId,menuId) VALUES
+        <foreach collection="menuList" item="item" separator=",">
+            (#{roleId},#{item.menuId})
+        </foreach>
+    </insert>
+
+    <!--删除角色对应菜单-->
+    <delete id="deleteRoleMenuRelationship">
+        DELETE FROM role_menu WHERE roleId = #{roleId}
+    </delete>
+
+    <!--查询roleId对应的菜单是否存在-->
+    <delete id="delRelationshipByRoleId">
+        DELETE FROM role_menu WHERE roleId = #{roleId}
+    </delete>
+
+    <!--查询角色对应的菜单-->
+    <select id="findMenuListByRoleId" resultType="com.example.springboot.entity.system.SysMenu">
+        SELECT sm.*
+        FROM sys_menu sm
+                 JOIN role_menu rm ON rm.menuId = sm.menuId
+        WHERE sm.deleteFlag = 1
+          AND sm.parentId != 0
+          AND rm.roleId = #{roleId}
+    </select>
+
+    <!--查询角色对应权限集合-->
+    <select id="permissionList" resultMap="resultMap">
+        SELECT
+            sp.*
+        FROM
+            sys_permission sp
+            LEFT JOIN role_permission rp ON rp.permissionId = sp.permissionId
+            LEFT JOIN sys_role sr on sr.roleId = rp.roleId
+        WHERE
+              sp.deleteFlag = 1 AND sp.parentId != 0
+        <if test="roleId != null and roleId != ''">
+            AND sr.roleId = #{roleId}
+        </if>
+    </select>
+
+    <!--可用权限集合-->
+    <select id="roleList" resultType="com.example.springboot.entity.system.SysPermission">
+        SELECT * FROM sys_permission WHERE deleteFlag = 1
+    </select>
+
+    <!--新增角色对应权限-->
+    <insert id="insertPermission">
+        INSERT INTO role_permission (roleId,permissionId) VALUES
+        <foreach collection="arr" item="permissionId" separator=",">
+            (#{roleId},#{permissionId})
+        </foreach>
+    </insert>
+
+    <!--删除角色对应的权限-->
+    <delete id="deletePermission">
+        DELETE  FROM  role_permission WHERE roleId = #{roleId}
+    </delete>
+</mapper>

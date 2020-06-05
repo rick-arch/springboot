@@ -1,0 +1,74 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>这可能是世界上最好的图床</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="这可能是世界上最好的图床，没有之一">
+    <meta name="description" content="这可能是世界上最好的图床，没有之一">
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <link id="layuicss-layer" rel="stylesheet"
+          href="https://www.cloudbed.vip/lib/layui/css/modules/layer/default/layer.css?v=3.1.1" media="all">
+    <style>
+        .flow-default {
+            margin-top: 20px
+        }
+
+        .flow-default li {
+            display: inline-block;
+            width: 13%;
+            height: 187px;
+            padding: 0px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            background: #f7f7f7;
+            box-shadow: 0 0 8px #ccc;
+            margin: 0 15px 10px 0px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flow-default li img {
+            width: 100%
+        }
+
+        @media screen and (max-width: 430px) {
+            .flow-default li {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+<body class="" style="padding-right: 0px;">
+
+<div style="margin-left: 10px" id="layer-photos-demo" class="layer-photos-demo">
+    <ul class="flow-default" id="images">
+        <li><a><img th:src="@{/img/avatar.jpeg}"></a></li>
+        <li><a><img th:src="@{/img/girl.jpg}"></a></li>
+        <li><a><img th:src="@{/img/logo.png}"></a></li>
+        <li><a><img th:src="@{/img/Snowflake.png}"></a></li>
+        <li><a><img th:src="@{/img/tools1.jpg}"></a></li>
+        <li><a><img th:src="@{/img/tools2.jpg}"></a></li>
+        <li><a><img th:src="@{/img/tools3.jpg}"></a></li>
+        <li><a><img th:src="@{/img/tools4.jpg}"></a></li>
+        <li><a><img th:src="@{/img/girl.jpg}"></a></li>
+        <li><a><img th:src="@{/img/1.jpg}"></a></li>
+    </ul>
+</div>
+<script th:src="@{/js/layui/layui.js}"></script>
+<script th:src="@{/js/viewer.min.js}"></script>
+<script th:src="@{/js/layui/okLayer.js}"></script>
+<script th:src="@{/js/layui/okUtils.js}"></script>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script>
+    layui.use(['table', 'tree', 'jquery'], function () {
+        //调用示例
+        layer.photos({
+            photos: '#layer-photos-demo'
+            , anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+    });
+
+</script>
+</body>
+</html>

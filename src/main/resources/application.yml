@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: dev #环境切换设置
+
+  thymeleaf:
+    prefix: classpath:/templates/ #模板前路径
+    suffix: .html #模板后缀
+    mode: LEGACYHTML5
+    encoding: utf-8
+    check-template-location: true #是否检查模板位置
+    cache: false #是否启动缓存
+
+  aop:
+    proxy-target-class: true
+
+# Mybatis配置
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+
+logging:
+  level:
+    com:
+      example:
+        springboot:
+          repository: debug
+#  file:
+#      name: log.log #日志输出文件（自动创建）
+#  pattern:
+#      level: WARN
+

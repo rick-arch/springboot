@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.repository.SysMenuRepository">
+
+    <!--查询用户对应的菜单-->
+    <select id="getMenuList" resultType="com.example.springboot.entity.system.SysMenu">
+        SELECT m.menuId               menuId,
+               m.menuName             menuName,
+               m.url                  url,
+               m.permissionIdentifier permissionIdentifier,
+               m.parentId             parentId,
+               m.icon                 icon
+        FROM sys_menu m
+                 JOIN role_menu rm ON rm.menuId = m.menuId
+                 JOIN sys_role sr ON sr.roleId = rm.roleId
+                 JOIN user_role ur ON ur.roleId = sr.roleId
+                 JOIN sys_user su ON su.id = ur.userId
+        WHERE su.id = #{userId}
+          AND sr.deleteFlag = 1
+          AND m.deleteFlag = 1
+        GROUP BY menuId
+    </select>
+
+    <!--查询所有菜单-->
+    <select id="findMenuList" resultType="com.example.springboot.entity.system.SysMenu">
+        SELECT m.menuId               menuId,
+               m.menuName             menuName,
+               m.url                  url,
+               m.permissionIdentifier permissionIdentifier,
+               m.parentId             parentId,
+               m.icon                 icon
+        FROM sys_menu m
+        WHERE m.deleteFlag = 1
+    </select>
+
+    <!--查询满足条件的菜单条数-->
+    <select id="getMenuCount" resultType="integer">
+        SELECT COUNT(1) FROM sys_menu sm WHERE  1 = 1
+        <if test="menuName!=null and menuName !=''">
+            AND sm.menuName LIKE '%${menuName}%'
+        </if>
+        <if test="description!=null and description !=''">
+            AND sm.description LIKE '%${description}%'
+        </if>
+        <if test="url!=null and url !=''">
+            AND sm.url LIKE '%${url}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="icon != null and icon !='' ">
+            AND icon LIKE '%${icon}%'
+        </if>
+    </select>
+
+    <!--查询满足条件的菜单集合-->
+    <select id="queryMenuList" resultType="com.example.springboot.entity.system.SysMenu">
+       SELECT
+            sm.menuId,
+            sm.menuName,
+            sm.url,
+            sm.permissionIdentifier,
+            sm.icon,
+            sm.deleteFlag,
+            sm.description,
+            sm.createTime ,
+            sm.parentId,
+            (CASE sm.parentId WHEN '0' THEN 0 ELSE 1 END) isParent
+        FROM sys_menu sm WHERE 1 = 1
+        <if test="menuName!=null and menuName !=''">
+            AND sm.menuName LIKE '%${menuName}%'
+        </if>
+        <if test="description!=null and description !=''">
+            AND sm.description LIKE '%${description}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="url!=null and url !=''">
+            AND sm.url LIKE '%${url}%'
+        </if>
+        <if test="icon != null and icon !='' ">
+            AND icon LIKE '%${icon}%'
+        </if>
+        <if test="page!=null and limit >0">
+            LIMIT #{page},#{limit}
+        </if>
+    </select>
+
+    <!--修改菜单-->
+    <update id="updateMenu">
+        UPDATE sys_menu
+        SET menuName    = #{menuName},
+            url         = #{url},
+            icon        = #{icon},
+            deleteFlag  = #{deleteFlag},
+            description =#{description},
+            parentId =  #{parentId}
+        WHERE menuId = #{menuId}
+    </update>
+
+    <!--禁用菜单-->
+    <update id="disable">
+        UPDATE sys_menu SET deleteFlag = 0 WHERE menuId IN
+        <foreach collection="array" open="(" close=")" separator="," item="menuId">
+            #{menuId}
+        </foreach>
+    </update>
+
+    <!--启用菜单-->
+    <update id="enable">
+        UPDATE sys_menu SET deleteFlag = 1 WHERE menuId = #{menuId}
+    </update>
+
+    <insert id="insertMenu">
+        INSERT INTO sys_menu(menuName, url, permissionIdentifier, parentId, icon, deleteFlag, description, createTime)
+        VALUES (#{menuName}, #{url}, #{permissionIdentifier}, #{parentId}, #{icon}, #{deleteFlag}, #{description},
+                #{createTime})
+    </insert>
+</mapper>

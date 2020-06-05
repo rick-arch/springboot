@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.repository.SysLogRepository">
+
+    <!--保存日志-->
+    <insert id="saveSysLog">
+        INSERT INTO sys_log(username, operation, time, method, params, ip, createtime, browser, userSystem, requestUrl)
+        VALUES (#{username}, #{operation}, #{time}, #{method}, #{params}, #{ip}, #{createTime}, #{browser}, #{userSystem},
+                #{requestUrl})
+    </insert>
+
+    <!--查询所有日志-->
+    <select id="querySysLog" resultType="com.example.springboot.entity.system.SysLog">
+        SELECT * FROM sys_log WHERE 1=1
+        <if test="username != null and username !='' ">
+            AND username LIKE '%${username}%'
+        </if>
+        <if test="operation != null and operation !='' ">
+            AND operation LIKE '%${operation}%'
+        </if>
+        <if test="method != null and method !='' ">
+            AND method LIKE '%${method}%'
+        </if>
+        <if test="params != null and params !='' ">
+            AND params LIKE '%${params}%'
+        </if>
+        <if test="ip != null and ip !='' ">
+            AND ip LIKE '%${ip}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="browser != null and browser !='' ">
+            AND browser LIKE '%${browser}%'
+        </if>
+        <if test="userSystem != null and userSystem !='' ">
+            AND userSystem LIKE '%${userSystem}%'
+        </if>
+        <if test="requestUrl != null and requestUrl !='' ">
+            AND requestUrl LIKE '%${requestUrl}%'
+        </if>
+        ORDER BY id DESC
+        <if test="page!=null and limit >0">
+            LIMIT #{page},#{limit}
+        </if>
+
+    </select>
+
+    <!--删除日志-->
+    <delete id="deleteLog">
+        DELETE FROM sys_log
+    </delete>
+
+    <!--查询满足条件的日志-->
+    <select id="logCount" resultType="integer">
+        SELECT COUNT(1) FROM sys_log WHERE 1=1
+        <if test="username != null and username !='' ">
+            AND username LIKE '%${username}%'
+        </if>
+        <if test="operation != null and operation !='' ">
+            AND operation LIKE '%${operation}%'
+        </if>
+        <if test="method != null and method !='' ">
+            AND method LIKE '%${method}%'
+        </if>
+        <if test="params != null and params !='' ">
+            AND params LIKE '%${params}%'
+        </if>
+        <if test="createTime != null and createTime !='' ">
+            AND createTime LIKE '%${createTime}%'
+        </if>
+        <if test="ip != null and ip !='' ">
+            AND ip LIKE '%${ip}%'
+        </if>
+        <if test="requestUrl != null and requestUrl !='' ">
+            AND requestUrl LIKE '%${requestUrl}%'
+        </if>
+    </select>
+</mapper>

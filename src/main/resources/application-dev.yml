@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+# **数据库基础信息配置**
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url:  jdbc:mysql://192.168.153.128:3306/springboot?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+      username: root
+      password: preciousYouAreMine.96
+      driverClassName: com.mysql.jdbc.Driver
+      # 初始化时建立物理连接连接的个数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 5
+      # 最大连接池数量
+      maxActive: 20
+      maxPoolPreparedStatementPerConnectionSize: 20
+      poolPreparedStatements: true
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      connectionProperties: config.decrypt=true;druid.stat.slowSqlMillis=5000;druid.stat.logSlowSql=true;
+
+#  redis: #redis
+#    # Redis数据库索引（默认为0
+#    database: 0
+#    # Redis服务器地址
+#    host: localhost
+#    # Redis服务器连接端口
+#    port: 6379
+#    timeout: 200
+#    # Redis服务器连接密码（默认为空）
+#    password:
+
+#  data: #mongodb
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      database: testdb
+
+#  rabbitmq: #rabbitmq
+#    host: localhost
+#    port: 5672 #15672是Web管理界面的端口；5672是MQ访问的端口。
+#    username: root
+#    password: root
+#    connection-timeout: 2000
+#    virtual-host: /
+

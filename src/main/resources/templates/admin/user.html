@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>用户管理</title>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+</head>
+<body>
+<div style="width: 10px;color: white;margin-top: 10px;"></div>
+<div class="demoTable">
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <div class="layui-field-box">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中文名：
+            <div class="layui-inline">
+                <input class="layui-input" name="chinaName" id="chinaName" placeholder="请输入中文名" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;英文名：
+            <div class="layui-inline">
+                <input class="layui-input" name="username" id="username" placeholder="请输入英文名" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部门：
+            <div class="layui-inline">
+                <input class="layui-input" name="deptName" id="deptName" placeholder="请输入部门" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：
+            <div class="layui-inline">
+                <input class="layui-input" name="email" id="email" placeholder="请输入邮箱" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建时间：
+            <div class="layui-inline">
+                <input class="layui-input" name="createTime" id="createTime" placeholder="请选择创建时间"
+                       autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述：
+            <div class="layui-inline">
+                <input class="layui-input" name="description" id="description" placeholder="请输入描述" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+            <div class="layui-inline" style="margin-left: 700px">
+                <button class="layui-btn layui-btn-warm layui-btn-sm" data-type="reload">
+                    <li class="layui-icon layui-icon-search">查询</li>
+                </button>
+                <button class="layui-btn layui-btn-sm" data-type="reset">
+                    <li class="layui-icon layui-icon-refresh-1"> 重置</li>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<table class="layui-hide" id="demo" lay-filter="demo"></table>
+<script th:src="@{/js/layui/layui.js}"></script>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript">
+    layui.config({//文档地址：https://faysunshine.com/layui/site/template/doc.html?formSelects
+        base: '/js/layui/formSelect/src/' //设定扩展模块所在的目录, 可以使用绝对路径
+    }).extend({  //设定模块别名
+        formSelects: 'formSelects-v3'
+    });
+</script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#createTime'
+        });
+    });
+</script>
+<script>
+    layui.use(['table', 'formSelects', 'jquery'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var formSelects = layui.formSelects;
+        var util = layui.util;
+        //方法级渲染
+        table.render({
+            elem: '#demo',
+            //height: 478,
+            url: '/user/userList', //数据接口,
+            id: 'userManager',
+            toolbar: '#headToolBar',//开启头部工具栏，并为其绑定左侧模板
+            defaultToolbar: ['filter', 'exports', 'print'], //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+            cols: [
+                [ //表头
+                    {field: '', title: '', type: 'checkbox'},
+                    {field: 'id', title: 'id', type: 'numbers', width: 55},
+                    {field: 'no', title: '序号', type: 'numbers', width: 55},
+                    {field: 'chinaName', title: '中文名', align: 'center', width: 90},
+                    {field: 'username', title: '英文名', align: 'center', width: 100},
+                    {
+                        field: 'roleNameCn', title: '角色', align: 'center', width: 200, templet: function (res) {
+                            var arr = res.roleLists;
+                            if (arr.length > 0) return arr[0].roleNameCn != null ? arr[0].roleNameCn : '<span style="color: orange">暂无角色</span>';
+                        }
+                    },
+                    {
+                        field: 'gender', title: '性别', align: 'center', width: 90, templet: function (res) {
+                            if (res.gender == 0) return '<span style="color: cornflowerblue">男</span>';
+                            else return '<span style="color: yellowgreen">女</span>';
+                        }
+                    },
+                    {field: 'email', title: '邮箱', align: 'center', width: 200},
+                    {
+                        field: 'deptName', title: '部门', align: 'center', width: 110, templet: function (res) {
+                            return res.sysDept.deptName;
+                        }
+                    },
+                    {
+                        field: 'status', title: '状态', align: 'center', width: 80, templet: function (res) {
+                            if (res.status == 1) return '<span style="color: green">启用</span>';
+                            else return '<span style="color: red">禁用</span>';
+                        }
+                    },
+                    {field: 'description', title: '描述', width: 240, align: 'center'},
+                    {
+                        field: 'createTime', title: '创建时间', width: 180, align: 'center', templet: function (res) {
+                            return util.toDateString(res.createTime, "yyyy-MM-dd HH:mm:ss");
+                        }
+                    },
+                    {field: '', title: '操作', width: 300, align: 'center', toolbar: '#barDemo'}
+                ]
+            ],
+            done: function (res, curr, count) {// 表格渲染完成之后的回调
+                $("[data-field='id']").css('display', 'none');
+                var that = this.elem.next();
+                if (res.code === 0) {
+                    res.data.forEach(function (item, index) {//item表示每列显示的数据
+                        if (index % 2 !== 0) {
+                            that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#F5F5F5");
+                        }
+                    });
+                }
+            },
+            page: true,
+            response: {
+                statusName: 'code', //数据状态的字段名称，默认：code
+                statusCode: 0,//成功的状态码，默认：0
+                msgName: 'msg', //状态信息的字段名称，默认：msg
+                countName: 'count', //数据总数的字段名称，默认：count
+                dataName: 'data' //数据列表的字段名称，默认：data
+            }
+        });
+
+        //查询
+        var $ = layui.$, active = {
+            reload: function () {
+                var username = $('#username');
+                var chinaName = $('#chinaName');
+                var email = $('#email');
+                var description = $('#description');
+                var createTime = $('#createTime');
+                var deptName = $('#deptName');
+                table.reload('userManager', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        username: username.val(),
+                        chinaName: chinaName.val(),
+                        email: email.val(),
+                        description: description.val(),
+                        createTime: createTime.val(),
+                        deptId: deptName.val()
+                    }
+                }, 'data')
+            },
+            reset: function () {//重置
+                $('#username').val('');
+                $('#chinaName').val('');
+                $('#createTime').val('');
+                $('#deptName').val('');
+                $('#email').val('');
+                $('#description').val('');
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        //监听工具条(操作栏)
+        table.on('tool(demo)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'disable') { //禁用
+                if (data.status == 0) {
+                    layer.msg("小样，已经是禁用状态哦！", {icon: 6});
+                    return false;
+                }
+                var arr = [];
+                arr.push(data.id);
+                deleteUser(arr);
+            } else if (obj.event === 'enable') {
+                if (data.status == 1) {
+                    layer.msg("小样，已经是启用状态哦！", {icon: 6});
+                    return false;
+                }
+                var userId = data.id;
+                $.ajax({
+                    url: '/user/enable/' + userId,
+                    type: 'post',
+                    dataType: "json",
+                    async: false,
+                    contentType: "application/json",//请求内容为Json
+                    success: function (res) {
+                        if (res.success === true) {
+                            layer.msg("启用成功了哦，小样！", {icon: 6});
+                            //刷新表格
+                            table.reload('userManager', {});
+                        } else {
+                            layer.msg("启用失败了哦，小样！", {icon: 5});
+                        }
+                    }
+                });
+            } else if (obj.event === 'edit') { //编辑
+                var res = [];
+                layer.open({
+                    //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                    type: 1,
+                    anim: 4,
+                    title: "修改用户信息",
+                    area: ['600px', '730px'],
+                    content: $("#form"),//引用的弹出层的页面层的方式加载修改界面表单
+                    success: function (layero, index) {
+                        $('#chinaNameEdit').val(data.chinaName);//中文名
+                        $('#emailEdit').val(data.email);//email
+                        $('#usernameEdit').val(data.username);//英文名
+                        $("#usernameEdit").css("background", "#C0C0C0");
+                        $('#createTimeEdit').val(util.toDateString(data.createTime, "yyyy-MM-dd HH:mm:ss"));//创建时间
+                        $('#descriptionEdit').val(data.description);//描述
+                        // 遍历select（部门）
+                        $('#deptName1').each(function () {
+                            // this代表的是<option></option>，对option再进行遍历
+                            $(this).children("option").each(function () {
+                                // 判断需要对那个选项进行回显
+                                if (this.value == data.sysDept.deptId) {
+                                    // 进行回显
+                                    $(this).attr("selected", true);
+                                }
+                            });
+                        });
+                        var arr = data.roleLists;
+
+                        if (arr.length > 0) {
+                            //roleIdStr: "2,1"
+                            var roleIdStr = arr[0].roleIdStr;
+                            if (roleIdStr != null) {
+                                roleIdStr = roleIdStr.split(',');
+                                roleIdStr.forEach(function (data, index, arr) {//转换成int数组
+                                    res.push(+data)
+                                });
+                                //formSelects.value('select1', [2, 4], true); // 追加value为2和4的option, 如果该值已选中则跳过, 该值未选中则选中
+                                formSelects.value("roleName", res, true);
+                            }
+                        }
+                        //性别
+                        data.gender == 0 ? $("#genderMan").attr("checked", true) : $("#genderWoman").attr("checked", true);
+                        //状态
+                        data.status == 0 ? $("#status0").attr("checked", true) : $("#status1").attr("checked", true);
+                        //将id值传给编辑form的id
+                        $('#userId').val(data.id);
+
+                        //你的HTML是动态生成的，自动渲染就会失效
+                        //需要在相应的地方，执行下述方法来手动渲染form
+                        form.render();
+                    },
+                    cancel: function () {
+                        res = [];
+                        formSelects.value("roleName", res, true);
+                        $('#chinaNameEdit').val('');
+                        $('#emailEdit').val('');
+                        $('#usernameEdit').val('');
+                        $('#createTimeEdit').val('');
+                        $('#descriptionEdit').val('');
+                        $('#usernameEdit').attr('disabled', false);
+                    }
+                });
+            } else if (obj.event === 'reset') {
+                layer.confirm('您确定重置【' + data.chinaName + '】的密码吗？', {btn: ['确定', '取消']}, function () {
+                    $.ajax({
+                        url: "/user/reset/password",
+                        type: "POST",
+                        contentType: "application/json",//请求内容为Json
+                        dataType: 'json',
+                        data: JSON.stringify(data),
+                        success: function (res) {
+                            if (res.success === true) {
+                                layer.msg("重置密码成功了哦！", {icon: 6});
+                                table.reload('userManager', {});
+                            } else {
+                                layer.msg("重置密码失败了哦！", {icon: 5});
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        //删除用户
+        function deleteUser(data) {
+            if (data.length === 0) {
+                layer.msg("小样，请选择你要操作的数据哦！", {icon: 5});
+                return false;
+            }
+            $.ajax({
+                url: "/user/delete",
+                type: "POST",
+                contentType: "application/json",//请求内容为Json
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("禁用成功了哦，小样！", {icon: 6});
+                        table.reload('userManager', {});
+                    } else {
+                        layer.msg("禁用失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        }
+
+        //监听table头部工具栏
+        //头工具栏事件（新增 删除 按钮）
+        table.on('toolbar(demo)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            var userIdArr = [];
+            switch (obj.event) {
+                case 'disable':
+                    var data = checkStatus.data;
+                    for (var i = 0; i < data.length; i++) {
+                        userIdArr.push(data[i].id)
+                    }
+                    deleteUser(userIdArr);
+                    break;
+                case 'add':
+                    layer.open({
+                        //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                        type: 1,
+                        anim: 4,
+                        title: "新增用户信息",
+                        area: ['600px', '730px'],
+                        content: $("#form"),//引用的弹窗
+                        success: function () {
+                            $('#usernameEdit').attr('disabled', false);
+                            $('#usernameEdit').val('');
+                            $('#createTimeDiv').hide()//隐藏创建时间div和label标签
+                        }
+                    });
+                    break;
+            }
+
+        });
+
+        //编辑 提交表单
+        form.on('submit(formDemo)', function (d) {
+            var arr = [];
+            var roleLists = [];
+            // formSelects.value('select1');               // [{"name":"上海","val":"2"},{"name":"深圳","val":"4"}]
+            // formSelects.value('select1', 'all');        // [{"name":"上海","val":"2"},{"name":"深圳","val":"4"}]
+            // formSelects.value('select1', 'val');        // ["2","4"]
+            // formSelects.value('select1', 'valStr');     // 2,4
+            // formSelects.value('select1', 'name');       // ["上海","深圳"]
+            // formSelects.value('select1', 'nameStr');    // 上海,深圳
+            var roleArr = JSON.stringify(formSelects.value('roleName', 'val'));//获取选择的角色
+            arr = roleArr.replace(/\"/g, "");//替换所有"
+            arr = arr.replace(/\[/g, "");//替换所有[
+            arr = arr.replace(/]/g, "");//替换所有]
+            if (arr.length !== 0) {//arr长度不为0
+                arr = arr.split(',');//然后，分割
+                for (var i = 0; i < arr.length; i++) {
+                    roleLists.push({roleId: arr[i]});
+                }
+            }
+            d.field.deptId = d.field.deptName;
+            d.field.roleLists = roleLists;
+            $.ajax({
+                url: '/user/updateUser',
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(d.field),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("更新成功了哦，小样！", {icon: 6});
+                    } else {
+                        layer.msg("更新失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+<script>
+
+
+</script>
+<script type="text/html" id="barDemo">
+    <shiro:hasRole name="ADMIN">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" style="background-color:	#5FB878" lay-event="reset">
+            <i class="layui-icon layui-icon-refresh-1"></i>重置密码</a>
+    </shiro:hasRole>
+    <shiro:hasPermission name="user:modify">
+        <a class="layui-btn layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">
+            <i class="layui-icon layui-icon-set"></i>编辑</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="user:enable">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="enable">
+            <i class="layui-icon layui-icon-edit"></i>启用</a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="user:disable">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">
+            <i class="layui-icon layui-icon-delete"></i>禁用</a>
+    </shiro:hasPermission>
+</script>
+<script type="text/html" id="headToolBar">
+    <shiro:hasPermission name="user:add">
+        <button type="button" class="layui-btn  layui-btn-normal layui-btn-sm layui-btn-radius" lay-event="add">添加
+        </button>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="user:disable">
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="disable">禁用
+        </button>
+    </shiro:hasPermission>
+</script>
+<!--查看编辑 form-->
+<form class="layui-form" action="" id="form" style="display: none">
+    <div style="margin-top: 36px"></div>
+    <input type="text" name="id" id="userId" autocomplete="off" style="display: none">
+    <div class="layui-form-item">
+        <label class="layui-form-label">中文名</label>
+        <div class="layui-input-block">
+            <input type="text" name="chinaName" id="chinaNameEdit" required lay-verify="required" autocomplete="off"
+                   placeholder="请输入中文名字"
+                   class="layui-input"
+                   style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">英文名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" id="usernameEdit" required lay-verify="required" autocomplete="off"
+                   disabled
+                   placeholder="请输入英文名字"
+                   class="layui-input"
+                   style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+            <input type="text" name="email" id="emailEdit" required lay-verify="required" autocomplete="off"
+                   placeholder="请输入邮箱"
+                   class="layui-input"
+                   style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-block" id="dept" style="height:30px;width:400px;"></div>
+    </div>
+    <div class="layui-form-item" id="createTimeDiv">
+        <label class="layui-form-label">创建时间</label>
+        <input type="text" class="layui-input" id="createTimeEdit" name="createTime" style="height:30px;width:400px;">
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block" id="roleName" style="height:30px;width:400px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block" id="gender1">
+            <input type="radio" name="gender" id="genderMan" value="0" title="男">
+            <input type="radio" name="gender" value="1" id="genderWoman" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block" id="status">
+            <input type="radio" name="status" id="status1" value="1" title="启用">
+            <input type="radio" name="status" value="0" id="status0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block" style="width:400px;">
+            <textarea name="description" id="descriptionEdit" class="layui-textarea" placeholder="请输入描述"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left: 65px">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+            <button type="reset" class="layui-btn layui-btn-normal">重置</button>
+            </button>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    // 部门下拉列表数据（点击编辑 form中 部门下拉列表）
+    $.ajax({
+        url: '/dept/deptList',
+        type: 'post',
+        success: function (res) {
+            var selection = res.data;
+            var menu = '<select name="deptName" id="deptName1" lay-verify="required"><option value=""></option>';
+            for (var i = 0; i < selection.length; i++) {
+                menu += '<option value="' + selection[i].deptId + '">' + selection[i].deptName + '</option>';
+            }
+            menu += "</select>";
+            $("#dept").html(menu);
+        }
+    });
+
+    //获取角色列表（点击编辑 form中 角色下拉列表）
+    $.ajax({
+        url: '/user/getRoleList',
+        type: 'post',
+        success: function (res) {
+            var selection = res;
+            var menu = '<select xm-select="roleName" xm-select-max="3"  lay-filter = "multi" name="roleName" id="roleName" ><option value=""></option>';
+            for (var i = 0; i < selection.length; i++) {
+                menu += '<option name="' + selection[i].roleNameCn + '" value="' + selection[i].roleId + '">' + selection[i].roleNameCn + '</option>';
+            }
+            menu += "</select>";
+            $("#roleName").html(menu);
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>角色管理</title>
+    <link rel="stylesheet" th:href="@{/js/layui/css/layui.css}">
+    <!--日期格式化js-->
+    <script th:src="@{/js/date-format.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/layui/laydate/laydate.js}"></script>
+    <script th:src="@{/js/layui/layui.js}"></script>
+</head>
+<body>
+<div style="width: 10px;color: white;margin-top: 10px;"></div>
+<div class="demoTable">
+    <fieldset class="layui-elem-field">
+        <legend>查询条件</legend>
+        <div class="layui-field-box">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图标ID：
+            <div class="layui-inline">
+                <input class="layui-input" name="iconId" id="iconId" placeholder="请输入图标ID" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图标CLASS：
+            <div class="layui-inline">
+                <input class="layui-input" name="iconClass" id="iconClass" placeholder="请输入图标CLASS" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图标名称：
+            <div class="layui-inline">
+                <input class="layui-input" name="iconName" id="iconName" placeholder="请输入图标名称" autocomplete="off">
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="layui-btn layui-btn-warm layui-btn-sm" data-type="reload">
+                <li class="layui-icon layui-icon-search">查询</li>
+            </button>
+            <button class="layui-btn layui-btn-sm" data-type="reset">
+                <li class="layui-icon layui-icon-refresh-1"> 重置</li>
+            </button>
+        </div>
+    </fieldset>
+</div>
+<table class="layui-hide" id="demo2" lay-filter="demo2"></table>
+</body>
+<script>
+    layui.use(['table', 'tree', 'element'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var element = layui.element;
+
+        //方法级渲染
+        table.render({
+            elem: '#demo2',
+            //height: 478,
+            url: '/icon/iconList', //数据接口,
+            id: 'iconManager',
+            toolbar: '#headToolBar',//开启头部工具栏，并为其绑定左侧模板
+            cols: [
+                [ //表头
+                    {field: '', title: '', type: 'checkbox'},
+                    {field: 'no', title: '序号', type: 'numbers',},
+                    {field: 'iconId', title: '图标ID', width: 100, align: 'center'},
+                    {
+                        field: 'iconClass', title: '图标CLASS', align: 'center', templet: function (res) {
+                            return '<span style="color:#009688">' + res.iconClass + '</span>';
+                        }
+                    },
+                    {
+                        field: 'iconName', title: '图标名称', align: 'center', templet: function (res) {
+                            return '<span style="color: #FFA500">' + res.iconName + '</span>';
+                        }
+                    },
+                    {
+                        field: 'iconCode', title: '图标CODE', align: 'center', templet: function (res) {
+                            return '<span style="color: #1E9FFF">' + res.iconCode + '</span>'
+                        }
+                    },
+                    {
+                        field: '', title: '图标效果', align: 'center', templet: function (res) {
+                            return "<i style='color: #2F4056' class='" + res.iconClass + "'</i>";
+                        }
+                    },
+                    {
+                        field: 'iconFontClass', title: '图标字体CLASS', align: 'center', templet: function (res) {
+                            return '<span style="color:#FF5722;">' + res.iconFontClass + '</span>'
+                        }
+                    },
+                ]
+            ],
+            done: function (res, curr, count) {// 表格渲染完成之后的回调
+                var that = this.elem.next();
+                if (res.code === 0) {
+                    res.data.forEach(function (item, index) {//item表示每列显示的数据
+                        if (index % 2 !== 0) {
+                            that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#F5F5F5");
+                        }
+                    })
+                }
+            },
+            page: true,
+            response: {
+                statusName: 'code', //数据状态的字段名称，默认：code
+                statusCode: 0,//成功的状态码，默认：0
+                msgName: 'msg', //状态信息的字段名称，默认：msg
+                countName: 'count', //数据总数的字段名称，默认：count
+                dataName: 'data' //数据列表的字段名称，默认：data
+            }
+        });
+
+
+        var $ = layui.$, active = {
+            reload: function () {  //查询
+                var iconId = $('#iconId');
+                var iconClass = $('#iconClass');
+                var iconName = $('#iconName');
+                table.reload('iconManager', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        iconId: iconId.val(),
+                        iconClass: iconClass.val(),
+                        iconName: iconName.val()
+                    }
+                }, 'data')
+            },
+            reset: function () {//重置
+                $('#iconId').val('');
+                $('#iconClass').val('');
+                $('#iconName').val('');
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        //点击添加 弹窗头部（添加 ）
+        table.on('toolbar(demo2)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    layer.open({
+                        type: 1,
+                        anim: 4,
+                        title: '新增部门',
+                        area: ['600px', '400px'],
+                        content: $("#addIconForm"),//引用的弹出层的页面层的方式加载修改界面表单
+                    });
+            }
+        });
+
+
+        //新增icon
+        form.on('submit(formDemo)', function (d) {
+            $.ajax({
+                url: '/icon/addIcon',
+                type: 'post',
+                dataType: "json",
+                async: false,
+                contentType: "application/json",//请求内容为Json
+                data: JSON.stringify(d.field),
+                success: function (res) {
+                    if (res.success === true) {
+                        layer.msg("新增成功了哦，小样！", {icon: 6});
+                    } else {
+                        layer.msg("新增失败了哦，小样！", {icon: 5});
+                    }
+                }
+            });
+        })
+
+
+    })
+</script>
+<script type="text/html" id="headToolBar">
+    <shiro:hasPermission name="icon:add">
+        <button type="button" class="layui-btn  layui-btn-normal layui-btn-sm layui-btn-radius" lay-event="add">添加
+        </button>
+    </shiro:hasPermission>
+</script>
+<!--新增部门form-->
+<form class="layui-form" action="" id="addIconForm" style="display: none">
+    <div style="margin-top: 36px"></div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图标CLASS</label>
+        <div class="layui-input-block">
+            <input type="text" name="iconClass" id="iconClassAdd" required lay-verify="required" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入图标CLASS">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">图标名称</label>
+        <div class="layui-input-block" style="width:400px;">
+            <input type="text" name="iconName" id="iconNameAdd" required lay-verify="required" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入图标名称">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">图标CODE</label>
+        <div class="layui-input-block" style="width:400px;">
+            <input type="text" name="iconCode" id="iconCodeAdd" required lay-verify="required" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入图标CODE">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">字体CLASS</label>
+        <div class="layui-input-block" style="width:400px;">
+            <input type="text" name="iconFontClass" id="iconFontClass" required lay-verify="required" autocomplete="off"
+                   class="layui-input" style="height:30px;width:400px;" placeholder="请输入图标字体CLASS">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left: 65px">
+        <div class="layui-input-block">
+            <button class="layui-btn" style="margin-left: 65px" lay-submit lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+
+</html>
