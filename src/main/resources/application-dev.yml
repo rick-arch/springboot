@@ -8,7 +8,7 @@ spring:
     druid:
       url:  jdbc:mysql://192.168.153.128:3306/springboot?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
       username: root
-      password: preciousYouAreMine.96
+      password: ENC(S6fH+fKOsBmeWDiYYXpdEAWThSxlGvCBBtdubPa5Fkk=)
       driverClassName: com.mysql.jdbc.Driver
       # 初始化时建立物理连接连接的个数
       initialSize: 5

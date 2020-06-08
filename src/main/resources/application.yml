@@ -28,3 +28,6 @@ logging:
 #  pattern:
 #      level: WARN
 
+jasypt:
+  encryptor:
+    password: ljk
