@@ -5,7 +5,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentPBEConfig;
 
 @Slf4j
-public class Test {
+public class DataBasePasswordEncryptTest {
     public static void main(String[] arg) {
         testDe(testEncrypt());
 
