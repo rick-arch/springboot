@@ -1,20 +1,20 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql
+ Source Server         : 192.168.153.128
  Source Server Type    : MySQL
- Source Server Version : 50022
- Source Host           : localhost:3306
+ Source Server Version : 80020
+ Source Host           : 192.168.153.128:3306
  Source Schema         : springboot
 
  Target Server Type    : MySQL
- Target Server Version : 50022
+ Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 20/01/2020 15:47:32
+ Date: 18/06/2020 10:39:54
 */
 
-SET NAMES utf8;
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -22,8 +22,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `role_menu`;
 CREATE TABLE `role_menu`  (
-                              `roleId` int(11) NULL DEFAULT NULL,
-                              `menuId` int(11) NULL DEFAULT NULL
+  `roleId` int(0) NULL DEFAULT NULL,
+  `menuId` int(0) NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色 菜单关系表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -41,7 +41,6 @@ INSERT INTO `role_menu` VALUES (1, 34);
 INSERT INTO `role_menu` VALUES (1, 30);
 INSERT INTO `role_menu` VALUES (1, 56);
 INSERT INTO `role_menu` VALUES (1, 38);
-INSERT INTO `role_menu` VALUES (1, 36);
 INSERT INTO `role_menu` VALUES (1, 43);
 INSERT INTO `role_menu` VALUES (1, 40);
 INSERT INTO `role_menu` VALUES (1, 33);
@@ -49,14 +48,15 @@ INSERT INTO `role_menu` VALUES (1, 42);
 INSERT INTO `role_menu` VALUES (1, 2);
 INSERT INTO `role_menu` VALUES (1, 48);
 INSERT INTO `role_menu` VALUES (1, 47);
-INSERT INTO `role_menu` VALUES (1, 44);
-INSERT INTO `role_menu` VALUES (1, 46);
+INSERT INTO `role_menu` VALUES (1, 36);
 INSERT INTO `role_menu` VALUES (1, 53);
+INSERT INTO `role_menu` VALUES (1, 57);
+INSERT INTO `role_menu` VALUES (1, 59);
+INSERT INTO `role_menu` VALUES (1, 60);
 INSERT INTO `role_menu` VALUES (1, 49);
 INSERT INTO `role_menu` VALUES (1, 41);
 INSERT INTO `role_menu` VALUES (1, 50);
 INSERT INTO `role_menu` VALUES (1, 55);
-INSERT INTO `role_menu` VALUES (1, 37);
 INSERT INTO `role_menu` VALUES (1, 45);
 INSERT INTO `role_menu` VALUES (1, 52);
 
@@ -65,8 +65,8 @@ INSERT INTO `role_menu` VALUES (1, 52);
 -- ----------------------------
 DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission`  (
-                                    `roleId` int(11) NULL DEFAULT NULL,
-                                    `permissionId` int(11) NULL DEFAULT NULL
+  `roleId` int(0) NULL DEFAULT NULL,
+  `permissionId` int(0) NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色 权限关系表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -126,12 +126,12 @@ INSERT INTO `role_permission` VALUES (1, 25);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept`  (
-                             `deptId` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id',
-                             `deptName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '部门名称',
-                             `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0 无效',
-                             `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-                             `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             PRIMARY KEY USING BTREE (`deptId`)
+  `deptId` int(0) NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `deptName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '部门名称',
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0 无效',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`deptId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -150,12 +150,12 @@ INSERT INTO `sys_dept` VALUES (14, '人力资源部', '1', '人力资源部门',
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_icon`;
 CREATE TABLE `sys_icon`  (
-                             `iconId` int(11) NOT NULL AUTO_INCREMENT COMMENT '图标id',
-                             `iconClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标class',
-                             `iconName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标名称',
-                             `iconCode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标code',
-                             `iconFontClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标字体class',
-                             PRIMARY KEY USING BTREE (`iconId`)
+  `iconId` int(0) NOT NULL AUTO_INCREMENT COMMENT '图标id',
+  `iconClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标class',
+  `iconName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标名称',
+  `iconCode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标code',
+  `iconFontClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标字体class',
+  PRIMARY KEY (`iconId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 172 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图标表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -335,37 +335,36 @@ INSERT INTO `sys_icon` VALUES (171, 'layui-icon layui-icon-download-circle', '�
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log`  (
-                            `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志id',
-                            `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户信息',
-                            `operation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '执行操作',
-                            `time` int(11) NULL DEFAULT NULL COMMENT '执行时间',
-                            `method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '执行方法',
-                            `params` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数',
-                            `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
-                            `createtime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                            `browser` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
-                            `system` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作系统',
-                            `requestUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求路径',
-                            PRIMARY KEY USING BTREE (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 10166 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Compact;
-
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '日志id',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户信息',
+  `operation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '执行操作',
+  `time` int(0) NULL DEFAULT NULL COMMENT '执行时间',
+  `method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '执行方法',
+  `params` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数',
+  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `browser` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
+  `userSystem` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作系统',
+  `requestUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求路径',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11253 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
-                             `menuId` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单id',
-                             `menuName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单名称',
-                             `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
-                             `permissionIdentifier` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-                             `parentId` int(11) NULL DEFAULT NULL COMMENT '父id',
-                             `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
-                             `deleteFlag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0无效',
-                             `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单描述',
-                             `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             PRIMARY KEY USING BTREE (`menuId`)
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Compact;
+  `menuId` int(0) NOT NULL AUTO_INCREMENT COMMENT '菜单id',
+  `menuName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单名称',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
+  `permissionIdentifier` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `parentId` int(0) NULL DEFAULT NULL COMMENT '父id',
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
+  `deleteFlag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0无效',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单描述',
+  `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`menuId`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -380,40 +379,43 @@ INSERT INTO `sys_menu` VALUES (31, '搜索引擎', '', NULL, 0, 'layui-icon layu
 INSERT INTO `sys_menu` VALUES (32, '百度搜索', 'https://www.baidu.com', NULL, 31, 'layui-icon layui-icon-tree', '1', 'It\'s not mine，but his.', '2019-12-18 10:44:53');
 INSERT INTO `sys_menu` VALUES (33, '私とあなたの物語', '/timeLine/timeLineIndex', NULL, 40, 'layui-icon layui-icon-engine', '1', '時間、新しい愛、古い愛、愛', '2019-12-18 17:02:16');
 INSERT INTO `sys_menu` VALUES (34, '图标管理', '', NULL, 0, 'layui-icon layui-icon-template', '1', 'New day，new start.', '2019-12-23 10:31:42');
-INSERT INTO `sys_menu` VALUES (36, 'LayUI 文档', 'https://www.layui.com/doc/', NULL, 38, 'layui-icon layui-icon-app', '1', 'I\'m lost, completely', '2019-12-23 16:41:53');
-INSERT INTO `sys_menu` VALUES (37, '龙喵网', 'http://ailongmiao.com/', NULL, 55, 'layui-icon layui-icon-cart-simple', '1', '龙喵网', '2019-12-24 09:22:35');
+INSERT INTO `sys_menu` VALUES (36, 'LayUI 文档', 'https://www.layui.com/doc/', NULL, 47, 'layui-icon layui-icon-app', '1', 'I\'m lost, completely', '2019-12-23 16:41:53');
+INSERT INTO `sys_menu` VALUES (37, '龙喵网', 'http://ailongmiao.com/', NULL, 55, 'layui-icon layui-icon-cart-simple', '0', '龙喵网', '2019-12-24 09:22:35');
 INSERT INTO `sys_menu` VALUES (38, '文档管理', '', NULL, 0, 'layui-icon layui-icon-fonts-code', '1', '完全に迷ってしまった', '2019-12-24 09:28:53');
-INSERT INTO `sys_menu` VALUES (39, '权限管理', '/permission/permissionIndex', NULL, 1, 'layui-icon layui-icon-utils', '1', '权限管理', '2019-12-26 10:40:42');
+INSERT INTO `sys_menu` VALUES (39, '权限管理', '/permission/permissionIndex', NULL, 1, 'layui-icon layui-icon-password', '1', '权限管理', '2019-12-26 10:40:42');
 INSERT INTO `sys_menu` VALUES (40, 'ラブストーリー', '', NULL, 0, 'layui-icon layui-icon-camera', '1', 'ラブストーリー', '2019-12-26 13:14:51');
 INSERT INTO `sys_menu` VALUES (41, '系统日志', '/system/logIndex', NULL, 49, 'layui-icon layui-icon-log', '1', '系统日志', '2019-12-27 09:45:45');
 INSERT INTO `sys_menu` VALUES (42, '用户管理', '', NULL, 0, 'layui-icon layui-icon-user', '1', '用户管理', '2019-12-27 10:39:24');
 INSERT INTO `sys_menu` VALUES (43, '系统文档', 'http://localhost:8080/swagger-ui.html', NULL, 38, 'layui-icon layui-icon-read', '1', '本系统文档', '2019-12-27 10:54:02');
-INSERT INTO `sys_menu` VALUES (44, 'Spring Boot', 'http://springboot.fun/', NULL, 47, 'layui-icon layui-icon-website', '1', 'Spring Boot', '2020-01-08 11:21:48');
+INSERT INTO `sys_menu` VALUES (44, 'Spring Boot', 'http://springboot.fun/', NULL, 47, 'layui-icon layui-icon-website', '0', 'Spring Boot', '2020-01-08 11:21:48');
 INSERT INTO `sys_menu` VALUES (45, '爪哇工具箱', 'https://www.cloudbed.vip/index.html', NULL, 55, 'layui-icon layui-icon-fonts-html', '1', '爪哇工具箱', '2020-01-08 11:22:44');
-INSERT INTO `sys_menu` VALUES (46, 'Spring Cloud', 'http://www.springcloud.wiki/#blog', NULL, 47, 'layui-icon layui-icon-headset', '1', 'Spring Cloud', '2020-01-08 13:03:01');
+INSERT INTO `sys_menu` VALUES (46, 'Spring Cloud', 'http://www.springcloud.wiki/#blog', NULL, 47, 'layui-icon layui-icon-headset', '0', 'Spring Cloud', '2020-01-08 13:03:01');
 INSERT INTO `sys_menu` VALUES (47, 'Java相关', '', NULL, 0, 'layui-icon layui-icon-release', '1', 'Java 相关', '2020-01-08 13:05:32');
 INSERT INTO `sys_menu` VALUES (48, '在线用户', '/online/index', NULL, 42, 'layui-icon layui-icon-fonts-code', '1', '在线用户', '2020-01-13 13:04:38');
 INSERT INTO `sys_menu` VALUES (49, '系统监控', '', NULL, 0, 'layui-icon layui-icon-video', '1', '系统监控', '2020-01-13 16:19:05');
 INSERT INTO `sys_menu` VALUES (50, 'Druid 监控', 'http://localhost:8080/druid/index.html', NULL, 49, 'layui-icon layui-icon-chart', '1', 'druid 监控', '2020-01-13 16:19:43');
 INSERT INTO `sys_menu` VALUES (52, 'tooool', 'http://tooool.org/', NULL, 55, 'layui-icon layui-icon-notice', '1', 'http://tooool.org/', '2020-01-14 16:01:46');
-INSERT INTO `sys_menu` VALUES (53, 'Hutool ', 'https://hutool.cn/docs/#/', NULL, 47, 'layui-icon layui-icon-star', '1', 'https://hutool.cn/docs/#/', '2020-01-15 10:10:00');
+INSERT INTO `sys_menu` VALUES (53, 'Hutool 工具', 'https://hutool.cn/docs/#/', NULL, 47, 'layui-icon layui-icon-star', '1', 'https://hutool.cn/docs/#/', '2020-01-15 10:10:00');
 INSERT INTO `sys_menu` VALUES (54, '高德地图', '/map/index', NULL, 31, 'layui-icon layui-icon-location', '1', 'mapIndex', '2020-01-15 11:17:35');
 INSERT INTO `sys_menu` VALUES (55, '资源导航', '', NULL, 0, 'layui-icon layui-icon-voice', '1', '资源导航', '2020-01-16 17:23:22');
 INSERT INTO `sys_menu` VALUES (56, '图片管理', '/image/index', NULL, 34, 'layui-icon layui-icon-female', '1', '图片管理', '2020-01-19 09:04:38');
+INSERT INTO `sys_menu` VALUES (57, 'vuejs 文档', 'https://cn.vuejs.org/v2/guide/', NULL, 47, 'layui-icon layui-icon-template', '1', 'vuejs 文档', '2020-06-18 10:13:11');
+INSERT INTO `sys_menu` VALUES (59, 'Spring Boot', 'http://springboot.fun/', NULL, 47, 'layui-icon layui-icon-website', '1', 'Spring Boot', '2020-06-18 10:38:15');
+INSERT INTO `sys_menu` VALUES (60, 'Spring Cloud', 'http://www.springcloud.wiki/#blog', NULL, 47, 'layui-icon layui-icon-headset', '1', 'Spring Cloud', '2020-06-18 10:39:16');
 
 -- ----------------------------
 -- Table structure for sys_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_permission`;
 CREATE TABLE `sys_permission`  (
-                                   `permissionId` int(11) NOT NULL AUTO_INCREMENT COMMENT '权限id',
-                                   `permissionName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '权限名称',
-                                   `deleteFlag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0 无效',
-                                   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-                                   `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                   `permissionNameCn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限名称（中文）',
-                                   `parentId` int(11) NULL DEFAULT NULL COMMENT '上级id',
-                                   PRIMARY KEY USING BTREE (`permissionId`)
+  `permissionId` int(0) NOT NULL AUTO_INCREMENT COMMENT '权限id',
+  `permissionName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '权限名称',
+  `deleteFlag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0 无效',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `permissionNameCn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限名称（中文）',
+  `parentId` int(0) NULL DEFAULT NULL COMMENT '上级id',
+  PRIMARY KEY (`permissionId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -473,13 +475,13 @@ INSERT INTO `sys_permission` VALUES (52, 'logIndex', '1', '系统日志', '2020-
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
-                             `roleId` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色id',
-                             `roleName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称英文',
-                             `deleteFlag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0无效',
-                             `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
-                             `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `roleNameCn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称中文',
-                             PRIMARY KEY USING BTREE (`roleId`)
+  `roleId` int(0) NOT NULL AUTO_INCREMENT COMMENT '角色id',
+  `roleName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称英文',
+  `deleteFlag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1 有效 0无效',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
+  `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `roleNameCn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称中文',
+  PRIMARY KEY (`roleId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -500,17 +502,17 @@ INSERT INTO `sys_role` VALUES (12, 'COSPLAY', '1', '角色扮演', '2019-12-16 1
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-                             `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
-                             `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
-                             `chinaName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中文名',
-                             `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户密码',
-                             `createtime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否有效 1：有效  0：锁定',
-                             `deptId` int(11) NULL DEFAULT NULL COMMENT '部门id',
-                             `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-                             `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户描述',
-                             `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '0 男 1 女',
-                             PRIMARY KEY USING BTREE (`id`)
+  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `chinaName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中文名',
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户密码',
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否有效 1：有效  0：锁定',
+  `deptId` int(0) NULL DEFAULT NULL COMMENT '部门id',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户描述',
+  `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '0 男 1 女',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -530,18 +532,18 @@ INSERT INTO `sys_user` VALUES (11, 'mz', '名字111', 'c4ca4238a0b923820dcc509a6
 INSERT INTO `sys_user` VALUES (14, 'jybd', '甲乙丙丁', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-11 16:19:25', '1', 14, '111@', '甲乙丙丁', '0');
 INSERT INTO `sys_user` VALUES (15, 'mtdykxo', '每天都要开心哦！', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-18 13:36:42', '1', 1, '11', '每天都要开心哦！', '1');
 INSERT INTO `sys_user` VALUES (16, 'smg', '什么鬼', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-25 17:25:29', '1', 13, '1', '', '0');
-INSERT INTO `sys_user` VALUES (17, 'Rick', 'rick', 'c4ca4238a0b923820dcc509a6f75849b', '2020-01-15 13:26:05', '1', 1, '23232@qq.com', 'rick', '1');
+INSERT INTO `sys_user` VALUES (17, 'Rick', 'rick', 'c4ca4238a0b923820dcc509a6f75849b', '2020-06-05 14:30:21', '1', 1, '23232@qq.com', 'rick', '1');
 
 -- ----------------------------
 -- Table structure for time_line
 -- ----------------------------
 DROP TABLE IF EXISTS `time_line`;
 CREATE TABLE `time_line`  (
-                              `timeLineId` int(11) NOT NULL AUTO_INCREMENT COMMENT '时间线id',
-                              `timeLineTitle` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线标题',
-                              `timeLineContent` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线内容（中日文）',
-                              `contentJapan` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线内容（日文）',
-                              PRIMARY KEY USING BTREE (`timeLineId`)
+  `timeLineId` int(0) NOT NULL AUTO_INCREMENT COMMENT '时间线id',
+  `timeLineTitle` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线标题',
+  `timeLineContent` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线内容（中日文）',
+  `contentJapan` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线内容（日文）',
+  PRIMARY KEY (`timeLineId`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '时间线 表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -562,8 +564,8 @@ INSERT INTO `time_line` VALUES (12, '半年  2020-01-20 11:29:41  星期一', '<
 -- ----------------------------
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role`  (
-                              `userId` int(11) NULL DEFAULT NULL,
-                              `roleId` int(11) NULL DEFAULT NULL
+  `userId` int(0) NULL DEFAULT NULL,
+  `roleId` int(0) NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户 角色关系表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -576,6 +578,6 @@ INSERT INTO `user_role` VALUES (7, 6);
 INSERT INTO `user_role` VALUES (9, 1);
 INSERT INTO `user_role` VALUES (10, 9);
 INSERT INTO `user_role` VALUES (1, 5);
-INSERT INTO `user_role` VALUES (17, 6);
+INSERT INTO `user_role` VALUES (17, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

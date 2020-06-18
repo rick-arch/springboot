@@ -44,7 +44,7 @@ public final class Constant {
     public static final String PROJECT_URL = "http://%s:%s";
     public static final String SLASH = "/";
     public static final String PROJECT_NOTIFICATION_INFO = "项目启动地址：";
-    public static String CHROME_PATH = "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe ";
+    public static String CHROME_PATH = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe ";
     public static final String SESSION_PRINCIPAL_KEY = "SESSION_PRINCIPAL_KEY";
     public static final String APPLICATION_JSON_UTF8_VALUE = "application/json;charset=UTF-8";
     public static final String X_REQUESTED_WITH = "x-requested-with";
@@ -68,7 +68,7 @@ public final class Constant {
     public static final String SWAGGER_BASE_PACKAGE = "com.example.springboot.controller";
     public static final String SWAGGER_TITLE = "This System Interface Address";
     public static final String SWAGGER_NAME = "SpringBoot";
-    public static final String SWAGGER_URL = "http://localhost:8080/login";
+    public static final String SWAGGER_URL = "http://localhost:" + SERVER_PORT + "/login";
     public static final String SWAGGER_EMAIL = "123@qq.com";
 
     /**
