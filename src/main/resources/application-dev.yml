@@ -6,9 +6,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url:  jdbc:mysql://192.168.153.128:3306/springboot?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      url:  jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
       username: root
-      password: ENC(S6fH+fKOsBmeWDiYYXpdEAWThSxlGvCBBtdubPa5Fkk=)
+      password: root
       driverClassName: com.mysql.jdbc.Driver
       # 初始化时建立物理连接连接的个数
       initialSize: 5
