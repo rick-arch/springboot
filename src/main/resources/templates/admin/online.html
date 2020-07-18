@@ -40,7 +40,7 @@
                     {field: 'chinaName', title: '中文名', width: 200, align: 'center'},
                     {field: 'username', title: '英文名', width: 200, align: 'center'},
                     {
-                        field: 'status', title: '状态', align: 'center', width: 150, templet: function (res) {
+                        field: 'status', title: '状态', align: 'center', width: 145, templet: function (res) {
                             if (res.status === '在线') return '<span style="color: green">' + res.status + '</span>';
                             else return '<span style="color: red">' + res.status + '</span>';
                         }
