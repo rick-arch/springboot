@@ -17,7 +17,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.io.Serializable;
 import java.time.Duration;
 
-import static com.example.springboot.constant.Constant.NUM_EIGHT;
 import static com.example.springboot.constant.Constant.NUM_ONE_HUNDRED_TWENTY;
 
 
