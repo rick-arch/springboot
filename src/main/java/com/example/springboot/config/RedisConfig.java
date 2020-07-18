@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.time.Duration;
 
 import static com.example.springboot.constant.Constant.NUM_EIGHT;
+import static com.example.springboot.constant.Constant.NUM_ONE_HUNDRED_TWENTY;
 
 
 /**
@@ -53,7 +54,7 @@ public class RedisConfig {
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration
                 .defaultCacheConfig()
                 .serializeValuesWith(serializationPair)
-                .entryTtl(Duration.ofSeconds(NUM_EIGHT));//设置缓存过期时间为8秒
+                .entryTtl(Duration.ofSeconds(NUM_ONE_HUNDRED_TWENTY));//设置缓存过期时间为120秒
 
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
     }
