@@ -1,4 +1,4 @@
-package com.example.springboot;
+package com.example.springboot.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;

@@ -34,6 +34,7 @@ public final class Constant {
     public static final String NO_SUCH_ALGORITHM_EXCEPTION = "No Such Algorithm Exception！";
     public static final String SESSION_TIME_OUT = "Session Time Out！";
     public static final String USER = "user";
+    public static final String CERTIFIED_MENU_LIST = "certifiedMenuList";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String FALSE = "false";
     public static final String ON_LINE = "在线";

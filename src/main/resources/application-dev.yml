@@ -43,12 +43,6 @@ spring:
 #    # Redis服务器连接密码（默认为空）
 #    password:
 
-#  data: #mongodb
-#    mongodb:
-#      host: localhost
-#      port: 27017
-#      database: testdb
-
 #  rabbitmq: #rabbitmq
 #    host: localhost
 #    port: 5672 #15672是Web管理界面的端口；5672是MQ访问的端口。

@@ -1,4 +1,4 @@
-package com.example.springboot.controller.other;
+package com.example.springboot.controller;
 
 import com.example.springboot.common.JsonResponseVO;
 import lombok.extern.slf4j.Slf4j;
