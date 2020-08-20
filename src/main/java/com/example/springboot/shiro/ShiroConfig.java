@@ -110,7 +110,15 @@ public class ShiroConfig {
         hashMap.put(INDEX, USER);
 
         // 其他页面认证访问
-        hashMap.put(ALL, AUTHC);
+        hashMap.put(ALL, USER);
+
+        //原先我们在filterChainDefinitions属性的最后定义的是
+        // /**=authc authc对应的是一个过滤器，
+        // 这个过滤器要求用户必须经过认证才能访问相应的请求。
+        // 记住我的功能有没有经过认证？没有经过认证的。
+        //TODO 如果要启用记住我的功能，就不能再写/**=authc 。
+        // 要写/**=user user也对应一个过滤器，这个过滤器要求，
+        // 要么是经过认证的用户，要么是通过记住我过的用户 都可以访问相应的请求。
 
         //  登录的路径
         shiroFilterFactoryBean.setLoginUrl(LOGIN);
