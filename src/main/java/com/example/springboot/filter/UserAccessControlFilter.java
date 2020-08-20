@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.springboot.common.JsonResponseVO;
 import com.example.springboot.entity.user.SysUser;
 import com.example.springboot.service.SysUserService;
-import com.example.springboot.utils.SpringUtil;
+import com.example.springboot.utils.BeansUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -57,7 +57,7 @@ public final class UserAccessControlFilter extends AccessControlFilter {
         }
 
         // 使用@Autowired无效 service为null，因为过滤器在spring扫描bean之前加载,通过已经初始化之后applicationContext容器中去获取需要的bean
-        final SysUserService sysUserService = (SysUserService) SpringUtil.getBean(SYS_USER_SERVICE_IMPL);
+        final SysUserService sysUserService = (SysUserService) BeansUtil.getBean(SYS_USER_SERVICE_IMPL);
 
         // 判断账号是否有效
         final boolean isEffective = sysUserService.accountIsEffective(sysUser.getId());

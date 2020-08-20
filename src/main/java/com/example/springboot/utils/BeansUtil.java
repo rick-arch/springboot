@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringUtil implements ApplicationContextAware {
+public class BeansUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
@@ -15,7 +15,7 @@ public class SpringUtil implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        if (SpringUtil.applicationContext == null) {
+        if (BeansUtil.applicationContext == null) {
             this.applicationContext = applicationContext;
         }
     }

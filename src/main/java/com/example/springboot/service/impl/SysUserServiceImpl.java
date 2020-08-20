@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.example.springboot.constant.Constant.*;
-import static com.example.springboot.utils.MD5Util.md5;
+import static com.example.springboot.utils.Md5Util.md5;
 
 @Service
 @Transactional(rollbackFor = Exception.class)

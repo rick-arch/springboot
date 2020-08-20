@@ -15,7 +15,7 @@ import java.util.List;
 
 import static com.example.springboot.constant.Constant.NUM_ZERO;
 import static com.example.springboot.constant.Constant.SESSION_PRINCIPAL_KEY;
-import static com.example.springboot.utils.MD5Util.md5;
+import static com.example.springboot.utils.Md5Util.md5;
 import static org.apache.shiro.SecurityUtils.getSubject;
 
 @Slf4j
