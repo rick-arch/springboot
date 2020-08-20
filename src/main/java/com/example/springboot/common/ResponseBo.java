@@ -6,7 +6,7 @@ import java.util.Map;
 import static com.example.springboot.constant.Constant.*;
 
 public final class ResponseBo extends HashMap<String, Object> {
-    private static final long serialVersionUID = LONG1L;
+    private static final long serialVersionUID = 1L;
 
     public ResponseBo() {
         put(CODE, NUM_ZERO);
