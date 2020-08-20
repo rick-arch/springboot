@@ -5,7 +5,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/ #模板前路径
     suffix: .html #模板后缀
-    mode: LEGACYHTML5
+    mode: HTML
     encoding: utf-8
     check-template-location: true #是否检查模板位置
     cache: false #是否启动缓存
