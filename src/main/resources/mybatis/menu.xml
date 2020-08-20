@@ -3,7 +3,7 @@
 <mapper namespace="com.example.springboot.repository.SysMenuRepository">
 
     <!--查询用户对应的菜单-->
-    <select id="getMenuList" resultType="com.example.springboot.entity.system.SysMenu">
+    <select id="getMenuList" resultType="com.example.springboot.entities.SysMenu">
         SELECT m.menuId               menuId,
                m.menuName             menuName,
                m.url                  url,
@@ -22,7 +22,7 @@
     </select>
 
     <!--查询所有菜单-->
-    <select id="findMenuList" resultType="com.example.springboot.entity.system.SysMenu">
+    <select id="findMenuList" resultType="com.example.springboot.entities.SysMenu">
         SELECT m.menuId               menuId,
                m.menuName             menuName,
                m.url                  url,
@@ -54,7 +54,7 @@
     </select>
 
     <!--查询满足条件的菜单集合-->
-    <select id="queryMenuList" resultType="com.example.springboot.entity.system.SysMenu">
+    <select id="queryMenuList" resultType="com.example.springboot.entities.SysMenu">
        SELECT
             sm.menuId,
             sm.menuName,

@@ -1,8 +1,10 @@
-package com.example.springboot.entity.system;
+package com.example.springboot.entities;
 
 import com.example.springboot.common.Page;
 import com.google.common.base.MoreObjects;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysRole extends Page implements Serializable {
 
     /**角色id*/

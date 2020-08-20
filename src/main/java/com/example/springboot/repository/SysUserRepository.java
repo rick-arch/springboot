@@ -1,7 +1,7 @@
 package com.example.springboot.repository;
 
-import com.example.springboot.entity.system.SysRole;
-import com.example.springboot.entity.user.SysUser;
+import com.example.springboot.entities.SysRole;
+import com.example.springboot.entities.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

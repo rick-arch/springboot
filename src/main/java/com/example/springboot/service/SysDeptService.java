@@ -1,7 +1,7 @@
 package com.example.springboot.service;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysDept;
+import com.example.springboot.entities.SysDept;
 
 public interface SysDeptService {
     /**

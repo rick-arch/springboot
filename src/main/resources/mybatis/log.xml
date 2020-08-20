@@ -10,7 +10,7 @@
     </insert>
 
     <!--查询所有日志-->
-    <select id="querySysLog" resultType="com.example.springboot.entity.system.SysLog">
+    <select id="querySysLog" resultType="com.example.springboot.entities.SysLog">
         SELECT * FROM sys_log WHERE 1=1
         <if test="username != null and username !='' ">
             AND username LIKE '%${username}%'

@@ -1,7 +1,7 @@
 package com.example.springboot.service.impl;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysIcon;
+import com.example.springboot.entities.SysIcon;
 import com.example.springboot.repository.SysIconRepository;
 import com.example.springboot.service.SysIconService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.example.springboot.service.impl;
 
-import com.example.springboot.entity.TimeLine;
+import com.example.springboot.entities.TimeLine;
 import com.example.springboot.repository.TimeLineRepository;
 import com.example.springboot.service.TimeLineService;
 import com.example.springboot.utils.DateUtil;

@@ -1,8 +1,8 @@
 package com.example.springboot.repository;
 
-import com.example.springboot.entity.system.SysMenu;
-import com.example.springboot.entity.system.SysPermission;
-import com.example.springboot.entity.system.SysRole;
+import com.example.springboot.entities.SysMenu;
+import com.example.springboot.entities.SysPermission;
+import com.example.springboot.entities.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,6 +1,6 @@
 package com.example.springboot.repository;
 
-import com.example.springboot.entity.system.SysPermission;
+import com.example.springboot.entities.SysPermission;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

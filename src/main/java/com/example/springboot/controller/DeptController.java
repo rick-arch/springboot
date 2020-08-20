@@ -3,7 +3,7 @@ package com.example.springboot.controller;
 import com.example.springboot.annotation.Log;
 import com.example.springboot.common.JsonResponseVO;
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysDept;
+import com.example.springboot.entities.SysDept;
 import com.example.springboot.service.SysDeptService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;

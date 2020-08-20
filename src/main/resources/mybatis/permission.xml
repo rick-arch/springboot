@@ -3,7 +3,7 @@
 <mapper namespace="com.example.springboot.repository.SysPermissionRepository">
 
     <!--根据条件查询权限集合-->
-    <select id="getPermissionList" resultType="com.example.springboot.entity.system.SysPermission">
+    <select id="getPermissionList" resultType="com.example.springboot.entities.SysPermission">
         SELECT * FROM sys_permission WHERE  parentId != 0
         <if test="permissionId != null and permissionId != ''">
             AND permissionId LIKE '%${permissionId}%'
@@ -75,7 +75,7 @@
         WHERE permissionId = #{permissionId}
     </update>
 
-    <select id="getParent" resultType="com.example.springboot.entity.system.SysPermission">
+    <select id="getParent" resultType="com.example.springboot.entities.SysPermission">
         SELECT * FROM sys_permission WHERE parentId = 0
     </select>
 </mapper>

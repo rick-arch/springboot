@@ -2,7 +2,7 @@ package com.example.springboot.controller;
 
 import com.example.springboot.annotation.Log;
 import com.example.springboot.common.ResponseBo;
-import com.example.springboot.entity.user.SysUser;
+import com.example.springboot.entities.SysUser;
 import com.example.springboot.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;

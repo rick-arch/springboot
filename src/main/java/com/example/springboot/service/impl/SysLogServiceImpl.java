@@ -1,7 +1,7 @@
 package com.example.springboot.service.impl;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysLog;
+import com.example.springboot.entities.SysLog;
 import com.example.springboot.repository.SysLogRepository;
 import com.example.springboot.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;

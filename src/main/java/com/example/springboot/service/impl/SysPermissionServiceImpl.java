@@ -1,7 +1,7 @@
 package com.example.springboot.service.impl;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysPermission;
+import com.example.springboot.entities.SysPermission;
 import com.example.springboot.repository.SysPermissionRepository;
 import com.example.springboot.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;

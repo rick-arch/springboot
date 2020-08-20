@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.springboot.repository.SysUserRepository">
-    <resultMap id="resultMap" type="com.example.springboot.entity.user.SysUser">
+    <resultMap id="resultMap" type="com.example.springboot.entities.SysUser">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="createTime" column="createTime"/>
@@ -11,16 +11,16 @@
         <result property="email" column="email"/>
         <result property="description" column="description"/>
         <result property="gender" column="gender"/>
-        <association property="sysDept" javaType="com.example.springboot.entity.system.SysDept">
+        <association property="sysDept" javaType="com.example.springboot.entities.SysDept">
             <id property="deptId" column="deptId"/>
             <result property="deptName" column="deptName"/>
         </association>
-        <collection property="roleLists" ofType="com.example.springboot.entity.system.SysRole">
+        <collection property="roleLists" ofType="com.example.springboot.entities.SysRole">
             <id property="roleId" column="roleId"/>
             <result property="roleName" column="roleName"/>
             <result property="roleIdStr" column="roleIdStr"/>
             <result property="roleNameCn" column="roleNameCn"/>
-            <collection property="permissionsLists" ofType="com.example.springboot.entity.system.SysPermission">
+            <collection property="permissionsLists" ofType="com.example.springboot.entities.SysPermission">
                 <id property="permissionId" column="permissionId"/>
                 <result property="permissionName" column="permissionName"/>
                 <result property="deleteFlag" column="deleteFlag"/>
@@ -31,7 +31,7 @@
     </resultMap>
 
     <!--  查询用户是否存在-->
-    <select id="selectByName" resultType="com.example.springboot.entity.user.SysUser">
+    <select id="selectByName" resultType="com.example.springboot.entities.SysUser">
         SELECT id, chinaName, username, password, createtime createTime, status
         FROM sys_user
         WHERE username = #{username}
@@ -151,7 +151,7 @@
     </insert>
 
     <!--查询可用角色-->
-    <select id="findRoleList" resultType="com.example.springboot.entity.system.SysRole">
+    <select id="findRoleList" resultType="com.example.springboot.entities.SysRole">
         SELECT *
         FROM sys_role
         WHERE deleteFlag = 1

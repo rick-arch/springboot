@@ -1,9 +1,9 @@
 package com.example.springboot.service;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysRole;
-import com.example.springboot.entity.user.SysUser;
-import com.example.springboot.entity.user.UserOnline;
+import com.example.springboot.entities.SysRole;
+import com.example.springboot.entities.SysUser;
+import com.example.springboot.entities.UserOnline;
 
 import java.util.List;
 

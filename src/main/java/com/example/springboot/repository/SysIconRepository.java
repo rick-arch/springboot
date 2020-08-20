@@ -1,6 +1,6 @@
 package com.example.springboot.repository;
 
-import com.example.springboot.entity.system.SysIcon;
+import com.example.springboot.entities.SysIcon;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

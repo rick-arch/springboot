@@ -3,7 +3,7 @@ package com.example.springboot.controller;
 import com.example.springboot.annotation.Limit;
 import com.example.springboot.annotation.Log;
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysLog;
+import com.example.springboot.entities.SysLog;
 import com.example.springboot.service.SysLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

@@ -1,7 +1,7 @@
 package com.example.springboot.service.impl;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysMenu;
+import com.example.springboot.entities.SysMenu;
 import com.example.springboot.repository.SysMenuRepository;
 import com.example.springboot.service.SysMenuService;
 import com.example.springboot.utils.DateUtil;

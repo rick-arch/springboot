@@ -1,10 +1,10 @@
-package com.example.springboot.entity.user;
+package com.example.springboot.entities;
 
 import com.example.springboot.common.Page;
-import com.example.springboot.entity.system.SysDept;
-import com.example.springboot.entity.system.SysRole;
 import com.google.common.base.MoreObjects;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
@@ -14,6 +14,8 @@ import java.util.Collection;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysUser extends Page implements Serializable {
 
     /**用户id*/

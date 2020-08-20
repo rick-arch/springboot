@@ -1,9 +1,9 @@
 package com.example.springboot.service;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysMenu;
-import com.example.springboot.entity.system.SysPermission;
-import com.example.springboot.entity.system.SysRole;
+import com.example.springboot.entities.SysMenu;
+import com.example.springboot.entities.SysPermission;
+import com.example.springboot.entities.SysRole;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.example.springboot.repository.SysIconRepository">
 
     <!--根据条件查询icon-->
-    <select id="selectIconList" resultType="com.example.springboot.entity.system.SysIcon">
+    <select id="selectIconList" resultType="com.example.springboot.entities.SysIcon">
         SELECT * FROM sys_icon WHERE 1=1
         <if test="iconId != null and iconId !='' ">
             AND iconId LIKE '%${iconId}%'

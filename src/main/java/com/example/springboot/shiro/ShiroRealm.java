@@ -1,6 +1,6 @@
 package com.example.springboot.shiro;
 
-import com.example.springboot.entity.user.SysUser;
+import com.example.springboot.entities.SysUser;
 import com.example.springboot.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;

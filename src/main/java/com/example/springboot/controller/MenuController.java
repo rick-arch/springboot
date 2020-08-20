@@ -4,13 +4,11 @@ import com.example.springboot.annotation.Log;
 import com.example.springboot.common.JsonResponseVO;
 import com.example.springboot.common.JsonDomainArray;
 import com.example.springboot.common.Tree;
-import com.example.springboot.entity.system.SysMenu;
+import com.example.springboot.entities.SysMenu;
 import com.example.springboot.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

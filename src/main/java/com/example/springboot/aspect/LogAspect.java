@@ -2,8 +2,8 @@ package com.example.springboot.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.example.springboot.annotation.Log;
-import com.example.springboot.entity.system.SysLog;
-import com.example.springboot.entity.user.SysUser;
+import com.example.springboot.entities.SysLog;
+import com.example.springboot.entities.SysUser;
 import com.example.springboot.service.SysLogService;
 import com.example.springboot.utils.DateUtil;
 import com.google.common.collect.Lists;
@@ -41,109 +41,109 @@ import static com.example.springboot.constant.Constant.USER_AGENT;
 @Slf4j
 public final class LogAspect {
 
-    @Autowired
-    private SysLogService sysLogService;
 
-    @Pointcut("@annotation(com.example.springboot.annotation.Log)")
-    public void pointcut() {
-    }
+	@Autowired
+	private SysLogService sysLogService;
 
-    @Around("pointcut()")
-    public Object around(ProceedingJoinPoint point) throws Throwable {
-        long beginTime = System.currentTimeMillis();
-        // 执行方法
-        Object result = point.proceed();
-        long time = System.currentTimeMillis() - beginTime;
-        String logValue = saveLog(point, time);
-        log.info("【" + logValue + "】【执行切面方法】耗时:{}毫秒", time);
-        return result;
-    }
+	@Pointcut("@annotation(com.example.springboot.annotation.Log)")
+	public void pointcut() {
+	}
 
-    private String saveLog(ProceedingJoinPoint point, long time) {
+	@Around("pointcut()")
+	public Object around(ProceedingJoinPoint point) throws Throwable {
+		long beginTime = System.currentTimeMillis();
+		// 执行方法
+		Object result = point.proceed();
+		long time = System.currentTimeMillis() - beginTime;
+		String logValue = saveLog(point, time);
+		log.info("【" + logValue + "】【执行切面方法】耗时:{}毫秒", time);
+		return result;
+	}
 
-        String logAnnotationValue = "";//返回Log注解上面的值
+	private String saveLog(ProceedingJoinPoint point, long time) {
 
-        MethodSignature signature = (MethodSignature) point.getSignature();
+		String logAnnotationValue = "";//返回Log注解上面的值
 
-        // 获取方法
-        Method method = signature.getMethod();
+		MethodSignature signature = (MethodSignature) point.getSignature();
 
-        SysLog log = new SysLog();
+		// 获取方法
+		Method method = signature.getMethod();
 
-        Log logAnnotation = method.getAnnotation(Log.class);
+		SysLog log = new SysLog();
 
-        if (logAnnotation != null) {
+		Log logAnnotation = method.getAnnotation(Log.class);
 
-            String value = logAnnotation.value();
+		if (logAnnotation != null) {
 
-            // 获取注解上的描述并设置
-            log.setOperation(value);
+			String value = logAnnotation.value();
 
-            logAnnotationValue = value;
-        }
-        // 获取请求的类名
-        String className = point.getTarget().getClass().getName();
+			// 获取注解上的描述并设置
+			log.setOperation(value);
 
-        // 获取请求的方法名
-        String methodName = signature.getName();
+			logAnnotationValue = value;
+		}
+		// 获取请求的类名
+		String className = point.getTarget().getClass().getName();
 
-        // 设置method为类名+方法名
-        log.setMethod(className + "." + methodName + "()");
+		// 获取请求的方法名
+		String methodName = signature.getName();
 
-        // 请求参数值
-        Object[] args = point.getArgs();
+		// 设置method为类名+方法名
+		log.setMethod(className + "." + methodName + "()");
 
-        // 请求的方法参数名称
-        LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-        String[] paramsNames = u.getParameterNames(method);
-        if (args != null && paramsNames != null) {
-            List<Object> list = Lists.newArrayList();
-            for (int i = NUM_ZERO; i < args.length; i++) {
-                if (!(args[i] instanceof HttpServletRequest) && !(args[i] instanceof MultipartFile && !(args[i] instanceof HttpServletResponse))) {
-                    list.add(args[i]);
-                }
-            }
-            log.setParams(list.isEmpty() ? null : JSON.toJSONString(list));
-        }
+		// 请求参数值
+		Object[] args = point.getArgs();
 
-        // 获取request
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+		// 请求的方法参数名称
+		LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
+		String[] paramsNames = u.getParameterNames(method);
+		if (args != null && paramsNames != null) {
+			List<Object> list = Lists.newArrayList();
+			for (int i = NUM_ZERO; i < args.length; i++) {
+				if (!(args[i] instanceof HttpServletRequest) && !(args[i] instanceof MultipartFile && !(args[i] instanceof HttpServletResponse))) {
+					list.add(args[i]);
+				}
+			}
+			log.setParams(list.isEmpty() ? null : JSON.toJSONString(list));
+		}
 
-        // 获取ip地址
-        log.setIp(request.getRemoteAddr());
+		// 获取request
+		HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
-        //获取请求路径
-        log.setRequestUrl(request.getRequestURI());
+		// 获取ip地址
+		log.setIp(request.getRemoteAddr());
 
-        // 设置操作时间
-        log.setTime((int) time);
+		//获取请求路径
+		log.setRequestUrl(request.getRequestURI());
 
-        // 获取用户信息
-        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+		// 设置操作时间
+		log.setTime((int) time);
 
-        log.setUsername(user == null ? null : user.getChinaName());
+		// 获取用户信息
+		SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
 
-        // *******************获取浏览器和操作系统信息**********************************
-        String userAgent = request.getHeader(USER_AGENT);
+		log.setUsername(user == null ? null : user.getChinaName());
 
-        UserAgent agent = UserAgent.parseUserAgentString(userAgent);
+		//TODO *******************获取浏览器和操作系统信息**********************************
+		String userAgent = request.getHeader(USER_AGENT);
 
-        Browser browser = agent.getBrowser();
+		UserAgent agent = UserAgent.parseUserAgentString(userAgent);
 
-        // 设置浏览器信息
-        log.setBrowser(browser.getName());
+		Browser browser = agent.getBrowser();
 
-        OperatingSystem os = agent.getOperatingSystem();
+		// 设置浏览器信息
+		log.setBrowser(browser.getName());
 
-        // 设置操作系统信息
-        log.setUserSystem(os.getName());
-        // *******************获取浏览器和操作系统信息**********************************
+		OperatingSystem os = agent.getOperatingSystem();
 
-        log.setCreateTime(DateUtil.format());
+		// 设置操作系统信息
+		log.setUserSystem(os.getName());
 
-        // 保存日志
-        sysLogService.addSysLog(log);
+		log.setCreateTime(DateUtil.format());
 
-        return logAnnotationValue;
-    }
+		// 保存日志
+		sysLogService.addSysLog(log);
+
+		return logAnnotationValue;
+	}
 }

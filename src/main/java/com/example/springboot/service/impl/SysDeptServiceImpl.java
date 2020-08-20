@@ -1,7 +1,7 @@
 package com.example.springboot.service.impl;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysDept;
+import com.example.springboot.entities.SysDept;
 import com.example.springboot.repository.SysDeptRepository;
 import com.example.springboot.service.SysDeptService;
 import com.example.springboot.utils.DateUtil;

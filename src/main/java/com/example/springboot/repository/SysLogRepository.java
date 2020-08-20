@@ -1,6 +1,6 @@
 package com.example.springboot.repository;
 
-import com.example.springboot.entity.system.SysLog;
+import com.example.springboot.entities.SysLog;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

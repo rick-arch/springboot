@@ -1,7 +1,7 @@
 package com.example.springboot.service;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysPermission;
+import com.example.springboot.entities.SysPermission;
 
 public interface SysPermissionService {
 

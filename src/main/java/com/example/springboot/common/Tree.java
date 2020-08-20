@@ -1,7 +1,7 @@
 package com.example.springboot.common;
 
-import com.example.springboot.entity.system.SysMenu;
-import com.example.springboot.entity.system.SysPermission;
+import com.example.springboot.entities.SysMenu;
+import com.example.springboot.entities.SysPermission;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;

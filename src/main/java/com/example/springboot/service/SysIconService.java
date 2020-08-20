@@ -1,7 +1,7 @@
 package com.example.springboot.service;
 
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysIcon;
+import com.example.springboot.entities.SysIcon;
 
 public interface SysIconService {
 

@@ -3,7 +3,7 @@ package com.example.springboot.controller;
 import com.example.springboot.annotation.Log;
 import com.example.springboot.common.ResponseBo;
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.user.UserOnline;
+import com.example.springboot.entities.UserOnline;
 import com.example.springboot.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

@@ -3,7 +3,7 @@ package com.example.springboot.controller;
 import com.example.springboot.annotation.Log;
 import com.example.springboot.common.JsonResponseVO;
 import com.example.springboot.common.JsonDomainArray;
-import com.example.springboot.entity.system.SysIcon;
+import com.example.springboot.entities.SysIcon;
 import com.example.springboot.service.SysIconService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

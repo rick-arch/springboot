@@ -2,7 +2,7 @@ package com.example.springboot.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.example.springboot.common.JsonResponseVO;
-import com.example.springboot.entity.user.SysUser;
+import com.example.springboot.entities.SysUser;
 import com.example.springboot.service.SysUserService;
 import com.example.springboot.utils.BeansUtil;
 import lombok.extern.slf4j.Slf4j;

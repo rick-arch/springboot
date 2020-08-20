@@ -1,6 +1,6 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.entity.user.SysUser;
+import com.example.springboot.entities.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
