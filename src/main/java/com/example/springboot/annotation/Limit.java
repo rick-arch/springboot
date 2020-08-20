@@ -30,7 +30,7 @@ import java.lang.annotation.*;
 public @interface Limit {
 
     /**
-     * 资源的名字
+     * 资源名称，用于描述接口功能
      */
     String name() default "";
 
@@ -50,10 +50,13 @@ public @interface Limit {
     int period();
 
     /**
-     * 最多的访问限制次数
+     * 限制访问次数
      */
     int count();
 
+    /**
+     * 限制类型
+     */
     LimitType limitType() default LimitType.CUSTOMER;
 
 }

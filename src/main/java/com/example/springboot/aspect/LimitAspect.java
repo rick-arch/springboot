@@ -82,7 +82,10 @@ public final class LimitAspect {
     }
 
     /**
-     * 限流 脚本
+     * 限流脚本
+     * 调用的时候不超过阈值，则直接返回并执行计算器自加。
+     *
+     * @return lua脚本
      */
     public String buildLuaScript() {
         StringBuilder lua = new StringBuilder();

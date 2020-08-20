@@ -18,18 +18,16 @@ import static com.example.springboot.constant.WebURIConstant.LOG_LIST;
 @Controller
 @Slf4j
 public class LogController {
-    @Autowired
-    private SysLogService sysLogService;
+	@Autowired
+	private SysLogService sysLogService;
 
-    @GetMapping(LOG_LIST)
-    @Log("系统日志")
-    @ResponseBody
-    @RequiresPermissions(value = PERMISSION_LOG_VIEW)
-    /**
-     * //TODO 意味着 10S 内最多最多允许访问10次
-     */
-    @Limit(key = "test", period = 10, count = 10)
-    public JsonDomainArray<SysLog> sysLogList(SysLog sysLog) {
-        return sysLogService.selectSysLog(sysLog);
-    }
+	//TODO 意味着 10S 内最多最多允许访问10次
+	@GetMapping(LOG_LIST)
+	@RequiresPermissions(value = PERMISSION_LOG_VIEW)
+	@Limit(key = "test", period = 10, count = 10, name = "查询系统操作日志")
+	@Log("查询系统操作日志")
+	@ResponseBody
+	public JsonDomainArray<SysLog> sysLogList(SysLog sysLog) {
+		return sysLogService.selectSysLog(sysLog);
+	}
 }
