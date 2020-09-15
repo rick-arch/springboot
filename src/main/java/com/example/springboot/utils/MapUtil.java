@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class CovertUtil {
+public class MapUtil {
 
 	/**
 	 * Object to map

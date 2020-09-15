@@ -260,11 +260,11 @@
             } else if (obj.event === 'menu') {//menu 菜单
                 var roleId = data.roleId;
                 $("#roleIdValue").val(roleId);
-                $("#roleValue").val('配置角色 （' + data.roleNameCn + '） 菜单权限');
+
 
                 layer.open({
                     type: 1,
-                    title: '配置角色菜单',
+                    title: '配置角色菜单【<span style="color:red;">' + data.roleNameCn + '</span>】',
                     area: ['600px', '500px'],
                     anim: 4,
                     isOutAnim: true,
@@ -305,7 +305,7 @@
                 var permissionIdAr = [];
                 layer.open({
                     type: 1,
-                    title: '配置角色对应的权限',
+                    title: '配置角色对应的权限【<span style="color:red;">' + data.roleNameCn + '</span>】',
                     area: ['600px', '500px'],
                     anim: 4,
                     isOutAnim: true,
@@ -494,21 +494,20 @@
 <form class="layui-form" id="menuForm" style="display: none">
     <div style="margin-top: 15px"></div>
 
+<!--    <div class="layui-form-item">-->
+<!--        <div class="layui-input-block" style="">-->
+<!--            <input type="text" id="roleValue" class="layui-input"-->
+<!--                   style="text-align: center;background-color: #FFDEAD;height:30px;width:400px;border:none;" disabled>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <div class="layui-input-block" style="">-->
+<!--            <input type="text" class="layui-input"-->
+<!--                   style="text-align: center;margin-left:-60px;background-color: #FFF8DC;height:30px;width:150px;border:none;"-->
+<!--                   disabled placeholder="所有菜单如下：">-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="layui-form-item">
-        <div class="layui-input-block" style="">
-            <input type="text" id="roleValue" class="layui-input"
-                   style="text-align: center;background-color: #FFDEAD;height:30px;width:400px;border:none;" disabled>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block" style="">
-            <input type="text" class="layui-input"
-                   style="text-align: center;margin-left:-60px;background-color: #FFF8DC;height:30px;width:150px;border:none;"
-                   disabled placeholder="所有菜单如下：">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单：</label>
         <div class="layui-input-block" id="menuName" style="height:30px;width:400px;">
         </div>
     </div>
@@ -532,20 +531,19 @@
 <!--配置角色对应的权限form-->
 <form class="layui-form" id="permissionForm" style="display: none">
     <div style="margin-top: 15px"></div>
+<!--    <div class="layui-form-item">-->
+<!--        <div class="layui-input-block" style="">-->
+<!--            <input type="text" id="rolePermission" class="layui-input"-->
+<!--                   style="text-align: center;background-color: #FFDEAD;height:30px;width:400px;border:none;" disabled>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <div class="layui-input-block" style="">-->
+<!--            <input type="text" id="roleValuePermission" class="layui-input"-->
+<!--                   style="text-align: center;display: none;">-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="layui-form-item">
-        <div class="layui-input-block" style="">
-            <input type="text" id="rolePermission" class="layui-input"
-                   style="text-align: center;background-color: #FFDEAD;height:30px;width:400px;border:none;" disabled>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block" style="">
-            <input type="text" id="roleValuePermission" class="layui-input"
-                   style="text-align: center;display: none;">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">拥有权限</label>
         <div class="layui-input-block" id="permission" style="height:30px;width:400px;">
         </div>
     </div>
