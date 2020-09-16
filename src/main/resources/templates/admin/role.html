@@ -224,16 +224,17 @@
             layer.close(index);
         }
 
-
+        var addRoleId ;
         //监听工具条(操作栏: 菜单 启用 禁用)
         table.on('tool(demo2)', function (obj) {
             var data = obj.data;
+            var roleId = data.roleId;
+            addRoleId = roleId;
             if (obj.event === 'enable') {//启用
                 if (data.deleteFlag == 1) {
                     layer.msg("小样，已经是启用状态哦！", {icon: 6});
                     return false;
                 }
-                var roleId = data.roleId;
                 $.ajax({
                     url: '/role/enable/' + roleId,
                     type: 'post',
@@ -255,13 +256,9 @@
                     return false;
                 }
                 var roleIdArr = [];
-                roleIdArr.push(data.roleId);
+                roleIdArr.push(roleId);
                 deleteRole(roleIdArr);
             } else if (obj.event === 'menu') {//menu 菜单
-                var roleId = data.roleId;
-                $("#roleIdValue").val(roleId);
-
-
                 layer.open({
                     type: 1,
                     title: '配置角色菜单【<span style="color:red;">' + data.roleNameCn + '</span>】',
@@ -300,8 +297,6 @@
                     }
                 });
             } else {//权限permission
-                var roleId = data.roleId;
-                $("#roleValuePermission").val(roleId);
                 var permissionIdAr = [];
                 layer.open({
                     type: 1,
@@ -358,7 +353,7 @@
         });
 
         //新增角色对应权限
-        form.on('submit(permissionSubmit)', function () {
+        form.on('submit(permissionSubmit)', function (obj) {
             var permissionIdArr = [];
             ////获取选中的权限树
             var checkData = tree.getChecked('permissionList');
@@ -369,9 +364,9 @@
                     permissionIdArr.push(checkData[i].children[j].id);
                 }
             }
-            var roleId = $("#roleValuePermission").val();
+            console.log(obj.data)
             $.ajax({
-                url: '/role/permission/add/' + roleId,
+                url: '/role/permission/add/' + addRoleId,
                 type: 'post',
                 dataType: "json",
                 async: false,
@@ -402,10 +397,9 @@
                     });
                 }
             }
-            var roleId = $('#roleIdValue').val();
 
             $.ajax({
-                url: '/role/deployMenu/' + roleId,
+                url: '/role/deployMenu/' + addRoleId,
                 type: 'post',
                 dataType: "json",
                 async: false,
