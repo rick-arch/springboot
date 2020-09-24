@@ -24,29 +24,6 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Autowired
     private SysRoleRepository sysRoleRepository;
 
-    @Override
-    public JsonDomainArray<SysRole> getRoleList(SysRole sysRole) {
-        sysRole.setPage((sysRole.getPage() - NUM_ONE) * NUM_TEN);
-        Integer count = sysRoleRepository.getRoleCount(sysRole);
-        List<SysRole> sysRoleList = sysRoleRepository.queryRoleList(sysRole);
-        return new JsonDomainArray<SysRole>().setCount(count).setData(sysRoleList);
-    }
-
-    @Override
-    public Boolean addRole(SysRole sysRole) {
-        sysRole.setCreateTime(DateUtil.format());
-        return sysRoleRepository.insertRole(sysRole) > NUM_ZERO;
-    }
-
-    @Override
-    public Boolean disableRole(Integer... roleIdArr) {
-        return sysRoleRepository.disable(roleIdArr) > NUM_ZERO;
-    }
-
-    @Override
-    public Boolean activateRole(Integer roleId) {
-        return sysRoleRepository.enable(roleId) > NUM_ZERO;
-    }
 
     @Override
     public Boolean deployMenu(List<SysMenu> menuList, Integer roleId) {
@@ -88,5 +65,29 @@ public class SysRoleServiceImpl implements SysRoleService {
             success = sysRoleRepository.insertPermission(roleId, arr) > NUM_ZERO;
         }
         return success;
+    }
+
+    @Override
+    public boolean add(SysRole sysRole) {
+        sysRole.setCreateTime(DateUtil.format());
+        return sysRoleRepository.insert(sysRole) > NUM_ZERO;
+    }
+
+    @Override
+    public JsonDomainArray<SysRole> getAll(SysRole sysRole) {
+        sysRole.setPage((sysRole.getPage() - NUM_ONE) * NUM_TEN);
+        Integer count = sysRoleRepository.count(sysRole);
+        List<SysRole> sysRoleList = sysRoleRepository.selectAll(sysRole);
+        return new JsonDomainArray<SysRole>().setCount(count).setData(sysRoleList);
+    }
+
+    @Override
+    public Boolean lock(Integer... arr) {
+        return sysRoleRepository.disable(arr) > NUM_ZERO;
+    }
+
+    @Override
+    public Boolean unlock(Integer id) {
+        return sysRoleRepository.enable(id) > NUM_ZERO;
     }
 }

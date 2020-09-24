@@ -15,7 +15,7 @@
     </resultMap>
 
     <!--查询角色列表-->
-    <select id="queryRoleList" resultType="com.example.springboot.entities.SysRole">
+    <select id="selectAll" resultType="com.example.springboot.entities.SysRole">
         SELECT * FROM `sys_role` WHERE 1=1
         <if test="roleId != null and roleId !='' ">
             AND roleId LIKE '%${roleId}%'
@@ -38,7 +38,7 @@
     </select>
 
     <!--查询角色总条数-->
-    <select id="getRoleCount" resultType="integer">
+    <select id="count" resultType="integer">
         SELECT COUNT(1) FROM sys_role WHERE 1=1
         <if test="roleId != null and roleId !='' ">
             AND roleId LIKE '%${roleId}%'
@@ -58,7 +58,7 @@
     </select>
 
     <!--新增角色-->
-    <insert id="insertRole">
+    <insert id="insert">
         INSERT INTO sys_role(roleName, description, createTime, deleteFlag, roleNameCn)
         VALUES (#{roleName}, #{description}, #{createTime}, #{deleteFlag}, #{roleNameCn})
     </insert>

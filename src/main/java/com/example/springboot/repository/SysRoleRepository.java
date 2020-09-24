@@ -9,42 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface SysRoleRepository {
-
-    /**
-     * 查询角色列表
-     * @param sysRole 角色封装类
-     * @return 角色集合
-     */
-    List<SysRole> queryRoleList(SysRole sysRole);
-
-    /**
-     * 查询角色总条数
-     * @param sysRole 角色封装类
-     * @return 角色总条数
-     */
-    Integer getRoleCount(SysRole sysRole);
-
-    /**
-     * 新增角色
-     * @param sysRole 角色封装类
-     * @return >0 success <0 fail
-     */
-    Integer insertRole(SysRole sysRole);
-
-    /**
-     * 禁用角色
-     * @param roleIdArr 角色id数组
-     * @return >0 success <0 fail
-     */
-    Integer disable(Integer... roleIdArr);
-
-    /**
-     * 启用角色
-     * @param roleId 角色id
-     * @return >0 success <0 fail
-     */
-    Integer enable(Integer roleId);
+public interface SysRoleRepository extends BaseRepository<SysRole> {
 
     /**
      *新增角色对应菜单
