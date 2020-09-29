@@ -34,7 +34,7 @@
     </select>
 
     <!--查询满足条件的菜单条数-->
-    <select id="getMenuCount" resultType="integer">
+    <select id="count" resultType="integer">
         SELECT COUNT(1) FROM sys_menu sm WHERE  1 = 1
         <if test="menuName!=null and menuName !=''">
             AND sm.menuName LIKE '%${menuName}%'
@@ -54,7 +54,7 @@
     </select>
 
     <!--查询满足条件的菜单集合-->
-    <select id="queryMenuList" resultType="com.example.springboot.entities.SysMenu">
+    <select id="selectAll" resultType="com.example.springboot.entities.SysMenu">
        SELECT
             sm.menuId,
             sm.menuName,
@@ -88,7 +88,7 @@
     </select>
 
     <!--修改菜单-->
-    <update id="updateMenu">
+    <update id="update">
         UPDATE sys_menu
         SET menuName    = #{menuName},
             url         = #{url},
@@ -112,7 +112,7 @@
         UPDATE sys_menu SET deleteFlag = 1 WHERE menuId = #{menuId}
     </update>
 
-    <insert id="insertMenu">
+    <insert id="insert">
         INSERT INTO sys_menu(menuName, url, permissionIdentifier, parentId, icon, deleteFlag, description, createTime)
         VALUES (#{menuName}, #{url}, #{permissionIdentifier}, #{parentId}, #{icon}, #{deleteFlag}, #{description},
                 #{createTime})

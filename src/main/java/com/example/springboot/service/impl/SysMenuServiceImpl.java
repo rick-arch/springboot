@@ -30,31 +30,32 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public JsonDomainArray<SysMenu> getMenuList(SysMenu sysMenu) {
+    public boolean modifyMenu(SysMenu sysMenu) {
+        return sysMenuRepository.update(sysMenu)> NUM_ZERO;
+    }
+
+
+    @Override
+    public boolean add(SysMenu sysMenu) {
+        sysMenu.setCreateTime(DateUtil.format());
+        return sysMenuRepository.insert(sysMenu) > NUM_ZERO;
+    }
+
+    @Override
+    public JsonDomainArray<SysMenu> getAll(SysMenu sysMenu) {
         sysMenu.setPage((sysMenu.getPage() - NUM_ONE) * NUM_TEN);//1,10  2,10
-        Integer count = sysMenuRepository.getMenuCount(sysMenu);
-        List<SysMenu> userList = sysMenuRepository.queryMenuList(sysMenu);
+        Integer count = sysMenuRepository.count(sysMenu);
+        List<SysMenu> userList = sysMenuRepository.selectAll(sysMenu);
         return new JsonDomainArray<SysMenu>().setCount(count).setData(userList);
     }
 
     @Override
-    public boolean modifyMenu(SysMenu sysMenu) {
-        return sysMenuRepository.updateMenu(sysMenu) > NUM_ZERO;
-    }
-
-    @Override
-    public boolean disableMenu(Integer... arr) {
+    public Boolean lock(Integer... arr) {
         return sysMenuRepository.disable(arr) > NUM_ZERO;
     }
 
     @Override
-    public boolean activateMenu(Integer menuId) {
-        return sysMenuRepository.enable(menuId) > NUM_ZERO;
-    }
-
-    @Override
-    public boolean addMenu(SysMenu sysMenu) {
-        sysMenu.setCreateTime(DateUtil.format());
-        return sysMenuRepository.insertMenu(sysMenu) > NUM_ZERO;
+    public Boolean unlock(Integer id) {
+        return sysMenuRepository.enable(id) > NUM_ZERO;
     }
 }

@@ -37,7 +37,7 @@ public class MenuController {
 	@ResponseBody
 	@RequiresPermissions(value = PERMISSION_MENU_VIEW)
 	public JsonDomainArray<SysMenu> getMenuList(SysMenu sysMenu) {
-		return sysMenuService.getMenuList(sysMenu);
+		return sysMenuService.getAll(sysMenu);
 	}
 
 	@PostMapping(MENU_EDIT)
@@ -53,7 +53,7 @@ public class MenuController {
 	@ResponseBody
 	@RequiresPermissions(value = {PERMISSION_MENU_DISABLE})
 	public JsonResponseVO disable(@RequestBody Integer... arr) {
-		return new JsonResponseVO(sysMenuService.disableMenu(arr));
+		return new JsonResponseVO(sysMenuService.lock(arr));
 	}
 
 	@PostMapping(MENU_ENABLE)
@@ -61,7 +61,7 @@ public class MenuController {
 	@ResponseBody
 	@RequiresPermissions(value = PERMISSION_MENU_ENABLE)
 	public JsonResponseVO enable(@PathVariable Integer menuId) {
-		return new JsonResponseVO(sysMenuService.activateMenu(menuId));
+		return new JsonResponseVO(sysMenuService.unlock(menuId));
 	}
 
 	@PostMapping(MENU_ADD)
@@ -69,6 +69,6 @@ public class MenuController {
 	@ResponseBody
 	@RequiresPermissions(value = PERMISSION_MENU_ADD)
 	public JsonResponseVO addMenu(@RequestBody SysMenu sysMenu) {
-		return new JsonResponseVO(sysMenuService.addMenu(sysMenu));
+		return new JsonResponseVO(sysMenuService.add(sysMenu));
 	}
 }
