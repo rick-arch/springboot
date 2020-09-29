@@ -3,14 +3,14 @@
 <mapper namespace="com.example.springboot.repository.SysLogRepository">
 
     <!--保存日志-->
-    <insert id="saveSysLog">
+    <insert id="insert">
         INSERT INTO sys_log(username, operation, time, method, params, ip, createtime, browser, userSystem, requestUrl)
         VALUES (#{username}, #{operation}, #{time}, #{method}, #{params}, #{ip}, #{createTime}, #{browser}, #{userSystem},
                 #{requestUrl})
     </insert>
 
     <!--查询所有日志-->
-    <select id="querySysLog" resultType="com.example.springboot.entities.SysLog">
+    <select id="selectAll" resultType="com.example.springboot.entities.SysLog">
         SELECT * FROM sys_log WHERE 1=1
         <if test="username != null and username !='' ">
             AND username LIKE '%${username}%'
@@ -52,7 +52,7 @@
     </delete>
 
     <!--查询满足条件的日志-->
-    <select id="logCount" resultType="integer">
+    <select id="count" resultType="integer">
         SELECT COUNT(1) FROM sys_log WHERE 1=1
         <if test="username != null and username !='' ">
             AND username LIKE '%${username}%'

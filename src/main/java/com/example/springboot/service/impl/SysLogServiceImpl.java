@@ -21,14 +21,14 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Override
     public void addSysLog(SysLog sysLog) {
-        sysLogRepository.saveSysLog(sysLog);
+        sysLogRepository.insert(sysLog);
     }
 
     @Override
     public JsonDomainArray<SysLog> selectSysLog(SysLog sysLog) {
         sysLog.setPage((sysLog.getPage() - NUM_ONE) * NUM_TEN);
-        Integer count = sysLogRepository.logCount(sysLog);
-        List<SysLog> sysLogList = sysLogRepository.querySysLog(sysLog);
+        Integer count = sysLogRepository.count(sysLog);
+        List<SysLog> sysLogList = sysLogRepository.selectAll(sysLog);
         return new JsonDomainArray<SysLog>().setCount(count).setData(sysLogList);
     }
 }
