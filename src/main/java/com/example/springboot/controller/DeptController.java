@@ -35,7 +35,7 @@ public class DeptController {
     @ResponseBody
     @RequiresPermissions(value = PERMISSION_DEPT_VIEW)
     public JsonDomainArray<SysDept> deptList(SysDept dept) {
-        return sysDeptService.getDeptByCondition(dept);
+        return sysDeptService.getAll(dept);
     }
 
     @PostMapping(ADD_OR_UPDATE)
@@ -43,7 +43,7 @@ public class DeptController {
     @ResponseBody
     @RequiresPermissions(value = {PERMISSION_DEPT_ADD, PERMISSION_DEPT_MODIFY}, logical = Logical.OR)
     public JsonResponseVO addOrUpdateDept(@RequestBody SysDept dept) {
-        return new JsonResponseVO(sysDeptService.addDept(dept));
+        return new JsonResponseVO(sysDeptService.add(dept));
     }
 
     @PostMapping(DISABLE_DEPT)
@@ -51,7 +51,7 @@ public class DeptController {
     @ResponseBody
     @RequiresPermissions(value = {PERMISSION_DEPT_DISABLE})
     public JsonResponseVO disable(@RequestBody Integer... arr) {
-        return new JsonResponseVO(sysDeptService.disableDept(arr));
+        return new JsonResponseVO(sysDeptService.lock(arr));
     }
 
     @PostMapping(ENABLE_DEPT)
@@ -59,6 +59,6 @@ public class DeptController {
     @ResponseBody
     @RequiresPermissions(value = PERMISSION_DEPT_ENABLE)
     public JsonResponseVO enable(@PathVariable Integer deptId) {
-        return new JsonResponseVO(sysDeptService.activateDept(deptId));
+        return new JsonResponseVO(sysDeptService.unlock(deptId));
     }
 }

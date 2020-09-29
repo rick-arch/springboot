@@ -31,33 +31,34 @@ public class SysDeptServiceImpl implements SysDeptService {
         return result;
     }
 
-    @Override
-    public JsonDomainArray<SysDept> getDeptByCondition(SysDept dept) {
-        dept.setPage((dept.getPage() - NUM_ONE) * NUM_TEN);
-        Integer count = sysDeptRepository.getDeptCount(dept);
-        List<SysDept> sysDeptList = sysDeptRepository.queryDeptList(dept);
-        return new JsonDomainArray<SysDept>().setCount(count).setData(sysDeptList);
-    }
 
     @Override
-    public Boolean addDept(SysDept dept) {
+    public boolean add(SysDept dept) {
         dept.setCreateTime(DateUtil.format());
 
         if (dept.getDeptId() == null) {
             //新增部门
-            return sysDeptRepository.insertDept(dept) > NUM_ZERO;
+            return sysDeptRepository.insert(dept) > NUM_ZERO;
         }
         //修改部门
-        return sysDeptRepository.updateDept(dept) > NUM_ZERO;
+        return sysDeptRepository.update(dept) > NUM_ZERO;
     }
 
     @Override
-    public boolean disableDept(Integer... arr) {
+    public JsonDomainArray<SysDept> getAll(SysDept dept) {
+        dept.setPage((dept.getPage() - NUM_ONE) * NUM_TEN);
+        Integer count = sysDeptRepository.count(dept);
+        List<SysDept> sysDeptList = sysDeptRepository.selectAll(dept);
+        return new JsonDomainArray<SysDept>().setCount(count).setData(sysDeptList);
+    }
+
+    @Override
+    public Boolean lock(Integer... arr) {
         return sysDeptRepository.disable(arr) > NUM_ZERO;
     }
 
     @Override
-    public boolean activateDept(Integer deptId) {
-        return sysDeptRepository.enable(deptId) > NUM_ZERO;
+    public Boolean unlock(Integer id) {
+        return sysDeptRepository.enable(id) > NUM_ZERO;
     }
 }

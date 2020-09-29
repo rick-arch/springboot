@@ -7,7 +7,7 @@
     </select>
 
     <!--查询满足条件的部门信息条数-->
-    <select id="getDeptCount" resultType="integer">
+    <select id="count" resultType="integer">
         SELECT COUNT(1) FROM sys_dept WHERE 1=1
         <if test="deptId != null and deptId !='' ">
             AND deptId LIKE '%${deptId}%'
@@ -24,7 +24,7 @@
     </select>
 
     <!--查询满足条件的部门信息-->
-    <select id="queryDeptList" resultType="com.example.springboot.entities.SysDept">
+    <select id="selectAll" resultType="com.example.springboot.entities.SysDept">
         SELECT * FROM sys_dept WHERE 1=1
         <if test="deptId != null and deptId !='' ">
             AND deptId LIKE '%${deptId}%'
@@ -44,7 +44,7 @@
     </select>
 
     <!--新增部门-->
-    <insert id="insertDept">
+    <insert id="insert">
         INSERT INTO sys_dept(deptName,status,description,createTime) VALUES (#{deptName},#{status},#{description},#{createTime})
     </insert>
 
@@ -62,7 +62,7 @@
     </update>
 
     <!--修改部门信息-->
-    <update id="updateDept">
+    <update id="update">
         UPDATE sys_dept
         SET deptName    = #{deptName},
             status      = #{status},
