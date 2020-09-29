@@ -27,7 +27,7 @@ public class PermissionController {
     @ResponseBody
     @RequiresPermissions(value = PERMISSION_VIEW)
     public JsonDomainArray<SysPermission> getPermissionList(SysPermission sysPermission) {
-        return sysPermissionService.querySysPermission(sysPermission);
+        return sysPermissionService.getAll(sysPermission);
     }
 
     @PostMapping(ENABLE_PERMISSION)
@@ -35,7 +35,7 @@ public class PermissionController {
     @ResponseBody
     @RequiresPermissions(value = PERMISSION_ENABLE)
     public JsonResponseVO enable(@PathVariable Integer permissionId) {
-        return new JsonResponseVO(sysPermissionService.activatePermission(permissionId));
+        return new JsonResponseVO(sysPermissionService.unlock(permissionId));
     }
 
 
@@ -44,7 +44,7 @@ public class PermissionController {
     @ResponseBody
     @RequiresPermissions(value = {PERMISSION_DISABLE})
     public JsonResponseVO disable(@RequestBody Integer... arr) {
-        return new JsonResponseVO(sysPermissionService.disablePermission(arr));
+        return new JsonResponseVO(sysPermissionService.lock(arr));
     }
 
     @PostMapping(PERMISSION_ADD_OR_UPDATE)
@@ -52,7 +52,7 @@ public class PermissionController {
     @ResponseBody
     @RequiresPermissions(value = {PERMISSION_MODIFY, PERMISSION_ADD}, logical = Logical.OR)
     public JsonResponseVO addRole(@RequestBody SysPermission sysPermission) {
-        return new JsonResponseVO(sysPermissionService.addOrUpdatePermission(sysPermission));
+        return new JsonResponseVO(sysPermissionService.add(sysPermission));
     }
 
     @GetMapping(PERMISSION_PARENT)

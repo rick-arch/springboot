@@ -3,7 +3,7 @@
 <mapper namespace="com.example.springboot.repository.SysPermissionRepository">
 
     <!--根据条件查询权限集合-->
-    <select id="getPermissionList" resultType="com.example.springboot.entities.SysPermission">
+    <select id="selectAll" resultType="com.example.springboot.entities.SysPermission">
         SELECT * FROM sys_permission WHERE  parentId != 0
         <if test="permissionId != null and permissionId != ''">
             AND permissionId LIKE '%${permissionId}%'
@@ -26,7 +26,7 @@
     </select>
 
     <!--根据条件查询权限条数-->
-    <select id="getSysPermissionCount" resultType="integer">
+    <select id="count" resultType="integer">
         SELECT COUNT(1) FROM sys_permission WHERE  parentId != 0
         <if test="permissionId != null and permissionId != ''">
             AND permissionId LIKE '%${permissionId}%'
@@ -59,12 +59,12 @@
     </update>
 
     <!-- 新增权限-->
-    <insert id="insertPermission">
+    <insert id="insert">
         INSERT INTO sys_permission(permissionName, description, createTime,permissionNameCn,parentId)
         VALUES (#{permissionName}, #{description}, #{createTime},#{permissionNameCn},#{parentId})
     </insert>
 
-    <update id="updatePermission">
+    <update id="update">
         UPDATE sys_permission
         SET permissionName = #{permissionName},
             description    = #{description},
