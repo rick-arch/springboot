@@ -3,7 +3,7 @@
 <mapper namespace="com.example.springboot.repository.SysIconRepository">
 
     <!--根据条件查询icon-->
-    <select id="selectIconList" resultType="com.example.springboot.entities.SysIcon">
+    <select id="selectAll" resultType="com.example.springboot.entities.SysIcon">
         SELECT * FROM sys_icon WHERE 1=1
         <if test="iconId != null and iconId !='' ">
             AND iconId LIKE '%${iconId}%'
@@ -20,7 +20,7 @@
     </select>
 
 <!--    查询满足条件的icon-->
-    <select id="countIcon" resultType="integer">
+    <select id="count" resultType="integer">
         SELECT COUNT(1) FROM sys_icon WHERE 1=1
         <if test="iconId != null and iconId !='' ">
             AND iconId LIKE '%${iconId}%'
@@ -34,7 +34,7 @@
     </select>
 
     <!--新增icon-->
-    <insert id="insertIcon">
+    <insert id="insert">
         INSERT INTO sys_icon(iconClass, iconName, iconCode, iconFontClass)
         VALUES (#{iconClass}, #{iconName}, #{iconCode}, #{iconFontClass})
     </insert>

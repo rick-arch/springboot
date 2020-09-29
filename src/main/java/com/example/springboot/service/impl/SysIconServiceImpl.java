@@ -21,8 +21,8 @@ public class SysIconServiceImpl implements SysIconService {
     @Override
     public JsonDomainArray<SysIcon> queryAll(SysIcon sysIcon) {
         sysIcon.setPage((sysIcon.getPage() - NUM_ONE) * NUM_TEN);
-        Integer count = sysIconRepository.countIcon(sysIcon);
-        List<SysIcon> iconList = sysIconRepository.selectIconList(sysIcon);
+        Integer count = sysIconRepository.count(sysIcon);
+        List<SysIcon> iconList = sysIconRepository.selectAll(sysIcon);
         return new JsonDomainArray<SysIcon>().setCount(count).setData(iconList);
     }
 
@@ -31,6 +31,6 @@ public class SysIconServiceImpl implements SysIconService {
         sysIcon.setIconClass(LAYUI_ICON + sysIcon.getIconClass());
         String[] ar = sysIcon.getIconCode().split(AND_SYMBOL);
         sysIcon.setIconCode(AMP + ar[NUM_ONE]);
-        return sysIconRepository.insertIcon(sysIcon) > NUM_ZERO;
+        return sysIconRepository.insert(sysIcon) > NUM_ZERO;
     }
 }
