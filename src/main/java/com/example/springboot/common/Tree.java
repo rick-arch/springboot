@@ -61,7 +61,7 @@ public final class Tree {
 	public static List<Tree> permissionList2Tree(List<SysPermission> list) {
 
 		//过滤出父级权限
-		List<SysPermission> parentList = list.stream().filter(sysPermission -> sysPermission.getParentId() == NUM_ZERO).collect(Collectors.toList());
+		List<SysPermission> parentList = list.stream().filter(sysPermission -> sysPermission.getParentId().equals(NUM_ZERO)).collect(Collectors.toList());
 
 		List<Tree> permissionList = Lists.newArrayList();//最后返回的树形权限
 
