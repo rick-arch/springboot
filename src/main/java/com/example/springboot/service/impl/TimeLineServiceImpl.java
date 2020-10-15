@@ -22,12 +22,12 @@ public class TimeLineServiceImpl implements TimeLineService {
 
     @Override
     public List<TimeLine> selectAll() {
-        return timeLineRepository.queryAllTimeLine();
+        return timeLineRepository.selectAll(null);
     }
 
     @Override
     public boolean addTimeLine(TimeLine timeLine) {
         timeLine.setTimeLineTitle(timeLine.getTimeLineTitle() + "  " + DateUtil.format() + "  " + DateUtil.getWeek(new Date()));
-        return timeLineRepository.insertTimeLine(timeLine) > NUM_ZERO;
+        return timeLineRepository.insert(timeLine) > NUM_ZERO;
     }
 }

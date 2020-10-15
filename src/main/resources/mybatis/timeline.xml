@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.springboot.repository.TimeLineRepository">
-    <select id="queryAllTimeLine" resultType="com.example.springboot.entities.TimeLine">
+    <select id="selectAll" resultType="com.example.springboot.entities.TimeLine">
         SELECT * FROM time_line ORDER BY timeLineId
     </select>
 
-    <insert id="insertTimeLine">
+    <insert id="insert">
         INSERT INTO time_line(timeLineTitle, timeLineContent, contentJapan)
         VALUES (#{timeLineTitle}, #{timeLineContent}, #{contentJapan})
     </insert>
