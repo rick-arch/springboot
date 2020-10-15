@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.153.128
+ Source Server         : springboot
  Source Server Type    : MySQL
  Source Server Version : 80020
- Source Host           : 192.168.153.128:3306
+ Source Host           : localhost:3306
  Source Schema         : springboot
 
  Target Server Type    : MySQL
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 18/06/2020 10:39:54
+ Date: 15/10/2020 09:50:17
 */
 
 SET NAMES utf8mb4;
@@ -132,7 +132,7 @@ CREATE TABLE `sys_dept`  (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`deptId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -156,7 +156,7 @@ CREATE TABLE `sys_icon`  (
   `iconCode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标code',
   `iconFontClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标字体class',
   PRIMARY KEY (`iconId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 172 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图标表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 171 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图标表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_icon
@@ -347,7 +347,379 @@ CREATE TABLE `sys_log`  (
   `userSystem` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作系统',
   `requestUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求路径',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11253 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11434 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+INSERT INTO `sys_log` VALUES (11253, NULL, '登录主页', 3, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:16', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=409e9f56-e0dc-42ac-b871-3db0773d1a8f');
+INSERT INTO `sys_log` VALUES (11254, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:17', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11255, '小怡', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:23', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11256, '小怡', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:30', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11257, '小怡', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:30', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11258, '小怡', '菜单，角色配置 （菜单tree）用', 12, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11259, '小怡', '菜单，角色配置 （菜单tree）用', 13, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11260, '小怡', '菜单，角色配置 （菜单tree）用', 7, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11261, '小怡', '菜单，角色配置 （菜单tree）用', 7, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11262, '小怡', '查询菜单', 50, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-06 21:31:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11263, '小怡', '查询菜单', 16, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-06 21:31:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11264, '小怡', '部门管理主页', 0, 'com.example.springboot.controller.ViewController.deptManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:32', 'Chrome 8', 'Windows 10', '/dept/deptIndex');
+INSERT INTO `sys_log` VALUES (11265, '小怡', '部门管理主页', 0, 'com.example.springboot.controller.ViewController.deptManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-06 21:31:32', 'Chrome 8', 'Windows 10', '/dept/deptIndex');
+INSERT INTO `sys_log` VALUES (11266, '小怡', '部门信息', 35, 'com.example.springboot.controller.DeptController.deptList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-06 21:31:32', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11267, '小怡', '部门信息', 10, 'com.example.springboot.controller.DeptController.deptList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-06 21:31:32', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11268, NULL, '登录主页', 3, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:51:35', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=b67725dd-9077-476c-a6a9-2b46efa83550');
+INSERT INTO `sys_log` VALUES (11269, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:51:37', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11270, NULL, '登录主页', 2, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:54:23', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=040d5f04-8777-4026-9ef7-f70534fdf7ac');
+INSERT INTO `sys_log` VALUES (11271, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:54:28', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11272, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:54:36', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11273, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:54:37', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11274, 'rick', '查询父级权限', 13, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:54:37', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11275, 'rick', '查询父级权限', 8, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 09:54:37', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11276, 'rick', '查询所有权限', 43, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 09:54:38', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11277, NULL, '登录主页', 2, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:17', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=b8226415-9590-40b8-97ba-27aa6e6f4b88');
+INSERT INTO `sys_log` VALUES (11278, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:17', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11279, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:26', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11280, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:29', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11281, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:29', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11282, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:30', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11283, 'rick', '查询可用权限', 18, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:30', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11284, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:30', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11285, 'rick', '查询可用权限', 9, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:30', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11286, 'rick', '查询角色', 43, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:23:30', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11287, 'rick', '查询角色', 12, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:23:30', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11288, 'rick', '查询角色对应权限', 8, 'com.example.springboot.controller.RoleController.permissionList()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-11 10:23:43', 'Chrome 8', 'Windows 10', '/role/getPermission/1');
+INSERT INTO `sys_log` VALUES (11289, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:53', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11290, 'rick', '菜单，角色配置 （菜单tree）用', 10, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:53', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11291, 'rick', '查询可用权限', 10, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:23:53', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11292, 'rick', '查询角色', 37, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:23:53', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11293, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:24:30', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11294, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:24:30', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11295, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:24:30', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11296, 'rick', '查询角色', 24, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:24:30', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11297, 'rick', '查询角色对应权限', 6, 'com.example.springboot.controller.RoleController.permissionList()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-11 10:24:34', 'Chrome 8', 'Windows 10', '/role/getPermission/1');
+INSERT INTO `sys_log` VALUES (11298, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:24:46', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11299, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:24:46', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11300, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:24:46', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11301, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:24:46', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11302, NULL, '登录主页', 4, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:30', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=d75b8b41-5531-418f-8d5b-6b8d19cf6a12');
+INSERT INTO `sys_log` VALUES (11303, 'rick', '系统主页', 1, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:39', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11304, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11305, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11306, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11307, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11308, 'rick', '菜单，角色配置 （菜单tree）用', 6, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11309, 'rick', '菜单，角色配置 （菜单tree）用', 7, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11310, 'rick', '查询菜单', 62, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11311, 'rick', '查询菜单', 13, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:27:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11312, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11313, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11314, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11315, 'rick', '查询可用权限', 19, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11316, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11317, 'rick', '查询可用权限', 9, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11318, 'rick', '查询角色', 11, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11319, 'rick', '查询角色', 36, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:27:42', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11320, 'rick', '查询角色对应权限', 8, 'com.example.springboot.controller.RoleController.permissionList()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-11 10:27:58', 'Chrome 8', 'Windows 10', '/role/getPermission/1');
+INSERT INTO `sys_log` VALUES (11321, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:00', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11322, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:00', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11323, 'rick', '查询可用权限', 6, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:00', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11324, 'rick', '查询角色', 10, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:00', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11325, 'rick', '查询角色对应菜单', 4, 'com.example.springboot.controller.RoleController.getMenuListByRoleId()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:01', 'Chrome 8', 'Windows 10', '/role/getMenuListByRoleId/1');
+INSERT INTO `sys_log` VALUES (11326, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:02', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11327, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:02', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11328, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:02', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11329, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:02', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11330, 'rick', '查询角色对应权限', 4, 'com.example.springboot.controller.RoleController.permissionList()', '[5]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:20', 'Chrome 8', 'Windows 10', '/role/getPermission/5');
+INSERT INTO `sys_log` VALUES (11331, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:22', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11332, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:22', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11333, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:22', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11334, 'rick', '查询角色', 7, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:22', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11335, 'rick', '查询角色对应菜单', 2, 'com.example.springboot.controller.RoleController.getMenuListByRoleId()', '[7]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:23', 'Chrome 8', 'Windows 10', '/role/getMenuListByRoleId/7');
+INSERT INTO `sys_log` VALUES (11336, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:24', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11337, 'rick', '菜单，角色配置 （菜单tree）用', 2, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:24', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11338, 'rick', '查询可用权限', 3, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:28:24', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11339, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:28:24', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11340, 'rick', '查询角色对应权限', 5, 'com.example.springboot.controller.RoleController.permissionList()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-11 10:35:17', 'Chrome 8', 'Windows 10', '/role/getPermission/1');
+INSERT INTO `sys_log` VALUES (11341, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:24', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11342, 'rick', '查询可用权限', 9, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:24', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11343, 'rick', '菜单，角色配置 （菜单tree）用', 7, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:24', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11344, 'rick', '查询角色', 27, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:35:25', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11345, 'rick', '查询角色对应菜单', 4, 'com.example.springboot.controller.RoleController.getMenuListByRoleId()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-11 10:35:25', 'Chrome 8', 'Windows 10', '/role/getMenuListByRoleId/1');
+INSERT INTO `sys_log` VALUES (11346, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:50', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11347, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:50', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11348, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:50', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11349, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:35:50', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11350, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:51', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11351, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:51', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11352, 'rick', '查询父级权限', 10, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:52', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11353, 'rick', '查询父级权限', 3, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:35:52', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11354, 'rick', '查询所有权限', 7, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:35:52', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11355, 'rick', '查询所有权限', 6, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:35:52', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11356, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:00', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11357, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:00', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11358, 'rick', '查询可用权限', 6, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:00', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11359, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:36:00', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11360, 'rick', '查询角色对应菜单', 3, 'com.example.springboot.controller.RoleController.getMenuListByRoleId()', '[12]', '0:0:0:0:0:0:0:1', '2020-10-11 10:36:04', 'Chrome 8', 'Windows 10', '/role/getMenuListByRoleId/12');
+INSERT INTO `sys_log` VALUES (11361, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:22', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11362, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:22', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11363, 'rick', '查询角色', 4, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:22', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11364, 'rick', '部门信息', 31, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:22', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11365, 'rick', '查询角色', 2, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:22', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11366, 'rick', '部门信息', 3, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:22', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11367, 'rick', '查询用户', 37, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:36:23', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11368, 'rick', '查询用户', 7, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:36:23', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11369, 'rick', '在线用户主页', 0, 'com.example.springboot.controller.ViewController.index()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:27', 'Chrome 8', 'Windows 10', '/online/index');
+INSERT INTO `sys_log` VALUES (11370, 'rick', '在线用户主页', 0, 'com.example.springboot.controller.ViewController.index()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:27', 'Chrome 8', 'Windows 10', '/online/index');
+INSERT INTO `sys_log` VALUES (11371, 'rick', '在线用户', 2, 'com.example.springboot.controller.SessionController.onlineUserList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:27', 'Chrome 8', 'Windows 10', '/online/list');
+INSERT INTO `sys_log` VALUES (11372, 'rick', '在线用户', 0, 'com.example.springboot.controller.SessionController.onlineUserList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:27', 'Chrome 8', 'Windows 10', '/online/list');
+INSERT INTO `sys_log` VALUES (11373, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:28', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11374, 'rick', '部门信息', 4, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:28', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11375, 'rick', '查询角色', 1, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:36:28', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11376, 'rick', '查询用户', 7, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:36:28', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11377, NULL, '登录主页', 3, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:39:09', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=16f2cb89-a6de-4ead-a226-43214514a5f5');
+INSERT INTO `sys_log` VALUES (11378, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:39:14', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11379, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:39:16', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11380, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:39:16', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11381, 'rick', '查询父级权限', 17, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:39:16', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11382, 'rick', '查询父级权限', 6, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 10:39:16', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11383, 'rick', '查询所有权限', 28, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 10:39:17', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11384, NULL, '登录主页', 3, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:25:55', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=1d5ce127-5ce2-49e9-adf5-19439b1afeb9');
+INSERT INTO `sys_log` VALUES (11385, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:25:57', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11386, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:03', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11387, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11388, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11389, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11390, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11391, 'rick', '菜单，角色配置 （菜单tree）用', 8, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11392, 'rick', '菜单，角色配置 （菜单tree）用', 13, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11393, 'rick', '查询菜单', 87, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11394, 'rick', '查询菜单', 21, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11395, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:24', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11396, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:24', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11397, 'rick', '查询父级权限', 15, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:24', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11398, 'rick', '查询父级权限', 5, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:24', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11399, 'rick', '查询所有权限', 15, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:24', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11400, 'rick', '查询所有权限', 8, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:24', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11401, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11402, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11403, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11404, 'rick', '查询可用权限', 16, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11405, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11406, 'rick', '查询可用权限', 5, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11407, 'rick', '查询角色', 8, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11408, 'rick', '查询角色', 7, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:27', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11409, 'rick', '部门管理主页', 0, 'com.example.springboot.controller.ViewController.deptManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:29', 'Chrome 8', 'Windows 10', '/dept/deptIndex');
+INSERT INTO `sys_log` VALUES (11410, 'rick', '部门管理主页', 0, 'com.example.springboot.controller.ViewController.deptManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:29', 'Chrome 8', 'Windows 10', '/dept/deptIndex');
+INSERT INTO `sys_log` VALUES (11411, 'rick', '部门信息', 59, 'com.example.springboot.controller.DeptController.deptList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:29', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11412, 'rick', '部门信息', 6, 'com.example.springboot.controller.DeptController.deptList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:29', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11413, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:33', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11414, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:33', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11415, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:26:33', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11416, 'rick', '查询菜单', 11, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:33', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11417, 'rick', '查询菜单', 6, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":30}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:26:37', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11418, 'rick', '系统日志主页', 0, 'com.example.springboot.controller.ViewController.logManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:27:02', 'Chrome 8', 'Windows 10', '/system/logIndex');
+INSERT INTO `sys_log` VALUES (11419, 'rick', '系统日志主页', 0, 'com.example.springboot.controller.ViewController.logManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:27:02', 'Chrome 8', 'Windows 10', '/system/logIndex');
+INSERT INTO `sys_log` VALUES (11420, 'rick', '查询系统操作日志', 12, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:04', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11421, 'rick', '查询系统操作日志', 9, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:04', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11422, 'rick', '查询系统操作日志', 6, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:05', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11423, 'rick', '查询系统操作日志', 7, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:06', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11424, 'rick', '查询系统操作日志', 7, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:06', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11425, 'rick', '查询系统操作日志', 6, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:06', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11426, 'rick', '查询系统操作日志', 7, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:07', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11427, 'rick', '查询系统操作日志', 6, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:07', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11428, 'rick', '查询系统操作日志', 6, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:07', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11429, 'rick', '查询系统操作日志', 7, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:07', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11430, 'rick', '系统日志主页', 0, 'com.example.springboot.controller.ViewController.logManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:27:14', 'Chrome 8', 'Windows 10', '/system/logIndex');
+INSERT INTO `sys_log` VALUES (11431, 'rick', '查询系统操作日志', 4, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:14', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11432, 'rick', '查询系统操作日志', 6, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"browser\":\"\",\"createTime\":\"\",\"ip\":\"\",\"limit\":10,\"method\":\"\",\"operation\":\"\",\"page\":0,\"params\":\"\",\"requestUrl\":\"\",\"userSystem\":\"\",\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:15', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11433, 'rick', '系统日志主页', 0, 'com.example.springboot.controller.ViewController.logManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-11 20:27:21', 'Chrome 8', 'Windows 10', '/system/logIndex');
+INSERT INTO `sys_log` VALUES (11434, 'rick', '查询系统操作日志', 5, 'com.example.springboot.controller.LogController.sysLogList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-11 20:27:21', 'Chrome 8', 'Windows 10', '/system/logList');
+INSERT INTO `sys_log` VALUES (11435, NULL, '登录主页', 2, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:12', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=adbe3bd0-e892-4775-be2d-fc0321335341');
+INSERT INTO `sys_log` VALUES (11436, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:13', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11437, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:24', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11438, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:25', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11439, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:25', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11440, 'rick', '菜单，角色配置 （菜单tree）用', 8, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:25', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11441, 'rick', '菜单，角色配置 （菜单tree）用', 8, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:25', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11442, 'rick', '菜单，角色配置 （菜单tree）用', 5, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:26', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11443, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:35:26', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11444, 'rick', '查询菜单', 71, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:35:26', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11445, 'rick', '查询菜单', 9, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:35:26', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11446, NULL, '登录主页', 7, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:44:08', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=fb355fe7-78c7-4cee-8356-4c50aa36946a');
+INSERT INTO `sys_log` VALUES (11447, NULL, '注册用户', 55, 'com.example.springboot.controller.UserController.add()', '[{\"chinaName\":\"rick\",\"createTime\":\"2020-10-14 15:44:34\",\"deptId\":\"2\",\"email\":\"1122\",\"gender\":\"1\",\"password\":\"111111\",\"roleLists\":[],\"status\":\"1\",\"username\":\"rick\"}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:44:34', 'Chrome 8', 'Windows 10', '/user/register');
+INSERT INTO `sys_log` VALUES (11448, NULL, '注册用户', 15, 'com.example.springboot.controller.UserController.add()', '[{\"chinaName\":\"yyy\",\"createTime\":\"2020-10-14 15:45:03\",\"deptId\":\"2\",\"email\":\"1122\",\"gender\":\"1\",\"id\":18,\"password\":\"96e79218965eb72c92a549dd5a330112\",\"roleLists\":[],\"status\":\"1\",\"username\":\"yyy\"}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:45:03', 'Chrome 8', 'Windows 10', '/user/register');
+INSERT INTO `sys_log` VALUES (11449, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:05', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11450, 'yyy', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:38', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11451, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:42', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=f18716df-148b-4e8e-94d7-bd01a9a6a412');
+INSERT INTO `sys_log` VALUES (11452, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:52', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11453, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11454, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11455, 'rick', '查询角色', 5, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11456, 'rick', '部门信息', 19, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11457, 'rick', '部门信息', 5, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11458, 'rick', '查询角色', 8, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11459, 'rick', '查询用户', 79, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11460, 'rick', '查询用户', 14, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:45:57', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11461, 'rick', '查询用户', 6, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":10}]', '0:0:0:0:0:0:0:1', '2020-10-14 15:46:03', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11462, NULL, '登录主页', 2, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:09:44', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=87e28d96-9d5c-4418-8887-d692ab590a40');
+INSERT INTO `sys_log` VALUES (11463, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:09:52', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11464, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:09:57', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11465, 'rick', '权限管理主页', 0, 'com.example.springboot.controller.ViewController.permissionManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:09:57', 'Chrome 8', 'Windows 10', '/permission/permissionIndex');
+INSERT INTO `sys_log` VALUES (11466, 'rick', '查询父级权限', 11, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:09:58', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11467, 'rick', '查询父级权限', 7, 'com.example.springboot.controller.PermissionController.parent()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:09:58', 'Chrome 8', 'Windows 10', '/permission/parent');
+INSERT INTO `sys_log` VALUES (11468, 'rick', '查询所有权限', 39, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:09:58', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11469, 'rick', '查询所有权限', 9, 'com.example.springboot.controller.PermissionController.getPermissionList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:09:58', 'Chrome 8', 'Windows 10', '/permission/getPermissionList');
+INSERT INTO `sys_log` VALUES (11470, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:01', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11471, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:01', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11472, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:02', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11473, 'rick', '查询可用权限', 15, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:02', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11474, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:02', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11475, 'rick', '查询可用权限', 8, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:02', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11476, 'rick', '查询角色', 13, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:02', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11477, 'rick', '查询角色', 11, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:02', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11478, 'rick', '查询角色对应权限', 10, 'com.example.springboot.controller.RoleController.permissionList()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:04', 'Chrome 8', 'Windows 10', '/role/getPermission/1');
+INSERT INTO `sys_log` VALUES (11479, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:06', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11480, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:06', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11481, 'rick', '查询可用权限', 6, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:06', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11482, 'rick', '查询角色', 6, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:06', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11483, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:08', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11484, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:08', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11485, 'rick', '查询可用权限', 5, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:08', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11486, 'rick', '查询角色', 7, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:09', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11487, 'rick', '查询角色对应菜单', 6, 'com.example.springboot.controller.RoleController.getMenuListByRoleId()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:09', 'Chrome 8', 'Windows 10', '/role/getMenuListByRoleId/1');
+INSERT INTO `sys_log` VALUES (11488, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:17', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11489, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:17', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11490, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:17', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11491, 'rick', '查询角色', 6, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:17', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11492, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:19', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11493, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:19', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11494, 'rick', '查询时间线', 14, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:19', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11495, 'rick', '查询时间线', 4, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:19', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11496, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:20', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11497, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:36', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11498, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:37', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11499, 'rick', '查询可用权限', 3, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:37', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11500, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:37', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11501, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:42', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11502, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:42', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11503, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:42', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11504, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:42', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11505, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:44', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11506, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:44', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11507, 'rick', '查询可用权限', 5, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:10:44', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11508, 'rick', '查询角色', 6, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:10:44', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11509, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:16', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11510, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:18', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11511, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:18', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11512, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:19', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11513, 'rick', '查询可用权限', 4, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:19', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11514, 'rick', '菜单，角色配置 （菜单tree）用', 8, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:19', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11515, 'rick', '查询可用权限', 6, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:19', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11516, 'rick', '查询角色', 8, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:19', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11517, 'rick', '查询角色', 5, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:19', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11518, 'rick', '查询角色对应权限', 6, 'com.example.springboot.controller.RoleController.permissionList()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:20', 'Chrome 8', 'Windows 10', '/role/getPermission/1');
+INSERT INTO `sys_log` VALUES (11519, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:27', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11520, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:29', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11521, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:29', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11522, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:29', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11523, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:29', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11524, 'rick', '菜单，角色配置 （菜单tree）用', 2, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:29', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11525, 'rick', '菜单，角色配置 （菜单tree）用', 2, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:29', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11526, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:30', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11527, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:30', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11528, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11529, 'rick', '查询可用权限', 3, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11530, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11531, 'rick', '查询可用权限', 8, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11532, 'rick', '查询菜单', 524, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11533, 'rick', '查询角色', 215, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11534, 'rick', '查询角色', 8, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:31', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11535, 'rick', '角色管理主页', 0, 'com.example.springboot.controller.ViewController.roleManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:41', 'Chrome 8', 'Windows 10', '/role/roleIndex');
+INSERT INTO `sys_log` VALUES (11536, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:41', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11537, 'rick', '查询可用权限', 7, 'com.example.springboot.controller.RoleController.list()', NULL, '0:0:0:0:0:0:0:1', '2020-10-14 16:15:41', 'Chrome 8', 'Windows 10', '/role/permission/list');
+INSERT INTO `sys_log` VALUES (11538, 'rick', '查询角色', 6, 'com.example.springboot.controller.RoleController.getRoleList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-14 16:15:41', 'Chrome 8', 'Windows 10', '/role/getRoleList');
+INSERT INTO `sys_log` VALUES (11539, NULL, '登录主页', 2, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:27:55', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=c0f7c333-6081-4a40-84c0-962c4bc63bfd');
+INSERT INTO `sys_log` VALUES (11540, NULL, '登录主页', 0, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:27:56', 'Chrome 8', 'Windows 10', '/login');
+INSERT INTO `sys_log` VALUES (11541, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:05', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11542, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:09', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11543, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:09', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11544, 'rick', '查询角色', 7, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:10', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11545, 'rick', '部门信息', 17, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:10', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11546, 'rick', '部门信息', 5, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:10', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11547, 'rick', '查询角色', 5, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:10', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11548, 'rick', '查询用户', 49, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:10', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11549, 'rick', '查询用户', 13, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:10', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11550, 'rick', '查询用户', 9, 'com.example.springboot.controller.UserController.userList()', '[{\"chinaName\":\"\",\"createTime\":\"\",\"deptId\":\"\",\"description\":\"\",\"email\":\"\",\"limit\":10,\"page\":0,\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:14', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11551, 'rick', '查询用户', 11, 'com.example.springboot.controller.UserController.userList()', '[{\"chinaName\":\"\",\"createTime\":\"\",\"deptId\":\"\",\"description\":\"\",\"email\":\"\",\"limit\":10,\"page\":0,\"username\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:14', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11552, 'rick', '修改或新增用户', 46, 'com.example.springboot.controller.UserController.updateOrUpdateUser()', '[{\"chinaName\":\"张三\",\"createTime\":\"2020-10-15 09:28:21\",\"deptId\":\"2\",\"description\":\"我是张三11\",\"email\":\"123@qq.com\",\"gender\":\"0\",\"id\":1,\"roleLists\":[{\"roleId\":5}],\"status\":\"1\",\"username\":\"zhangsan\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:21', 'Chrome 8', 'Windows 10', '/user/updateUser');
+INSERT INTO `sys_log` VALUES (11553, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:21', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11554, 'rick', '查询角色', 2, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:21', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11555, 'rick', '部门信息', 4, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:21', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11556, 'rick', '查询用户', 7, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:21', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11557, 'rick', '禁用用户', 11, 'com.example.springboot.controller.UserController.deleteUser()', '[[1]]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:25', 'Chrome 8', 'Windows 10', '/user/delete');
+INSERT INTO `sys_log` VALUES (11558, 'rick', '查询用户', 7, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:25', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11559, 'rick', '启用用户', 10, 'com.example.springboot.controller.UserController.enableUser()', '[1]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:26', 'Chrome 8', 'Windows 10', '/user/enable/1');
+INSERT INTO `sys_log` VALUES (11560, 'rick', '查询用户', 5, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:26', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11561, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:38', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11562, 'rick', '部门信息', 10, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:39', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11563, 'rick', '查询角色', 9, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:28:39', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11564, 'rick', '查询用户', 4, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:39', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11565, 'rick', '查询用户', 6, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":10}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:40', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11566, 'rick', '查询用户', 6, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:28:45', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11567, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:29:51', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11568, 'rick', '部门信息', 4, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:29:51', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11569, 'rick', '查询角色', 7, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:29:51', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11570, 'rick', '查询用户', 5, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:29:51', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11571, NULL, '登录主页', 3, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:31:53', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=f2329b14-64b4-4370-890c-f3f1cacaeaeb');
+INSERT INTO `sys_log` VALUES (11572, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:03', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11573, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:08', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11574, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:08', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11575, 'rick', '查询角色', 6, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:09', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11576, 'rick', '部门信息', 14, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:09', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11577, 'rick', '部门信息', 4, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:09', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11578, 'rick', '查询角色', 5, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:09', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11579, 'rick', '查询用户', 52, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:32:09', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11580, 'rick', '查询用户', 10, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:32:09', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11581, 'rick', '修改或新增用户', 13, 'com.example.springboot.controller.UserController.updateOrUpdateUser()', '[{\"chinaName\":\"1\",\"createTime\":\"2020-10-15 09:32:21\",\"deptId\":\"1\",\"description\":\"1\",\"email\":\"1\",\"gender\":\"0\",\"id\":19,\"roleLists\":[],\"status\":\"1\",\"username\":\"1\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:32:21', 'Chrome 8', 'Windows 10', '/user/updateUser');
+INSERT INTO `sys_log` VALUES (11582, 'rick', '用户管理主页', 0, 'com.example.springboot.controller.ViewController.userManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:21', 'Chrome 8', 'Windows 10', '/user/userIndex');
+INSERT INTO `sys_log` VALUES (11583, 'rick', '查询角色', 2, 'com.example.springboot.controller.UserController.getRoleList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:21', 'Chrome 8', 'Windows 10', '/user/getRoleList');
+INSERT INTO `sys_log` VALUES (11584, 'rick', '部门信息', 8, 'com.example.springboot.controller.DeptController.deptList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:32:21', 'Chrome 8', 'Windows 10', '/dept/deptList');
+INSERT INTO `sys_log` VALUES (11585, 'rick', '查询用户', 7, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:32:21', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11586, 'rick', '查询用户', 6, 'com.example.springboot.controller.UserController.userList()', '[{\"limit\":10,\"page\":10}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:32:27', 'Chrome 8', 'Windows 10', '/user/userList');
+INSERT INTO `sys_log` VALUES (11587, NULL, '登录主页', 4, 'com.example.springboot.controller.ViewController.login()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:42:58', 'Chrome 8', 'Windows 10', '/login;JSESSIONID=7267c2e9-d6d5-45e6-8818-43b629057040');
+INSERT INTO `sys_log` VALUES (11588, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:43:04', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11589, 'rick', '时间线管理主页', 1, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:43:08', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11590, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:43:09', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11591, 'rick', '查询时间线', 18, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:43:09', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11592, 'rick', '查询时间线', 6, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:43:09', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11593, 'rick', '新增时间线', 28, 'com.example.springboot.controller.TimeLineController.timeLineAdd()', '[{\"contentJapan\":\"<p>一年以上、大丈夫ですか</p>\",\"timeLineContent\":\"<p>一年多了，你还好吗<br>一年以上、大丈夫ですか</p>\",\"timeLineTitle\":\"大丈夫ですか  2020-10-15 09:45:55  星期四\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:45:55', 'Chrome 8', 'Windows 10', '/timeLine/add');
+INSERT INTO `sys_log` VALUES (11594, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:45:55', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11595, 'rick', '查询时间线', 4, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:45:56', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11596, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:20', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11597, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:20', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11598, 'rick', '菜单，角色配置 （菜单tree）用', 7, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:20', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11599, 'rick', '菜单，角色配置 （菜单tree）用', 9, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:20', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11600, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:20', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11601, 'rick', '菜单，角色配置 （菜单tree）用', 5, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:20', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11602, 'rick', '查询菜单', 37, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:47:21', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11603, 'rick', '查询菜单', 11, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:47:21', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11604, 'rick', '查询菜单', 9, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"createTime\":\"\",\"description\":\"\",\"icon\":\"\",\"limit\":10,\"menuName\":\"私\",\"page\":0,\"url\":\"\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:47:27', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11605, 'rick', '修改菜单', 15, 'com.example.springboot.controller.MenuController.menuEdit()', '[{\"deleteFlag\":\"1\",\"description\":\"時間、新しい愛、古い愛、愛\",\"icon\":\"layui-icon layui-icon-engine\",\"menuId\":33,\"menuName\":\"ストーリー\",\"parentId\":40,\"url\":\"/timeLine/timeLineIndex\"}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:47:33', 'Chrome 8', 'Windows 10', '/menu/editMenu');
+INSERT INTO `sys_log` VALUES (11606, 'rick', '菜单管理主页', 0, 'com.example.springboot.controller.ViewController.menuManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:33', 'Chrome 8', 'Windows 10', '/menu/menuIndex');
+INSERT INTO `sys_log` VALUES (11607, 'rick', '菜单，角色配置 （菜单tree）用', 4, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:33', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11608, 'rick', '菜单，角色配置 （菜单tree）用', 3, 'com.example.springboot.controller.MenuController.getMenuList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:33', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11609, 'rick', '查询菜单', 7, 'com.example.springboot.controller.MenuController.getMenuList()', '[{\"limit\":10,\"page\":0}]', '0:0:0:0:0:0:0:1', '2020-10-15 09:47:33', 'Chrome 8', 'Windows 10', '/menu/getMenuList');
+INSERT INTO `sys_log` VALUES (11610, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:34', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11611, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:35', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11612, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:37', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11613, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:37', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11614, 'rick', '查询时间线', 3, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:37', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11615, 'rick', '查询时间线', 2, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:47:37', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11616, 'rick', '系统主页', 0, 'com.example.springboot.controller.ViewController.mainIndex()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:49:18', 'Chrome 8', 'Windows 10', '/main');
+INSERT INTO `sys_log` VALUES (11617, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:49:21', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11618, 'rick', '时间线管理主页', 0, 'com.example.springboot.controller.ViewController.timeLineManager()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:49:21', 'Chrome 8', 'Windows 10', '/timeLine/timeLineIndex');
+INSERT INTO `sys_log` VALUES (11619, 'rick', '查询时间线', 3, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:49:21', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
+INSERT INTO `sys_log` VALUES (11620, 'rick', '查询时间线', 3, 'com.example.springboot.controller.TimeLineController.timeLineList()', NULL, '0:0:0:0:0:0:0:1', '2020-10-15 09:49:21', 'Chrome 8', 'Windows 10', '/timeLine/timeLineList');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -364,7 +736,7 @@ CREATE TABLE `sys_menu`  (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单描述',
   `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`menuId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -377,7 +749,7 @@ INSERT INTO `sys_menu` VALUES (25, '角色管理', '/role/roleIndex', NULL, 1, '
 INSERT INTO `sys_menu` VALUES (30, 'icon 管理', '/icon/iconIndex', NULL, 34, 'layui-icon layui-icon-snowflake', '1', 'Time will help you solve everything.', '2019-12-17 14:20:10');
 INSERT INTO `sys_menu` VALUES (31, '搜索引擎', '', NULL, 0, 'layui-icon layui-icon-search', '1', 'Neither slow nor determined.', '2019-12-18 10:43:25');
 INSERT INTO `sys_menu` VALUES (32, '百度搜索', 'https://www.baidu.com', NULL, 31, 'layui-icon layui-icon-tree', '1', 'It\'s not mine，but his.', '2019-12-18 10:44:53');
-INSERT INTO `sys_menu` VALUES (33, '私とあなたの物語', '/timeLine/timeLineIndex', NULL, 40, 'layui-icon layui-icon-engine', '1', '時間、新しい愛、古い愛、愛', '2019-12-18 17:02:16');
+INSERT INTO `sys_menu` VALUES (33, 'ストーリー', '/timeLine/timeLineIndex', NULL, 40, 'layui-icon layui-icon-engine', '1', '時間、新しい愛、古い愛、愛', '2019-12-18 17:02:16');
 INSERT INTO `sys_menu` VALUES (34, '图标管理', '', NULL, 0, 'layui-icon layui-icon-template', '1', 'New day，new start.', '2019-12-23 10:31:42');
 INSERT INTO `sys_menu` VALUES (36, 'LayUI 文档', 'https://www.layui.com/doc/', NULL, 47, 'layui-icon layui-icon-app', '1', 'I\'m lost, completely', '2019-12-23 16:41:53');
 INSERT INTO `sys_menu` VALUES (37, '龙喵网', 'http://ailongmiao.com/', NULL, 55, 'layui-icon layui-icon-cart-simple', '0', '龙喵网', '2019-12-24 09:22:35');
@@ -416,7 +788,7 @@ CREATE TABLE `sys_permission`  (
   `permissionNameCn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限名称（中文）',
   `parentId` int(0) NULL DEFAULT NULL COMMENT '上级id',
   PRIMARY KEY (`permissionId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_permission
@@ -482,7 +854,7 @@ CREATE TABLE `sys_role`  (
   `createTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `roleNameCn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称中文',
   PRIMARY KEY (`roleId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_role
@@ -513,12 +885,12 @@ CREATE TABLE `sys_user`  (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户描述',
   `gender` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '0 男 1 女',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'zhangsan', '张三', 'c4ca4238a0b923820dcc509a6f75849b', '2020-01-08 16:41:25', '1', 2, '123@qq.com', '我是张三', '0');
+INSERT INTO `sys_user` VALUES (1, 'zhangsan', '张三', NULL, '2020-10-15 09:28:21', '1', 2, '123@qq.com', '我是张三11', '0');
 INSERT INTO `sys_user` VALUES (2, 'lisi', '李四', 'c4ca4238a0b923820dcc509a6f75849b', '2019-11-15 15:56:51', '1', 3, '23@qq.com', '我是李四', '0');
 INSERT INTO `sys_user` VALUES (3, 'wangwu', '王五', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-03 13:46:52', '1', 3, '1@qq.com', '我是王五', '1');
 INSERT INTO `sys_user` VALUES (4, 'zhaoliu', '赵六', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-04 16:42:52', '1', 2, '2@qq.com', '赵六', '1');
@@ -533,6 +905,8 @@ INSERT INTO `sys_user` VALUES (14, 'jybd', '甲乙丙丁', 'c4ca4238a0b923820dcc
 INSERT INTO `sys_user` VALUES (15, 'mtdykxo', '每天都要开心哦！', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-18 13:36:42', '1', 1, '11', '每天都要开心哦！', '1');
 INSERT INTO `sys_user` VALUES (16, 'smg', '什么鬼', 'c4ca4238a0b923820dcc509a6f75849b', '2019-12-25 17:25:29', '1', 13, '1', '', '0');
 INSERT INTO `sys_user` VALUES (17, 'Rick', 'rick', 'c4ca4238a0b923820dcc509a6f75849b', '2020-06-05 14:30:21', '1', 1, '23232@qq.com', 'rick', '1');
+INSERT INTO `sys_user` VALUES (18, 'yyy', 'yyy', '96e79218965eb72c92a549dd5a330112', '2020-10-14 15:45:03', '1', 2, '1122', NULL, '1');
+INSERT INTO `sys_user` VALUES (19, '1', '1', NULL, '2020-10-15 09:32:21', '1', 1, '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for time_line
@@ -544,7 +918,7 @@ CREATE TABLE `time_line`  (
   `timeLineContent` varchar(10000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线内容（中日文）',
   `contentJapan` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时间线内容（日文）',
   PRIMARY KEY (`timeLineId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '时间线 表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '时间线 表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of time_line
@@ -558,6 +932,7 @@ INSERT INTO `time_line` VALUES (7, 'いま  2019-12-20 11:20:06 星期五', '<p>
 INSERT INTO `time_line` VALUES (8, '今すぐ    2019-12-23 15:16:48', '<p>因为一个人，爱上一座城，因为一座城，住着喜欢的人<br>一人の人のために、都市に恋をする、都市のために、それを好きな人がいる<br><br>今年是等不到下雪了，可能是老天觉得一个看雪太寂寞吧<br>今年は雪が降るのを待つことはできません。多分、神は雪を見るには寂しすぎると思う<br><br>且听风吟，静待花开<br>風に耳を傾け、花が咲くのを待つ<br><br>曾以为走不出去的日子，现在都回不去了<br>今は外出できないと思っていた日々、今は戻れない</p>', '<p>一人の人のために、都市に恋をする、都市のために、それを好きな人がいる<br>今年は雪が降るのを待つことはできません。多分、神は雪を見るには寂しすぎると思う<br>風に耳を傾け、花が咲くのを待つ<br>今は外出できないと思っていた日々、今は戻れない</p>');
 INSERT INTO `time_line` VALUES (11, '未来は大丈夫ですか   2020-01-01 09:48:10', '<p>未来会好吗？会的吧、肯定会的吧，一切都会过去的吧<br>未来は大丈夫ですか はい、確かに、すべてが合格します<br><br>加油吧！一切都会慢慢过去的<br>さあ！すべてがゆっくりと通過します</p>', '<p>未来は大丈夫ですか？はい、確かに、すべてが合格します<br>さあ！すべてがゆっくりと通過します</p>');
 INSERT INTO `time_line` VALUES (12, '半年  2020-01-20 11:29:41  星期一', '<p>时间过得真快啊，一晃就已经半年了，我知道你已经不再爱我了，可是我还是忍不住的去留意你的消息<br>時間が経ち、半年になります、あなたはもう私を愛していないことを知っています、しかし、私はまだあなたのニュースに注意を払うことはできません<br><br>我是不是不应该再坚持了，是时候放手了，我想我还是做不到吧，也就只能交给时间了<br>私がもう主張しないならば、それは手放す時です、まだできないと思います。時間にしか与えられません<br><br>说真的，昨天你能陪我打游戏我已经很开心了 xy<br>真面目に、昨日あなたが私と一緒にゲームをすることができてとても幸せでした xy<br><br>过几天就过年了，或许我也应该有一个新的开始了吧<br>数日で中国の新年、多分私は新しい始まりを持っている必要があります<br><br>也希望你能天天开心，一直幸福下去 <br>私はあなたが毎日幸せであり、常に幸せであることを願っています<br><br><br><br></p>', '<p>時間が経ち、半年になります、あなたはもう私を愛していないことを知っています、しかし、私はまだあなたのニュースに注意を払うことはできません<br>私がもう主張しないならば、それは手放す時です、まだできないと思います。時間にしか与えられません<br>真面目に、昨日あなたが私と一緒にゲームをすることができてとても幸せでした xy<br>数日で中国の新年、多分私は新しい始まりを持っている必要があります<br>私はあなたが毎日幸せであり、常に幸せであることを願っています<br></p>');
+INSERT INTO `time_line` VALUES (13, '大丈夫ですか  2020-10-15 09:45:55  星期四', '<p>一年多了，你还好吗<br>一年以上、大丈夫ですか</p>', '<p>一年以上、大丈夫ですか</p>');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -577,7 +952,7 @@ INSERT INTO `user_role` VALUES (13, 7);
 INSERT INTO `user_role` VALUES (7, 6);
 INSERT INTO `user_role` VALUES (9, 1);
 INSERT INTO `user_role` VALUES (10, 9);
-INSERT INTO `user_role` VALUES (1, 5);
 INSERT INTO `user_role` VALUES (17, 1);
+INSERT INTO `user_role` VALUES (1, 5);
 
 SET FOREIGN_KEY_CHECKS = 1;
