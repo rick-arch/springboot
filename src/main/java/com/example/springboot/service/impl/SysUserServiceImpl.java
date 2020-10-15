@@ -43,9 +43,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public JsonDomainArray<SysUser> getUseList(SysUser sysUser) {
-        Integer count = sysUserRepository.getUserCount(sysUser);
+        Integer count = sysUserRepository.count(sysUser);
         sysUser.setPage((sysUser.getPage() - NUM_ONE) * NUM_TEN);//1,10  2,10
-        List<SysUser> userList = sysUserRepository.findUserList(sysUser);
+        List<SysUser> userList = sysUserRepository.selectAll(sysUser);
         return new JsonDomainArray<SysUser>().setCount(count).setData(userList);
     }
 
@@ -72,11 +72,11 @@ public class SysUserServiceImpl implements SysUserService {
             sysUser.setPassword(md5(sysUser.getPassword()));
 
             //新增用户
-            flag = sysUserRepository.insertUser(sysUser) > NUM_ZERO;
+            flag = sysUserRepository.insert(sysUser) > NUM_ZERO;
         } else {
 
             //修改用户信息
-            flag = sysUserRepository.modifyUser(sysUser) > NUM_ZERO;
+            flag = sysUserRepository.update(sysUser) > NUM_ZERO;
 
             //删除用户和角色关系
             sysUserRepository.removeRelation(sysUser.getId());

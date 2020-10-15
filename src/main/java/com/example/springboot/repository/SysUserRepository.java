@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface SysUserRepository {
+public interface SysUserRepository extends BaseRepository<SysUser>{
     /**
      * 查询用户是否存在
      * @param username 用户姓名
@@ -24,32 +24,11 @@ public interface SysUserRepository {
     List<SysUser> findRoleAndPermission(String username);
 
     /**
-     * 查询所有用户
-     * @param sysUser 用户封装类
-     * @return 满足条件的用户集合
-     */
-    List<SysUser> findUserList(SysUser sysUser);
-
-    /**
      * 修改用户状态
      * @param id 用户id 数组
      * @return >0 成功 否则失败
      */
     Integer updateUser(Integer[] id);
-
-    /**
-     * 查询满足条件的用户条数
-     * @param sysUser 用户封装类
-     * @return 返回用户条数
-     */
-    Integer getUserCount(SysUser sysUser);
-
-    /**
-     * 修改用户
-     * @param sysUser 用户封装类
-     * @return  0 fail >0 success
-     */
-    Integer modifyUser(SysUser sysUser);
 
     /**
      * 删除用户和角色的关系
@@ -69,20 +48,6 @@ public interface SysUserRepository {
      * @return 角色集合
      */
     List<SysRole> findRoleList();
-
-    /**
-     * 新增用户
-     * @param sysUser 用户封装类
-     * @return 0 fail >0 success
-     */
-    Integer insertUser(SysUser sysUser);
-
-    /**
-     * 启用用户
-     * @param id 用户id
-     * @return
-     */
-    Integer enable(@Param("userId")Integer id);
 
     /**
      * 判断账户是否有效
