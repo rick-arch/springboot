@@ -23,38 +23,36 @@ import static com.example.springboot.utils.JsonUtil.object2Json;
 @Controller
 @Slf4j
 public class LoginController extends BaseController {
-	@Autowired
-	private SysMenuService sysMenuService;
+    @Autowired
+    private SysMenuService sysMenuService;
 
-	@PostMapping(LOGIN)
-	@ResponseBody
-	public ResponseBo login(String username, String password, Boolean rememberMe) {
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-		try {
-			login(token);
-			return ok();
-		} catch (UnknownAccountException | LockedAccountException | IncorrectCredentialsException e) {
-			return error(e.getMessage());
-		} catch (AuthenticationException e) {
-			return error(AUTHENTICATION_FAILED);
-		}
+    @PostMapping(LOGIN)
+    @ResponseBody
+    public ResponseBo login(String username, String password, Boolean rememberMe) {
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+        try {
+            login(token);
+            return ok();
+        } catch (AuthenticationException e) {
+            return error(NUM_FIVE_HUNDRED, e.getMessage());
+        }
 	}
 
 
-	@GetMapping(INDEX)
-	public String index(Model model) {
-		// 登录成后，即可通过Subject获取登录的用户信息
-		SysUser user = getPrincipal();
-		model.addAttribute(USER, user);
-		//当前id角色下对应的菜单列表
-		model.addAttribute(CERTIFIED_MENU_LIST, object2Json(sysMenuService.queryMenuList(user.getId())));
-		return FWD_INDEX;
-	}
+    @GetMapping(INDEX)
+    public String index(Model model) {
+        // 登录成后，即可通过Subject获取登录的用户信息
+        SysUser user = getPrincipal();
+        model.addAttribute(USER, user);
+        //当前id角色下对应的菜单列表
+        model.addAttribute(CERTIFIED_MENU_LIST, object2Json(sysMenuService.queryMenuList(user.getId())));
+        return FWD_INDEX;
+    }
 
-	@GetMapping(LOGOUT)
-	@Log("用户退出")
-	public void logout() {
-		//用户退出后，shiro实现自动跳转到登陆页面
-		userLogout();
-	}
+    @GetMapping(LOGOUT)
+    @Log("用户退出")
+    public void logout() {
+        //用户退出后，shiro实现自动跳转到登陆页面
+        userLogout();
+    }
 }

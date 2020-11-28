@@ -9,7 +9,7 @@ public final class ResponseBo extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     public ResponseBo() {
-        put(CODE, NUM_ZERO);
+        put(CODE, NUM_TWO_HUNDRED);
         put(MSG, MSG_SUCCESS);
     }
 
